@@ -30,15 +30,8 @@ public class SpringDemoTheaApplication {
 						String[] datos = alumno.split(";");
 						String[] datos_roles = datos[3].split("|");
 
-						Role[] roles = new Role[datos_roles.length];
-
-						for (int i = 0; i < datos_roles.length; i++) {
-							roles[i] = new Role(datos_roles[i]);
-						}
-
-						
-						
-						User user = new User(datos[0], roles);
+											
+						User user = new User(datos[0], datos_roles);
 						user.setName(datos[0]);
 						user.setEmail(datos[1]);
 						user.setPassword(datos[2]);
@@ -46,7 +39,11 @@ public class SpringDemoTheaApplication {
 						repository.save(user);
 					});
 
-			repository.findAll().forEach(System.out::println);
+			repository.findAll().forEach(x -> {
+					//System.out::println
+					System.out.print(x.getId() + " | " + x.getName() + " | " + x.getEmail() + " | " + x.getPassword() + " | ");
+					System.out.println();
+			});
 
 		};
 	}

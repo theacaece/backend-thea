@@ -1,11 +1,12 @@
 package edu.caece.app.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,8 +25,8 @@ public class Role {
 	@Column(name = "name")
 	private String name;
 	
-	@ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
-	private Set<User> users = new HashSet<>();
+	@ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<User> users = new ArrayList<User>();
 
 	
 	public Role() {
@@ -52,11 +53,11 @@ public class Role {
 		this.name = name;
 	}
 
-	public Set<User> getUsers() {
+	public List<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Set<User> users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 }

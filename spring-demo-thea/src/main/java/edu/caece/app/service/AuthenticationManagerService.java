@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationManagerService implements AuthenticationManager  {
 
+	
+	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		
