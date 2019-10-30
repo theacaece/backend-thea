@@ -17,7 +17,6 @@ import edu.caece.app.service.JwtUserDetailsService;
 import edu.caece.app.config.JwtTokenUtil;
 import edu.caece.app.domain.JwtRequest;
 import edu.caece.app.domain.JwtResponse;
-import edu.caece.app.domain.User;
 
 @RestController
 @CrossOrigin

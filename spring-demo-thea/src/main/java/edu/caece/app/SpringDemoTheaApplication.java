@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import edu.caece.app.domain.Role;
 import edu.caece.app.domain.User;
 import edu.caece.app.repository.IRoleRepository;
 import edu.caece.app.repository.IUserRepository;
