@@ -24,9 +24,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column(name = "name", nullable = false)
-	private String name;
-
+	@Column(name = "fistName", nullable = false)
+	private String fistName;
+	
+	@Column(name = "lastName", nullable = false)
+	private String lastName;
+	
+	@Column(name = "username", nullable = false)
+	private String username;
+	
 	@Column(name = "email", nullable = false)
 	private String email;
 
@@ -42,12 +48,12 @@ public class User {
 	}
 
 	public User(String name, String... roles) {
-		this.name = name;
+		this.username = name;
 
 		this.roles = new ArrayList<Role>();
 
 		for (int i = 0; i < roles.length; i++) {
-			this.roles.add(new Role(roles[i]));
+			this.roles.add(new Role(roles[i].toUpperCase()));
 		}
 
 		this.roles.forEach(x -> x.getUsers().add(this));
@@ -61,12 +67,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUsername(String name) {
+		this.username = name;
 	}
 
 	public String getEmail() {
@@ -84,6 +90,22 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getFistName() {
+		return fistName;
+	}
+
+	public void setFistName(String fistName) {
+		this.fistName = fistName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
 	public List<Role> getRoles() {
 		return roles;
@@ -95,7 +117,7 @@ public class User {
 	}
 
 	public String getRolesSeparetedComma() {
-
+		
 		String result = "";
 		int i = 1;
 
@@ -105,9 +127,24 @@ public class User {
 			
 			if (i < roles.size())
 				result += ", ";
+			
+			i++;
 
 		}
 
 		return result;
+	}
+	
+	public String[] getRolesToArray() {
+	
+		String[] rl = new String[roles.size()];
+		int i = 0;
+		
+		for(Role r: roles) {
+			rl[i] = r.getName();
+			i++;
+		}
+		
+		return rl;
 	}
 }

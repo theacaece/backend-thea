@@ -24,24 +24,26 @@ public class SpringDemoTheaApplication {
 	@Bean
 	ApplicationRunner init(IUserRepository repository, IRoleRepository repository_role) {
 		return args -> {
-			Stream.of("Francisco Ferrari;ff@gmail.com;ffff;admin", "Javier Michelson;jm@gmail.com;jjjj;user|admin",
-					"Juan Salinas;js@gmail.com;ssss;user", "Pablo Garcia;pg@gmail.com;gggg;admin").forEach(alumno -> {
+			Stream.of("Francisco;Ferrari;jferrari;ff@gmail.com;ffff;admin", "Javier;Michelson;jmichelson;jm@gmail.com;jjjj;user,admin",
+					"Juan;Salinas;jsalinas;js@gmail.com;ssss;user,admin", "Pablo;Garcia;pgarcia;pg@gmail.com;gggg;admin").forEach(alumno -> {
 
 						String[] datos = alumno.split(";");
-						String[] datos_roles = datos[3].split("|");
+						String[] datos_roles = datos[5].split(",");
 
 											
-						User user = new User(datos[0], datos_roles);
-						user.setName(datos[0]);
-						user.setEmail(datos[1]);
-						user.setPassword(datos[2]);
+						User user = new User(datos[2], datos_roles);
+						user.setFistName(datos[0]);
+						user.setLastName(datos[1]);
+						user.setUsername(datos[2]);
+						user.setEmail(datos[3]);
+						user.setPassword(datos[4]);
 
 						repository.save(user);
 					});
 
 			repository.findAll().forEach(x -> {
 					//System.out::println
-					System.out.print(x.getId() + " | " + x.getName() + " | " + x.getEmail() + " | " + x.getPassword() + " | ");
+					System.out.print(x.getId() + " | " + x.getUsername() + " | " + x.getEmail() + " | " + x.getPassword() + " | ");
 					System.out.println();
 			});
 
