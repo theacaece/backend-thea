@@ -97,14 +97,14 @@ public class User {
 	public String getRolesSeparetedComma() {
 
 		String result = "";
-		int i = 0;
+		int i = 1;
 
 		for (Role role : roles) {
 
-			result = role.getName();
+			result += role.getName();
 			
 			if (i < roles.size())
-				result = ", ";
+				result += ", ";
 
 		}
 
