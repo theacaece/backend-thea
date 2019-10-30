@@ -62,7 +62,7 @@ public class JwtTokenUtil implements Serializable {
 		return expiration.before(new Date());
 	}
 
-	// while creating the token -
+	// while creating the token -
 	// 1. Define claims of the token, like Issuer, Expiration, Subject, and the ID
 	// 2. Sign the JWT using the HS512 algorithm and secret key.
 	// 3. According to JWS Compact
@@ -76,7 +76,7 @@ public class JwtTokenUtil implements Serializable {
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
 
-	// validate token
+	// validate token
 	public Boolean validateToken(String token, UserDetails userDetails) {
 
 		final String username = getUsernameFromToken(token);
