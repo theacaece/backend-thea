@@ -28,8 +28,7 @@ public class SpringDemoTheaApplication {
 
 						String[] datos = alumno.split(";");
 						String[] datos_roles = datos[5].split(",");
-
-											
+										
 						User user = new User(datos[2], datos_roles);
 						user.setFistName(datos[0]);
 						user.setLastName(datos[1]);
