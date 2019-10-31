@@ -6,8 +6,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.stereotype.Service;
 
 import edu.caece.app.config.Hash;
@@ -30,8 +28,6 @@ public class AuthenticationManagerService implements AuthenticationManager {
 
 		if (user == null)
 			throw new UsernameNotFoundException("INVALID CREDENTIALS");
-
-		System.out.println(Hash.sha1(password));
 
 		if (user.getUsername().equals(username) && user.getPassword().equals(Hash.sha1(password))) {
 			return authentication;
