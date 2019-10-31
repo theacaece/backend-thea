@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+import edu.caece.app.config.Hash;
 import edu.caece.app.domain.User;
 import edu.caece.app.repository.IRoleRepository;
 import edu.caece.app.repository.IUserRepository;
@@ -28,13 +29,13 @@ public class SpringDemoTheaApplication {
 
 						String[] datos = alumno.split(";");
 						String[] datos_roles = datos[5].split(",");
-										
+						
 						User user = new User(datos[2], datos_roles);
 						user.setFistName(datos[0]);
 						user.setLastName(datos[1]);
 						user.setUsername(datos[2]);
 						user.setEmail(datos[3]);
-						user.setPassword(datos[4]);
+						user.setPassword(Hash.sha1(datos[4]));
 
 						repository.save(user);
 					});
@@ -44,7 +45,6 @@ public class SpringDemoTheaApplication {
 					System.out.print(x.getId() + " | " + x.getUsername() + " | " + x.getEmail() + " | " + x.getPassword() + " | ");
 					System.out.println();
 			});
-
 		};
 	}
 }
