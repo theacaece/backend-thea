@@ -1,5 +1,7 @@
 package edu.caece.app;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.springframework.boot.ApplicationRunner;
@@ -9,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 import edu.caece.app.config.Hash;
+import edu.caece.app.domain.Role;
 import edu.caece.app.domain.User;
 import edu.caece.app.repository.IRoleRepository;
 import edu.caece.app.repository.IUserRepository;
@@ -23,15 +26,32 @@ public class SpringDemoTheaApplication {
 
 	@Bean
 	ApplicationRunner init(IUserRepository repository, IRoleRepository repository_role) {
+
+		List<Role> roles = new ArrayList<Role>();
+
+		roles.add(new Role(1L, "ADMIN"));
+		roles.add(new Role(2L, "USER"));
+
+		repository_role.saveAll(roles);
+
+		repository_role.findAll().forEach(x -> {
+
+			System.out.print(x.getId() + " | " + x.getName());
+			System.out.println();
+
+		});
+
 		return args -> {
-			Stream.of("Francisco;Ferrari;jferrari;ff@gmail.com;ffff;admin", "Javier;Michelson;jmichelson;jm@gmail.com;jjjj;user,admin",
-					"Juan;Salinas;jsalinas;js@gmail.com;ssss;user,admin", "Pablo;Garcia;pgarcia;pg@gmail.com;gggg;admin").forEach(alumno -> {
+			Stream.of("Francisco;Ferrari;jferrari;ff@gmail.com;ffff;1#admin",
+					"Javier;Michelson;jmichelson;jm@gmail.com;jjjj;2#user,1#admin",
+					"Juan;Salinas;jsalinas;js@gmail.com;ssss;2#user,1#admin",
+					"Pablo;Garcia;pgarcia;pg@gmail.com;gggg;1#admin").forEach(alumno -> {
 
 						String[] datos = alumno.split(";");
 						String[] datos_roles = datos[5].split(",");
-						
+
 						User user = new User(datos[2], datos_roles);
-						user.setFistName(datos[0]);
+						user.setFirstName(datos[0]);
 						user.setLastName(datos[1]);
 						user.setUsername(datos[2]);
 						user.setEmail(datos[3]);
@@ -41,9 +61,25 @@ public class SpringDemoTheaApplication {
 					});
 
 			repository.findAll().forEach(x -> {
-					//System.out::println
-					System.out.print(x.getId() + " | " + x.getUsername() + " | " + x.getEmail() + " | " + x.getPassword() + " | ");
-					System.out.println();
+				// System.out::println
+				System.out.print(
+						x.getId() + " | " + x.getUsername() + " | " + x.getEmail() + " | " + x.getPassword() + " | ");
+				System.out.println();
+			});
+			repository_role.findAll().forEach(x -> {
+
+				System.out.print(x.getId() + " | " + x.getName());
+				System.out.println();
+
+			});
+
+			System.out.println();
+
+			repository_role.findAll().forEach(x -> {
+
+				System.out.print(x.getId() + " | " + x.getName());
+				System.out.println();
+
 			});
 		};
 	}
