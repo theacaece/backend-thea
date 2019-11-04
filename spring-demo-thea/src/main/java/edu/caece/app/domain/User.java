@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -24,36 +26,42 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column(name = "fistName", nullable = false)
-	private String fistName;
-	
+	@Column(name = "firstName", nullable = false)
+	private String firstName;
+
 	@Column(name = "lastName", nullable = false)
 	private String lastName;
-	
-	@Column(name = "username", nullable = false)
+
+	@Column(name = "username", nullable = false, unique = true)
 	private String username;
-	
+
 	@Column(name = "email", nullable = false)
 	private String email;
 
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
+			CascadeType.DETACH }, fetch = FetchType.EAGER)
+	@JoinTable(name = "users_roles", 
+				joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    //@JsonIgnore
 	private List<Role> roles;
 
 	public User() {
-		
+		this.roles = new ArrayList<Role>();
 	}
 
 	public User(String name, String... roles) {
+		String[] rl = new String[2];
 		this.username = name;
 
 		this.roles = new ArrayList<Role>();
 
 		for (int i = 0; i < roles.length; i++) {
-			this.roles.add(new Role(roles[i].toUpperCase()));
+			rl = roles[i].split("#");
+			this.roles.add(new Role(Long.parseLong(rl[0]), rl[1].toUpperCase()));
 		}
 
 		this.roles.forEach(x -> x.getUsers().add(this));
@@ -90,13 +98,13 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public String getFistName() {
-		return fistName;
+
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFistName(String fistName) {
-		this.fistName = fistName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -107,44 +115,45 @@ public class User {
 		this.lastName = lastName;
 	}
 
+	
 	public List<Role> getRoles() {
 		return roles;
 	}
 
+	
 	public void setRoles(List<Role> roles) {
-		roles.forEach(x -> x.getUsers().add(this));
 		this.roles = roles;
+		this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
-	public String getRolesSeparetedComma() {
-		
-		String result = "";
-		int i = 1;
-
-		for (Role role : roles) {
-
-			result += role.getName();
-			
-			if (i < roles.size())
-				result += ", ";
-			
-			i++;
-
-		}
-
-		return result;
-	}
-	
+//	public String getRolesSeparetedComma() {
+//
+//		String result = "";
+//		int i = 1;
+//
+//		for (Role role : roles) {
+//
+//			result += role.getName();
+//
+//			if (i < roles.size()) {
+//				result += ", ";
+//				i++;
+//			}
+//		}
+//
+//		return result;
+//	}
+	@JsonIgnore
 	public String[] getRolesToArray() {
-	
+
 		String[] rl = new String[roles.size()];
 		int i = 0;
-		
-		for(Role r: roles) {
+
+		for (Role r : roles) {
 			rl[i] = r.getName();
 			i++;
 		}
 		
 		return rl;
-	}
+	}	
 }
