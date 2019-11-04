@@ -19,7 +19,7 @@ import edu.caece.app.domain.JwtRequest;
 import edu.caece.app.domain.JwtResponse;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 public class JwtAuthenticationController {
 	
 	@Autowired
