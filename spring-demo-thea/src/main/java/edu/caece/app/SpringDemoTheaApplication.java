@@ -24,7 +24,7 @@ public class SpringDemoTheaApplication {
 	ApplicationRunner init(IUserRepository repository, IRoleRepository repository_role) {
 		return args -> {
 			Stream.of("Francisco;Ferrari;jferrari;ff@gmail.com;ffff;admin", "Javier;Michelson;jmichelson;jm@gmail.com;jjjj;user,admin",
-					"Juan;Salinas;jsalinas;js@gmail.com;ssss;user,admin", "Pablo;Garcia;pgarcia;pg@gmail.com;gggg;admin").forEach(alumno -> {
+					"Juan;Salinas;jsalinas;js@gmail.com;ssss;user", "Pablo;Garcia;pgarcia;pg@gmail.com;gggg;admin").forEach(alumno -> {
 
 						String[] datos = alumno.split(";");
 						String[] datos_roles = datos[5].split(",");
