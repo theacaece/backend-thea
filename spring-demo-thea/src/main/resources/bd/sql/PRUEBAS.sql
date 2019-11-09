@@ -1,0 +1,21 @@
+
+DROP TABLE IF EXISTS acceso;
+DROP TABLE IF EXISTS registro;
+DROP TABLE IF EXISTS usuario;
+DROP TABLE IF EXISTS rol_Permiso;
+DROP TABLE IF EXISTS rol;
+DROP TABLE IF EXISTS permiso;
+DROP TABLE IF EXISTS foto;
+DROP TABLE IF EXISTS persona;
+DROP TABLE IF EXISTS funcion;
+
+
+SELECT * FROM acceso;
+SELECT * FROM registro;
+SELECT * FROM usuario;
+SELECT * FROM rol_Permiso;
+SELECT * FROM rol;
+SELECT * FROM permiso;
+SELECT * FROM foto;
+SELECT * FROM persona;
+SELECT * FROM funcion;
