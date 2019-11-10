@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.caece.app.domain.Person;
 import edu.caece.app.domain.User;
 import edu.caece.app.repository.IUserRepository;
 
@@ -47,6 +46,14 @@ public class UserController {
 			repository.save(user);
 		}
 	}
+	
+	@DeleteMapping("/users/delete/{id}")
+	public void delete(@PathVariable Long id) {
+		Optional<User> _userData = repository.findById(id);
+		if (_userData.isPresent()) {
+			repository.deleteById(id);
+		}
+	}
 
 	@PostMapping("/users/update/{id}")
 	public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody User user) {
@@ -71,19 +78,6 @@ public class UserController {
 
 		} else {
 			return new ResponseEntity<>("Error: el usuario no fue encontrado!", HttpStatus.NOT_FOUND);
-		}
-	}
-
-	@DeleteMapping("/users/delete/{id}")
-	public ResponseEntity<String> delete(@PathVariable Long id) {
-
-		Optional<User> _userData = repository.findById(id);
-
-		if (_userData.isPresent()) {
-			repository.deleteById(id);
-			return new ResponseEntity<String>("el usuario ha sido eliminado!", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>("Usuario no encontrado!", HttpStatus.NOT_FOUND);
 		}
 	}
 

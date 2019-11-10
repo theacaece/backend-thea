@@ -6,6 +6,6 @@ import edu.caece.app.domain.Photo;
 
 public interface IPhotoDao {
 
-	List<Photo> getFotos();
+	List<Photo> getPhotos();
 	
 }

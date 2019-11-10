@@ -7,5 +7,7 @@ import edu.caece.app.domain.Person;
 public interface IPersonDao {
 
 	List<Person> getPersonas() throws Exception;
+
+	Person findById(int id) throws Exception;
 	
 }

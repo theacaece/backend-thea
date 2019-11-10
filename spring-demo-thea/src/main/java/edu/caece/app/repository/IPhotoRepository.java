@@ -9,6 +9,6 @@ import edu.caece.app.domain.Photo;
 @RepositoryRestResource(collectionResourceRel = "fotos", path = "fotos")
 @CrossOrigin(origins = "http://localhost:4200")
 
-public interface IPhotoRepositorio extends JpaRepository<Photo, String> {
+public interface IPhotoRepository extends JpaRepository<Photo, String> {
 
 }

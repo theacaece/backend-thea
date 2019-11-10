@@ -3,6 +3,7 @@ package edu.caece.app.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.caece.app.domain.Person;
+import edu.caece.app.domain.User;
 import edu.caece.app.repository.IPersonRepository;
 
 @RestController
@@ -42,6 +44,14 @@ public class PersonController {
 		boolean existe = repository.existsByDni(person.getDni());
 		if (!existe) {
 			repository.save(person);
+		}
+	}
+	
+	@DeleteMapping("/persons/delete/{id}")
+	public void delete(@PathVariable Long id) {
+		Optional<Person> _personData = repository.findById(id);
+		if (_personData.isPresent()) {
+			repository.deleteById(id);
 		}
 	}
 	
