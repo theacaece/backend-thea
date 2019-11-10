@@ -30,7 +30,7 @@ public class UserController {
 	@Autowired
 	private IUserRepository repository;
 
-	@RequestMapping(value = "/users/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public Collection<User> get() {
 
 		List<User> users = new ArrayList<User>();

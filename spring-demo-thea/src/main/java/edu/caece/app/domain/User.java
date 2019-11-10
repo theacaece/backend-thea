@@ -120,32 +120,13 @@ public class User {
 		return roles;
 	}
 
-	
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 		this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
-//	public String getRolesSeparetedComma() {
-//
-//		String result = "";
-//		int i = 1;
-//
-//		for (Role role : roles) {
-//
-//			result += role.getName();
-//
-//			if (i < roles.size()) {
-//				result += ", ";
-//				i++;
-//			}
-//		}
-//
-//		return result;
-//	}
 	@JsonIgnore
 	public String[] getRolesToArray() {
-
 		String[] rl = new String[roles.size()];
 		int i = 0;
 
@@ -153,7 +134,6 @@ public class User {
 			rl[i] = r.getName();
 			i++;
 		}
-		
 		return rl;
 	}	
 }
