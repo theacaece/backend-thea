@@ -10,65 +10,65 @@ import org.hibernate.annotations.GenericGenerator;
 public class Person implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "id", updatable = false, nullable = false)
-	private int id = 0;
-	
-	@Column(name = "nombre")
-	private String nombre;
-	
-	@Column(name = "apellido")
-	private String apellido;
-	
-	@Column(name = "dni")
+	private long id;
+
+	@Column(name = "firstName", nullable = false)
+	private String firstName;
+
+	@Column(name = "lastName", nullable = false)
+	private String lastName;
+
+	@Column(name = "dni", nullable = false)
 	private String dni;
-	
+
 	@ManyToOne
     @JoinColumn(name = "id_funcion")
     private Position funcion;
 	
 	@Column(name = "matricula")
 	private String matricula;
-
+	
 	public Person() {
 		
 	}
 	
-	public Person(String nombre,
-			       String apellido,
+	public Person(String firstName,
+			       String lastName,
 			       String dni,
 			       String matricula) {
-		this.nombre = nombre;
-		this.apellido = apellido;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.dni = dni;
 		this.matricula = matricula;
 	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-
-	public String getNombre() {
-		return nombre;
+	
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getApellido() {
-		return apellido;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getDni() {
@@ -89,8 +89,8 @@ public class Person implements Serializable {
 	
 	public String toString (){
         String datosPersona = "Persona::" + 
-        					  nombre + ":" + 
-        					  apellido + ":" + 
+        					  firstName + ":" + 
+        					  lastName + ":" + 
         					  dni + ":" + 
         					  matricula;
         return datosPersona;

@@ -147,11 +147,11 @@ public ArrayList<Person> leerHojaPersonas() {
 				
 				// Leo Celda Nombre del Excel
 				celda = iterador.next();
-				persona.setNombre(celda.getStringCellValue());
+				persona.setFirstName(celda.getStringCellValue());
 				
 				// Leo Celda Apellido del Excel
 				celda = iterador.next();
-				persona.setApellido(celda.getStringCellValue());
+				persona.setLastName(celda.getStringCellValue());
 				
 				// Leo Celda DNI del Excel
 				celda = iterador.next();

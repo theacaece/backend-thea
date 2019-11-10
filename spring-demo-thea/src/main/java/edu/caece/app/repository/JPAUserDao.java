@@ -34,9 +34,8 @@ public class JPAUserDao implements IUserDao {
 	public void deleteUser(int userId) throws Exception {
 		em.createQuery("DELETE FROM users WHERE u.id = :usuarioId");
 	}
-	
-	@Override
-	public User findById(int id) throws Exception {
+
+	public User findByIds(int id) throws Exception {
 		User usuario = null;
         try {
         	usuario = em.find(User.class, id);

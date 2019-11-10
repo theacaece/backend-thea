@@ -38,7 +38,7 @@ public class SpringDemoTheaApplication {
 	ApplicationRunner init(IUserRepository userRepository, 
 			               IRoleRepository roleRepository,
 			               IPersonRepository personRepository,
-			               IPhotoRepository photoRepository) {
+			               IPhotoRepository photoRepository) throws Exception {
 
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(new Role(1L, "ADMIN"));
@@ -50,6 +50,8 @@ public class SpringDemoTheaApplication {
 		                     "Juan;Salinas;jsalinas;js@gmail.com;ssss;2#user,1#admin",
 		                     "Pablo;Garcia;pgarcia;pg@gmail.com;gggg;1#admin"};
 
+		inicializarDatosBD(userRepository, personRepository, photoRepository);
+		
 		return args -> {
 			
 			Stream.of(usuarios).forEach(alumno -> {
@@ -65,40 +67,43 @@ public class SpringDemoTheaApplication {
 				user.setPassword(Hash.sha1(datos[4]));
 	
 				userRepository.save(user);
-			});
-			
+		});	
+	};
+ }
+	
+	public void inicializarDatosPersonas(IUserRepository userRepository, 
+										 IPersonRepository personRepository,
+										 IPhotoRepository photoRepository) {
+		try {
 			
 			String[] personas = {"Francisco;Ferrari;dni33333333;ffff",
-					             "Javier;Michelson;dni33333333;jjjj"};
-
+		    					 "Javier;Michelson;dni33333333;jjjj"};
+		
 			Stream.of(personas).forEach(persona -> {
-
 				String[] datos = persona.split(";");
-
+				
 				Person person = new Person();
 				person.setNombre(datos[0]);
 				person.setApellido(datos[1]);
 				person.setDni(datos[2]);
 				person.setMatricula(datos[3]);
-	
+				
 				personRepository.save(person);
 			});
-
-		userRepository.findAll().forEach(x -> {x.toString();});
-		roleRepository.findAll().forEach(x -> {x.toString();});
-		personRepository.findAll().forEach(x -> {x.toString();});
-		
-		inicializarDatosBD(userRepository, personRepository, photoRepository);
-
-	};
- }
+			
+			personRepository.findAll().forEach(x -> {x.toString();});
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	 public void inicializarDatosBD(IUserRepository userRepository, 
 				                    IPersonRepository personRepository,
 				                    IPhotoRepository photoRepository) throws Exception {
 		 // crearTablaUsuarios(userRepository);
-		 // crearTablaPersonas(personRepository);
-		crearTablaFotos(photoRepository);
+		crearTablaPersonas(personRepository); // BD
+		crearTablaFotos(photoRepository); // BD
 	}
 	 
  	private void crearTablaUsuarios(IUserRepository userRepository) throws Exception {

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +26,8 @@ import edu.caece.app.repository.IUserRepository;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
+	private static final Logger LOGGER = Logger.getLogger(UserController.class.getName());
+	
 	@Autowired
 	private IUserRepository repository;
 
@@ -47,7 +49,14 @@ public class UserController {
 		}
 	}
 	
-	@DeleteMapping("/users/delete/{id}")
+	@RequestMapping(value = "/users/edit", method = RequestMethod.GET)
+	public Optional<User> getById(@PathVariable Long id) {
+		LOGGER.info(" Enter >> getById() ");
+		System.out.println(" Enter >> getById() ");
+		return repository.findById(id);
+	}
+	
+	@PostMapping(value="/users/delete")
 	public void delete(@PathVariable Long id) {
 		Optional<User> _userData = repository.findById(id);
 		if (_userData.isPresent()) {
@@ -78,18 +87,6 @@ public class UserController {
 
 		} else {
 			return new ResponseEntity<>("Error: el usuario no fue encontrado!", HttpStatus.NOT_FOUND);
-		}
-	}
-
-	@GetMapping("/users/edit/{id}")
-	public ResponseEntity<User> getById(@PathVariable Long id) {
-
-		Optional<User> _userData = repository.findById(id);
-
-		if (_userData.isPresent()) {
-			return new ResponseEntity<User>(repository.findById(id).get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 

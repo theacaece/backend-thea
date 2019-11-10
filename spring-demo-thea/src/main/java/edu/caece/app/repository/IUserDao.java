@@ -8,8 +8,6 @@ public interface IUserDao {
 	
 	List<User> getUsers() throws Exception;
 
-	User findById(int id) throws Exception;
-
 	User getUserById(int userId) throws Exception;
 	
 	void deleteUser(int userId) throws Exception;
