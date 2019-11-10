@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,10 +37,27 @@ public class PersonController {
 		return persons.stream().collect(Collectors.toList());
 	}
 	
+	@PostMapping("/persons/save")
+	public void save(@RequestBody Person person) {
+		boolean existe = repository.existsByDni(person.getDni());
+		if (!existe) {
+			repository.save(person);
+		}
+	}
+	
+//	@PostMapping("/personas/save")
+//	public void save(@RequestBody Person person) throws Exception {
+//		try {
+//			this.repository.save(person);
+//		} catch (Exception e) {
+//			throw new Exception("method persona :: save :: " + e.getMessage());
+//		}
+//	}
+	
 	public Collection<Person> personas() throws Exception {
 		Collection<Person> personas = null;
 		try {
-//			personas = repository.findAll().stream().collect(Collectors.toList());
+			personas = repository.findAll().stream().collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new Exception("method persons :: " + e.getMessage());
 		}
@@ -48,14 +69,14 @@ public class PersonController {
 ////		return repository.getOne(id);
 //	}
 	
-	@PostMapping("/personas/save")
-	public void save(@RequestBody Person persona) throws Exception {
-		try {
-//			this.repository.save(persona);
-		} catch (Exception e) {
-			throw new Exception("method persona :: save :: " + e.getMessage());
-		}
-	}
+//	@PostMapping("/personas/save")
+//	public void save(@RequestBody Person persona) throws Exception {
+//		try {
+////			this.repository.save(persona);
+//		} catch (Exception e) {
+//			throw new Exception("method persona :: save :: " + e.getMessage());
+//		}
+//	}
 	
 	@DeleteMapping("/personas/delete/{id}")
 	public void deleteById(String id) throws Exception {
@@ -64,6 +85,11 @@ public class PersonController {
 		} catch (Exception e) {
 			throw new Exception("method persona :: deleteById :: " + e.getMessage());
 		}
+	}
+	
+	@GetMapping("persons/exists/{dni}")
+	public ResponseEntity<Boolean> existByDni(@PathVariable String dni) {
+		return new ResponseEntity<>(repository.existsByDni(dni), HttpStatus.OK);
 	}
 
 }

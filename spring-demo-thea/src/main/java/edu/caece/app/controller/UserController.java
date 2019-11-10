@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.caece.app.config.Hash;
+import edu.caece.app.domain.Person;
 import edu.caece.app.domain.User;
 import edu.caece.app.repository.IUserRepository;
 
@@ -40,19 +40,12 @@ public class UserController {
 		return users.stream().collect(Collectors.toList());
 	}
 
-	@PostMapping("/users/create")
-	public ResponseEntity<String> save(@RequestBody User user) {
-
+	@PostMapping("/users/save")
+	public void save(@RequestBody User user) {
 		boolean existe = repository.existsByUsername(user.getUsername());
-
 		if (!existe) {
-			user.setPassword(Hash.sha1(user.getPassword()));
 			repository.save(user);
-			return new ResponseEntity<String>("el usuario ha sido creado!", HttpStatus.OK);
 		}
-
-		return new ResponseEntity<String>("ERROR: el usuario " + "\"" + user.getUsername() + "\"" + " ya existe",
-				HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping("/users/update/{id}")
