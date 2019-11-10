@@ -1,21 +1,30 @@
-#mysql -u root -p
-#GRANT ALL PRIVILEGES ON *.* TO 'dbUser'@'localhost' IDENTIFIED BY 'root';
-#\q
+mysql -u root -p
+GRANT ALL PRIVILEGES ON *.* TO 'dbUser'@'localhost' IDENTIFIED BY 'root';
+\q
 
 DROP DATABASE IF EXISTS dbThea;
 
 CREATE DATABASE dbThea;
 USE dbThea;
 
-#DROP TABLE IF EXISTS Acceso;
-#DROP TABLE IF EXISTS Registro;
-#DROP TABLE IF EXISTS Usuario;
-#DROP TABLE IF EXISTS Rol_Permiso;
-#DROP TABLE IF EXISTS Rol;
-#DROP TABLE IF EXISTS Permiso;
-#DROP TABLE IF EXISTS Foto;
-#DROP TABLE IF EXISTS Persona;
-#DROP TABLE IF EXISTS Funcion;
+DROP TABLE IF EXISTS Acceso;
+DROP TABLE IF EXISTS Registro;
+DROP TABLE IF EXISTS Usuario;
+DROP TABLE IF EXISTS Rol_Permiso;
+DROP TABLE IF EXISTS Rol;
+DROP TABLE IF EXISTS Permiso;
+DROP TABLE IF EXISTS Foto;
+DROP TABLE IF EXISTS Persona;
+DROP TABLE IF EXISTS Funcion;
+DROP TABLE IF EXISTS Access;
+DROP TABLE IF EXISTS Register;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Role_Permission;
+DROP TABLE IF EXISTS Role;
+DROP TABLE IF EXISTS Permission;
+DROP TABLE IF EXISTS Photo;
+DROP TABLE IF EXISTS Person;
+DROP TABLE IF EXISTS Position;
 
 CREATE TABLE Funcion (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -124,7 +133,7 @@ insert into Usuario (id,nombre,apellido,email,id_rol) values (1,'Oscar','Rodrigu
 insert into Usuario (id,nombre,apellido,email,id_rol) values (2,'Julio','Rodriguez','spyrofran@gmail.com',2);
 insert into Usuario (id,nombre,apellido,email,id_rol) values (3,'Mario','Rodriguez','spyrofran@gmail.com',2);
 
-insert into Persona (id,nombre,apellido,dni,id_funcion,matricula) values (1,'Javier','Testa',39044332,1,956475);
-insert into Persona (id,nombre,apellido,dni,id_funcion,matricula) values (2,'Natalia','Testa',42657467,1,956432);
-insert into Persona (id,nombre,apellido,dni,id_funcion,matricula) values (3,'Juan','Testa',43564565,1,956443);
+insert into Person (id,nombre,apellido,dni,id_funcion,matricula) values (1,'Javier','Testa',39044332,1,956475);
+insert into Person (id,nombre,apellido,dni,id_funcion,matricula) values (2,'Natalia','Testa',42657467,1,956432);
+insert into Person (id,nombre,apellido,dni,id_funcion,matricula) values (3,'Juan','Testa',43564565,1,956443);
 

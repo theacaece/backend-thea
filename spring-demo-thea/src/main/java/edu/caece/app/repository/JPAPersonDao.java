@@ -22,7 +22,7 @@ public class JPAPersonDao implements IPersonDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Person> getPersonas() throws Exception {
-		return em.createQuery("SELECT p from persona p").getResultList();
+		return em.createQuery("SELECT p from person p").getResultList();
 	}
 
 }

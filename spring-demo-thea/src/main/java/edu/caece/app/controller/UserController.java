@@ -32,9 +32,7 @@ public class UserController {
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public Collection<User> get() {
-
 		List<User> users = new ArrayList<User>();
-
 		repository.findAll().forEach(x -> {
 			x.setPassword(null);
 			users.add(x);
