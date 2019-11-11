@@ -94,11 +94,11 @@ public class LecturaExcel {
 				
 				// Leo Celda Nombre del Excel
 				celda = iterador.next();
-				usuario.setFirstName(celda.getStringCellValue());
+				usuario.setFirstname(celda.getStringCellValue());
 				
 				// Leo Celda Apellido del Excel
 				celda = iterador.next();
-				usuario.setLastName(celda.getStringCellValue());
+				usuario.setLastname(celda.getStringCellValue());
 				
 				// Leo Celda Email del Excel
 				celda = iterador.next();

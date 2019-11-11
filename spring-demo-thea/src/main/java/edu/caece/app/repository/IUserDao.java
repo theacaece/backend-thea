@@ -1,5 +1,5 @@
 package edu.caece.app.repository;
 
-public interface IPersonaDao {
+public interface IUserDao {
 
 }

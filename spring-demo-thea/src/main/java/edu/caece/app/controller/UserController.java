@@ -1,16 +1,13 @@
 package edu.caece.app.controller;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,58 +23,45 @@ import edu.caece.app.repository.IUserRepository;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
-	private static final Logger LOGGER = Logger.getLogger(UserController.class.getName());
-	
 	@Autowired
-	private IUserRepository repository;
+	private IUserRepository repositorio;
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public Collection<User> get() {
-		List<User> users = new ArrayList<User>();
-		repository.findAll().forEach(x -> {
-			x.setPassword(null);
-			users.add(x);
-		});
-		return users.stream().collect(Collectors.toList());
+	public Collection<User> getUsuarios() {
+		return repositorio.findAll();
 	}
-
+	
+	@RequestMapping(value = "/users/edit/{id}", method = RequestMethod.GET)
+	public Optional<User> getUsuarioById(@PathVariable Long id) {
+		return repositorio.findById(id);
+	}
+	
 	@PostMapping("/users/save")
-	public void save(@RequestBody User user) {
-		boolean existe = repository.existsByUsername(user.getUsername());
-		if (!existe) {
-			repository.save(user);
-		}
+	public void saveUsuario(@RequestBody User user) {
+		repositorio.save(user);
 	}
 	
-	@RequestMapping(value = "/users/edit", method = RequestMethod.GET)
-	public Optional<User> getById(@PathVariable Long id) {
-		return repository.findById(id);
-	}
-	
-	@PostMapping(value="/users/delete")
-	public void delete(@PathVariable Long id) {
-		Optional<User> _userData = repository.findById(id);
-		if (_userData.isPresent()) {
-			repository.deleteById(id);
-		}
+	@DeleteMapping(path = { "/users/{id}" })
+	public void deleteUsuario(@PathVariable("id") Long id) {
+		repositorio.deleteById(id);
 	}
 
 	@PostMapping("/users/update/{id}")
 	public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody User user) {
 
-		Optional<User> _userData = repository.findById(id);
-		boolean existe_username = repository.existsByUsername(user.getUsername());
+		Optional<User> _userData = repositorio.findById(id);
+		boolean existe_username = repositorio.existsByUsername(user.getUsername());
 
 		if (_userData.isPresent()) {
 			User _user = _userData.get();
 			if (!existe_username || _user.getUsername().equals(user.getUsername())) {
-				_user.setFirstName(user.getFirstName());
-				_user.setLastName(user.getLastName());
+				_user.setFirstname(user.getFirstname());
+				_user.setLastname(user.getLastname());
 				_user.setEmail(user.getEmail());
 				_user.setUsername(user.getUsername());
 				_user.setRoles(user.getRoles());
 
-				return new ResponseEntity<>(repository.save(_user), HttpStatus.OK);
+				return new ResponseEntity<>(repositorio.save(_user), HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>("ERROR: el usuario " + "\"" + user.getUsername() + "\"" + " ya existe",
 						HttpStatus.NOT_FOUND);
@@ -90,6 +74,6 @@ public class UserController {
 
 	@GetMapping("users/exists/{username}")
 	public ResponseEntity<Boolean> existByUsername(@PathVariable String username) {
-		return new ResponseEntity<>(repository.existsByUsername(username), HttpStatus.OK);
+		return new ResponseEntity<>(repositorio.existsByUsername(username), HttpStatus.OK);
 	}
 }

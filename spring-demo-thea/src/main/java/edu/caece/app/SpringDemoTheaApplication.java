@@ -164,19 +164,4 @@ public class SpringDemoTheaApplication {
 			throw new Exception ("method guardarFotos" + e.getMessage());
 		}
 	}
-	
-	public static void probar() throws Exception {
-		try {
-			
-			LecturaExcel lecturaExcel = new LecturaExcel();
-			lecturaExcel.obtenerUsuarios();
-			lecturaExcel.obtenerPersonas();
-			
-			LecturaCarpeta lecturaCarpeta = new LecturaCarpeta();
-			lecturaCarpeta.recorrerCarpeta();
-			
-		} catch (Exception e) {
-			throw new Exception ("method probar" + e.getMessage());
-		}
-	}
 }
