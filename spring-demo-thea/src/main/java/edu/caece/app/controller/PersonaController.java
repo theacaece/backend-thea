@@ -1,10 +1,8 @@
 package edu.caece.app.controller;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,38 +23,37 @@ import edu.caece.app.repository.IPersonaRepositorio;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class PersonaController {
-	
-	private static final Logger LOGGER = Logger.getLogger(PersonaController.class.getName());
-	
+
 	@Autowired
-	private IPersonaRepositorio repository;
+	private IPersonaRepositorio repositorio;
 	
 	@RequestMapping(value = "/personas", method = RequestMethod.GET)
-	public Collection<Persona> get() {
-		return repository.findAll();
+	public Collection<Persona> getPersonas() {
+		return repositorio.findAll();
+	}
+	
+	
+	@RequestMapping(value = "/personas/edit/{id}", method = RequestMethod.GET)
+	public Optional<Persona> getPersonaById(@PathVariable Long id) {
+		return repositorio.findById(id);
 	}
 	
 	@PostMapping("/personas/save")
-	public void save(@RequestBody Persona persona) {
-		boolean existe = repository.existsByDni(persona.getDni());
+	public void savePersona(@RequestBody Persona persona) {
+		boolean existe = repositorio.existsByDni(persona.getDni());
 		if (!existe) {
-			repository.save(persona);
+			repositorio.save(persona);
 		}
 	}
 	
 	@DeleteMapping(path = { "/personas/{id}" })
-	public void delete(@PathVariable("id") Long id) {
-		repository.deleteById(id);
+	public void deletePersona(@PathVariable("id") Long id) {
+		repositorio.deleteById(id);
 	}
-	
-//	@GetMapping("/personas/{id}")
-//	public Person persona(String id) throws Exception {
-////		return repository.getOne(id);
-//	}
-	
+
 	@GetMapping("personas/exists/{dni}")
 	public ResponseEntity<Boolean> existByDni(@PathVariable String dni) {
-		return new ResponseEntity<>(repository.existsByDni(dni), HttpStatus.OK);
+		return new ResponseEntity<>(repositorio.existsByDni(dni), HttpStatus.OK);
 	}
 
 }

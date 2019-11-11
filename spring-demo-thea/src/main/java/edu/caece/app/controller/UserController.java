@@ -51,8 +51,6 @@ public class UserController {
 	
 	@RequestMapping(value = "/users/edit", method = RequestMethod.GET)
 	public Optional<User> getById(@PathVariable Long id) {
-		LOGGER.info(" Enter >> getById() ");
-		System.out.println(" Enter >> getById() ");
 		return repository.findById(id);
 	}
 	
