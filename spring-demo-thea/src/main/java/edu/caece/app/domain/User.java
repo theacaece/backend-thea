@@ -56,18 +56,12 @@ public class User {
 		this.roles = new ArrayList<Rol>();
 	}
 
-	public User(String name, String... roles) {
-		String[] rl = new String[2];
-		this.username = name;
-
+	public void setRoles2(String[] roles) {
 		this.roles = new ArrayList<Rol>();
-
 		for (int i = 0; i < roles.length; i++) {
-			rl = roles[i].split("#");
+			String[] rl = roles[i].split("#");
 			this.roles.add(new Rol(Long.parseLong(rl[0]), rl[1].toUpperCase()));
 		}
-
-		this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
 	public long getId() {

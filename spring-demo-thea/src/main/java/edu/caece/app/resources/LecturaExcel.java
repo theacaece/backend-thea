@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import edu.caece.app.config.Hash;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.User;
 
@@ -92,22 +93,29 @@ public class LecturaExcel {
 				User usuario = new User();
 				
 				// Leo Celda Nombre del Excel
-				// celda = iterador.next();
-				// usuario.setNombre(celda.getStringCellValue());
+				celda = iterador.next();
+				usuario.setFirstName(celda.getStringCellValue());
 				
 				// Leo Celda Apellido del Excel
-				// celda = iterador.next();
-				// usuario.setApellido(celda.getStringCellValue());
+				celda = iterador.next();
+				usuario.setLastName(celda.getStringCellValue());
 				
 				// Leo Celda Email del Excel
 				celda = iterador.next();
 				usuario.setEmail(celda.getStringCellValue());
 				
-				// Leo Celda Rol del Excel
+				// Leo Celda Usuario del Excel
 				celda = iterador.next();
-				//usuario.setIdRol(Double.valueOf(celda.getNumericCellValue()));
+				usuario.setUsername(celda.getStringCellValue());
 				
-				System.out.println(usuario.toString());
+				// Leo Celda Password del Excel
+				celda = iterador.next();
+				usuario.setPassword(Hash.sha1(celda.getStringCellValue()));
+				
+				// Leo Celda Rol del Excel
+				String[] datos_roles = "2#user,1#admin".split(",");
+				celda = iterador.next();
+				usuario.setRoles2(datos_roles);
 				
 				// Agrego a Lista de Usuarios
 				usuarios.add(usuario);

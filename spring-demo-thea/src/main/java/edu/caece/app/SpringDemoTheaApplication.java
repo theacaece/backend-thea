@@ -2,7 +2,6 @@ package edu.caece.app;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import edu.caece.app.config.Hash;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.Foto;
 import edu.caece.app.domain.Rol;
@@ -39,73 +37,28 @@ public class SpringDemoTheaApplication {
 			               IRolRepositorio rolRepositorio,
 			               IPersonaRepositorio personaRepositorio,
 			               IFotoRepositorio fotoRepositorio) throws Exception {
-
-		List<Rol> roles = new ArrayList<Rol>();
-		roles.add(new Rol(1L, "ADMIN"));
-		roles.add(new Rol(2L, "USER"));
-		rolRepositorio.saveAll(roles);
-		
-		String[] usuarios = {"Francisco;Ferrari;jferrari;ff@gmail.com;ffff;1#admin",
-		                     "Javier;Michelson;jmichelson;jm@gmail.com;jjjj;2#user,1#admin",
-		                     "Juan;Salinas;jsalinas;js@gmail.com;ssss;2#user,1#admin",
-		                     "Pablo;Garcia;pgarcia;pg@gmail.com;gggg;1#admin"};
-
-		inicializarDatosBD(usuarioRepositorio, rolRepositorio, personaRepositorio, fotoRepositorio);
-		
 		return args -> {
 			
-			Stream.of(usuarios).forEach(alumno -> {
+			List<Rol> roles = new ArrayList<Rol>();
+			roles.add(new Rol(1L, "ADMIN"));
+			roles.add(new Rol(2L, "USER"));
+			rolRepositorio.saveAll(roles);
 
-				String[] datos = alumno.split(";");
-				String[] datos_roles = datos[5].split(",");
-	
-				User user = new User(datos[2], datos_roles);
-				user.setFirstName(datos[0]);
-				user.setLastName(datos[1]);
-				user.setUsername(datos[2]);
-				user.setEmail(datos[3]);
-				user.setPassword(Hash.sha1(datos[4]));
-	
-				usuarioRepositorio.save(user);
-		});	
-	};
- }
-	
-	public void inicializarDatosPersonas(IUserRepository usuarioRepositorio,
-										 IRolRepositorio rolRepositorio,
-										 IPersonaRepositorio personaRepositorio,
-										 IFotoRepositorio fotoRepositorio) {
-		try {
+			inicializarDatosBD(usuarioRepositorio, 
+							   rolRepositorio, 
+							   personaRepositorio, 
+							   fotoRepositorio);
 			
-			String[] personas = {"Francisco;Ferrari;dni33333333;ffff",
-		    					 "Javier;Michelson;dni33333333;jjjj"};
-		
-			Stream.of(personas).forEach(_persona -> {
-				String[] datos = _persona.split(";");
-				
-				Persona persona = new Persona();
-				persona.setNombre(datos[0]);
-				persona.setApellido(datos[1]);
-				persona.setDni(datos[2]);
-				persona.setMatricula(datos[3]);
-				
-				personaRepositorio.save(persona);
-			});
-			
-			personaRepositorio.findAll().forEach(x -> {x.toString();});
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+		};
+	 }
 
 	 public void inicializarDatosBD(IUserRepository usuarioRepositorio, 
 			 						IRolRepositorio rolRepositorio,
 			 						IPersonaRepositorio personaRepositorio,
 			 						IFotoRepositorio fotoRepositorio) throws Exception {
-		// crearTablaUsuarios(userRepository);
-		crearTablaPersonas(personaRepositorio); // BD
-		crearTablaFotos(fotoRepositorio); // BD
+		crearTablaUsuarios(usuarioRepositorio);
+		crearTablaPersonas(personaRepositorio);
+		crearTablaFotos(fotoRepositorio);
 	}
 	 
  	private void crearTablaUsuarios(IUserRepository userRepository) throws Exception {
@@ -166,9 +119,6 @@ public class SpringDemoTheaApplication {
 		try {
 			for (User user: users) {
 				usuarioRepositorio.save(user);
-				//Usuario usu = usuarioRepositorio.findById(usuario.getId());
-				//usuarioRepositorio.deleteUsuarioById(usuario.getId());
-				//System.out.println(usu.toString());
 			}
 			usuarioRepositorio.findAll().forEach(System.out::println);
 			

@@ -2,7 +2,6 @@ package edu.caece.app.controller;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

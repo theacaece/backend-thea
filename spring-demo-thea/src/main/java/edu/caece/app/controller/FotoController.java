@@ -20,21 +20,11 @@ import edu.caece.app.repository.IFotoRepositorio;
 public class FotoController {
 	
 	@Autowired
-	private IFotoRepositorio photoRepository;
+	private IFotoRepositorio repositorio;
 	
-	@GetMapping("/fotos")
-	public Collection<Foto> photos() throws Exception {
-		Collection<Foto> fotos = null;
-		try {
-			fotos = photoRepository.findAll().stream().collect(Collectors.toList());
-		} catch (Exception e) {
-			throw new Exception("method photos :: " + e.getMessage());
-		}
-		return fotos;
+	@RequestMapping(value = "/fotos", method = RequestMethod.GET)
+	public Collection<Foto> getPersonas() {
+		return repositorio.findAll();
 	}
-	
-	@RequestMapping(value = "/fotos/edit", method = RequestMethod.GET)
-	public Optional<Foto> getById(@PathVariable Long id) {
-		return photoRepository.findById(id);
-	}
+
 }
