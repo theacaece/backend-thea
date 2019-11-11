@@ -7,11 +7,10 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import edu.caece.app.domain.Person;
-import edu.caece.app.domain.User;
+import edu.caece.app.domain.Persona;
 
 @Repository(value = "personaDao")
-public class JPAPersonDao implements IPersonDao {
+public class JPAPersonaDao implements IPersonaDao {
 
     private EntityManager em = null;
 
@@ -22,15 +21,15 @@ public class JPAPersonDao implements IPersonDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Person> getPersonas() throws Exception {
-		return em.createQuery("SELECT p from person p").getResultList();
+	public List<Persona> getPersonas() throws Exception {
+		return em.createQuery("SELECT p from persona p").getResultList();
 	}
 
 	@Override
-	public Person findById(int id) throws Exception {
-		Person person = null;
+	public Persona findById(int id) throws Exception {
+		Persona person = null;
         try {
-        	person = em.find(Person.class, id);
+        	person = em.find(Persona.class, id);
         } catch (Exception e) {
 			throw new Exception("method findById :: " + e.getMessage());
 		}

@@ -4,11 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import edu.caece.app.domain.Photo;
+import edu.caece.app.domain.Foto;
 
-@RepositoryRestResource(collectionResourceRel = "photos", path = "photos")
+@RepositoryRestResource(collectionResourceRel = "fotos", path = "fotos")
 @CrossOrigin(origins = "http://localhost:4200")
 
-public interface IPhotoRepository extends JpaRepository<Photo, Long> {
+public interface IFotoRepositorio extends JpaRepository<Foto, Long> {
 
 }

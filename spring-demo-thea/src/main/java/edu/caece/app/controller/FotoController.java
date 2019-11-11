@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.caece.app.domain.Photo;
-import edu.caece.app.repository.IPhotoRepository;
+import edu.caece.app.domain.Foto;
+import edu.caece.app.repository.IFotoRepositorio;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-public class PhotoController {
+public class FotoController {
 	
 	@Autowired
-	private IPhotoRepository photoRepository;
+	private IFotoRepositorio photoRepository;
 	
-	@GetMapping("/photos")
-	public Collection<Photo> photos() throws Exception {
-		Collection<Photo> fotos = null;
+	@GetMapping("/fotos")
+	public Collection<Foto> photos() throws Exception {
+		Collection<Foto> fotos = null;
 		try {
 			fotos = photoRepository.findAll().stream().collect(Collectors.toList());
 		} catch (Exception e) {
@@ -33,8 +33,8 @@ public class PhotoController {
 		return fotos;
 	}
 	
-	@RequestMapping(value = "/photos/edit", method = RequestMethod.GET)
-	public Optional<Photo> getById(@PathVariable Long id) {
+	@RequestMapping(value = "/fotos/edit", method = RequestMethod.GET)
+	public Optional<Foto> getById(@PathVariable Long id) {
 		return photoRepository.findById(id);
 	}
 }

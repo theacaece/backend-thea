@@ -6,8 +6,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="Person") 
-public class Person implements Serializable {
+@Table(name="Persona") 
+public class Persona implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -17,32 +17,32 @@ public class Person implements Serializable {
     @Column(name = "id", updatable = false, nullable = false)
 	private long id;
 
-	@Column(name = "firstName", nullable = false)
-	private String firstName;
+	@Column(name = "nombre", nullable = false)
+	private String nombre;
 
-	@Column(name = "lastName", nullable = false)
-	private String lastName;
+	@Column(name = "apellido", nullable = false)
+	private String apellido;
 
 	@Column(name = "dni", nullable = false)
 	private String dni;
 
 	@ManyToOne
     @JoinColumn(name = "id_funcion")
-    private Position funcion;
+    private Funcion funcion;
 	
 	@Column(name = "matricula")
 	private String matricula;
 	
-	public Person() {
+	public Persona() {
 		
 	}
 	
-	public Person(String firstName,
-			       String lastName,
+	public Persona(String nombre,
+			       String apellido,
 			       String dni,
 			       String matricula) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.nombre = nombre;
+		this.apellido = apellido;
 		this.dni = dni;
 		this.matricula = matricula;
 	}
@@ -55,20 +55,20 @@ public class Person implements Serializable {
 		this.id = id;
 	}
 	
-	public String getFirstName() {
-		return firstName;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getApellido() {
+		return apellido;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
 
 	public String getDni() {
@@ -89,8 +89,8 @@ public class Person implements Serializable {
 	
 	public String toString (){
         String datosPersona = "Persona::" + 
-        					  firstName + ":" + 
-        					  lastName + ":" + 
+        					  nombre + ":" + 
+        					  apellido + ":" + 
         					  dni + ":" + 
         					  matricula;
         return datosPersona;

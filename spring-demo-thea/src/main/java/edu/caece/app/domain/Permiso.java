@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="Register") 
-public class Register implements Serializable {
+@Table(name="Permiso") 
+public class Permiso implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -23,20 +23,15 @@ public class Register implements Serializable {
     @Column(name = "id", updatable = false, nullable = false)
 	private Integer id = 0;
 	
-	@Column(name = "id_persona")
-	private String idPersona;
+	@Column(name = "descripcion")
+	private String descripcion;
 	
-	@Column(name = "fecha_ingreso")
-	private String fechaIngreso;
-	
-	public Register() {
+	public Permiso() {
 		
 	}
 	
-	public Register(String idPersona,
-					String fechaIngreso) {
-		this.idPersona = idPersona;
-		this.fechaIngreso = fechaIngreso;
+	public Permiso(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public Integer getId() {
@@ -47,20 +42,12 @@ public class Register implements Serializable {
 		this.id = id;
 	}
 
-	public String getIdPersona() {
-		return idPersona;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setIdPersona(String idPersona) {
-		this.idPersona = idPersona;
-	}
-
-	public String getFechaIngreso() {
-		return fechaIngreso;
-	}
-
-	public void setFechaIngreso(String fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 }

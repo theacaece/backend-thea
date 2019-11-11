@@ -15,18 +15,18 @@ import edu.caece.app.repository.IUserRepository;
 public class JwtUserDetailsService implements UserDetailsService{
 
 	@Autowired
-	private IUserRepository userRepository;
+	private IUserRepository usuarioRepositorio;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String _usuario) throws UsernameNotFoundException {
 		
-		User usuario = userRepository.findByUsername(username);
+		User usuario = usuarioRepositorio.findByUsername(_usuario);
 		
 		if(usuario == null)
 			throw new UsernameNotFoundException("INVALID CREDENTIALS");
 		
 		UserBuilder builder = null;
-		builder = org.springframework.security.core.userdetails.User.withUsername(username);
+		builder = org.springframework.security.core.userdetails.User.withUsername(_usuario);
 		builder.password(usuario.getPassword());
 		builder.roles(usuario.getRolesToArray());
 		

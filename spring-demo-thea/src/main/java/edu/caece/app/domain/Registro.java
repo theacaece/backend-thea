@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="Access") 
-public class Access implements Serializable {
+@Table(name="Registro") 
+public class Registro implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -23,22 +23,22 @@ public class Access implements Serializable {
     @Column(name = "id", updatable = false, nullable = false)
 	private Integer id = 0;
 	
-	@Column(name = "id_usuario")
-	private String idUsuario;
-
-	@Column(name = "fecha_acceso")
-	private String fechaAcceso;
+	@Column(name = "id_persona")
+	private String idPersona;
 	
-	public Access() {
+	@Column(name = "fecha_ingreso")
+	private String fechaIngreso;
+	
+	public Registro() {
 		
 	}
 	
-	public Access(String idUsuario,
-			      String fechaAcceso) {
-		this.idUsuario = idUsuario;
-		this.fechaAcceso = fechaAcceso;
+	public Registro(String idPersona,
+					String fechaIngreso) {
+		this.idPersona = idPersona;
+		this.fechaIngreso = fechaIngreso;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -47,20 +47,20 @@ public class Access implements Serializable {
 		this.id = id;
 	}
 
-	public String getIdUsuario() {
-		return idUsuario;
+	public String getIdPersona() {
+		return idPersona;
 	}
 
-	public void setIdUsuario(String idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setIdPersona(String idPersona) {
+		this.idPersona = idPersona;
 	}
 
-	public String getFechaAcceso() {
-		return fechaAcceso;
+	public String getFechaIngreso() {
+		return fechaIngreso;
 	}
 
-	public void setFechaAcceso(String fechaAcceso) {
-		this.fechaAcceso = fechaAcceso;
+	public void setFechaIngreso(String fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
 	}
 
 }

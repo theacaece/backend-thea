@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import edu.caece.app.domain.User;
 
-@Repository(value = "userDao")
-public class JPAUserDao implements IUserDao {
+@Repository(value = "usuarioDao")
+public class JPAUserDao implements IUsuarioDao {
 
     private EntityManager em = null;
 
@@ -21,18 +21,18 @@ public class JPAUserDao implements IUserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> getUsers() throws Exception {
-		return em.createQuery("SELECT u FROM users u").getResultList();
+	public List<User> getUsuarios() throws Exception {
+		return em.createQuery("SELECT u FROM usuario u").getResultList();
 	}
 	
 	@Override
-	public User getUserById(int userId) throws Exception {
-		return em.createQuery("SELECT u FROM users WHERE CAST(u.usuario AS User) u WHERE u.id = :usuarioId", User.class).getSingleResult();
+	public User getUsuarioById(int userId) throws Exception {
+		return em.createQuery("SELECT u FROM usuario WHERE CAST(u.usuario AS Usuario) u WHERE u.id = :usuarioId", User.class).getSingleResult();
 	}
 	
 	@Override
-	public void deleteUser(int userId) throws Exception {
-		em.createQuery("DELETE FROM users WHERE u.id = :usuarioId");
+	public void deleteUsuario(int userId) throws Exception {
+		em.createQuery("DELETE FROM usuario WHERE u.id = :usuarioId");
 	}
 
 	public User findByIds(int id) throws Exception {
@@ -46,7 +46,7 @@ public class JPAUserDao implements IUserDao {
     }
 
 	public void deleteUserById(int id) {
-        em.createQuery("DELETE FROM users WHERE u.id = :userId");
+        em.createQuery("DELETE FROM usuario WHERE u.id = :userId");
     }
 
 }

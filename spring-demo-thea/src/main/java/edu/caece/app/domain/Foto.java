@@ -13,8 +13,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="Photo") 
-public class Photo implements Serializable {
+@Table(name="Foto") 
+public class Foto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -34,13 +34,13 @@ public class Photo implements Serializable {
 	@Column(name="id_persona")
 	private String idPersona;
 	
-	public Photo(byte[] archivo, 
+	public Foto(byte[] archivo, 
 				String idPersona) {
 		this.archivo = archivo;
 		this.idPersona = idPersona;
 	}
 	
-	public Photo() {
+	public Foto() {
 		
 	}
 

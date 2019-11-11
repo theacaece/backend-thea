@@ -20,7 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "users")
+@Table(name = "usuario")
 public class User {
 
 	@Id
@@ -50,21 +50,21 @@ public class User {
 				joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     //@JsonIgnore
-	private List<Role> roles;
+	private List<Rol> roles;
 
 	public User() {
-		this.roles = new ArrayList<Role>();
+		this.roles = new ArrayList<Rol>();
 	}
 
 	public User(String name, String... roles) {
 		String[] rl = new String[2];
 		this.username = name;
 
-		this.roles = new ArrayList<Role>();
+		this.roles = new ArrayList<Rol>();
 
 		for (int i = 0; i < roles.length; i++) {
 			rl = roles[i].split("#");
-			this.roles.add(new Role(Long.parseLong(rl[0]), rl[1].toUpperCase()));
+			this.roles.add(new Rol(Long.parseLong(rl[0]), rl[1].toUpperCase()));
 		}
 
 		this.roles.forEach(x -> x.getUsers().add(this));
@@ -119,11 +119,11 @@ public class User {
 	}
 
 	
-	public List<Role> getRoles() {
+	public List<Rol> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(List<Rol> roles) {
 		this.roles = roles;
 		this.roles.forEach(x -> x.getUsers().add(this));
 	}
@@ -133,7 +133,7 @@ public class User {
 		String[] rl = new String[roles.size()];
 		int i = 0;
 
-		for (Role r : roles) {
+		for (Rol r : roles) {
 			rl[i] = r.getName();
 			i++;
 		}

@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import edu.caece.app.domain.Photo;
+import edu.caece.app.domain.Foto;
 
 public class LecturaCarpeta {
   	
@@ -13,11 +13,11 @@ public class LecturaCarpeta {
 	protected String RUTA_CSV = "\\src\\main\\resources\\bd\\TP-FINAL\\Fotos";
 	protected String rutaArchivo = "";
 	
-	ArrayList<Photo> fotos = null;
+	ArrayList<Foto> fotos = null;
 	
 	@SuppressWarnings("finally")
-	public ArrayList<Photo> recorrerCarpeta() throws Exception {
-	  fotos = new ArrayList<Photo>();
+	public ArrayList<Foto> recorrerCarpeta() throws Exception {
+	  fotos = new ArrayList<Foto>();
 	  	try {
 	  		// Obtiene Ruta de Carpeta Con Fotos de Personas
 	  		String path = System.getProperty("user.dir");
@@ -57,7 +57,7 @@ public class LecturaCarpeta {
 	}
 
 	@SuppressWarnings("finally")
-	public ArrayList<Photo> recorrerFotos(File carpeta) throws Exception {
+	public ArrayList<Foto> recorrerFotos(File carpeta) throws Exception {
 	  try {
 		  // Obtiene fotos de la carpeta
 		  File[] archivos = carpeta.listFiles();
@@ -72,7 +72,7 @@ public class LecturaCarpeta {
 				  byte[] archivoBlob = Files.readAllBytes(Paths.get(archivos[i].getPath()));
 		    	  
 				  // Crea Objeto Foto
-				  Photo foto = new Photo();
+				  Foto foto = new Foto();
 		    	  foto.setIdPersona(carpeta.getName());
 		    	  foto.setNombreArchivo(archivos[i].getName());
 		    	  foto.setArchivo(archivoBlob);

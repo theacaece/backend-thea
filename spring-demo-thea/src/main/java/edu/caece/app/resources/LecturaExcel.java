@@ -10,7 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import edu.caece.app.domain.Person;
+import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.User;
 
 public class LecturaExcel {
@@ -49,8 +49,8 @@ public class LecturaExcel {
 	}
 	
 	@SuppressWarnings("finally")
-	public ArrayList<Person> obtenerPersonas() {
-		ArrayList<Person> personas = null;
+	public ArrayList<Persona> obtenerPersonas() {
+		ArrayList<Persona> personas = null;
 		try {			
 			leerArchivo();
 			sheet = worbook.getSheetAt(1);
@@ -116,10 +116,10 @@ public class LecturaExcel {
 		return usuarios;
 	}
 	
-public ArrayList<Person> leerHojaPersonas() {
+public ArrayList<Persona> leerHojaPersonas() {
 		
 		// Creacion de Lista de Personas
-		ArrayList<Person> personas = new ArrayList<Person>();
+		ArrayList<Persona> personas = new ArrayList<Persona>();
 		
 		// Obtiene Todas las Filas de Excel
 		Iterator<Row> rowIterator = sheet.iterator();
@@ -143,15 +143,15 @@ public ArrayList<Person> leerHojaPersonas() {
 			while (iterador.hasNext()) {
 				
 				// Creo Objeto Persona
-				Person persona = new Person();
+				Persona persona = new Persona();
 				
 				// Leo Celda Nombre del Excel
 				celda = iterador.next();
-				persona.setFirstName(celda.getStringCellValue());
+				persona.setNombre(celda.getStringCellValue());
 				
 				// Leo Celda Apellido del Excel
 				celda = iterador.next();
-				persona.setLastName(celda.getStringCellValue());
+				persona.setApellido(celda.getStringCellValue());
 				
 				// Leo Celda DNI del Excel
 				celda = iterador.next();

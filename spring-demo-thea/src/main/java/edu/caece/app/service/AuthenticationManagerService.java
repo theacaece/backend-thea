@@ -16,7 +16,7 @@ import edu.caece.app.repository.IUserRepository;
 public class AuthenticationManagerService implements AuthenticationManager {
 
 	@Autowired
-	private IUserRepository userRepository;
+	private IUserRepository usuarioRepositorio;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -24,7 +24,7 @@ public class AuthenticationManagerService implements AuthenticationManager {
 		String username = authentication.getPrincipal().toString();
 		String password = authentication.getCredentials().toString();
 
-		User user = userRepository.findByUsername(username);
+		User user = usuarioRepositorio.findByUsername(username);
 
 		if (user == null)
 			throw new UsernameNotFoundException("INVALID CREDENTIALS");

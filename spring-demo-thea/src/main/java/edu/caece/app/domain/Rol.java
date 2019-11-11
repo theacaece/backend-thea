@@ -14,8 +14,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "Rol")
+public class Rol {
 
 	@Id
 	@Column(name = "id")
@@ -29,15 +29,15 @@ public class Role {
 	@JsonIgnore
 	private List<User> users = new ArrayList<User>();
 
-	public Role() {
+	public Rol() {
 
 	}
 
-	public Role(String name) {
+	public Rol(String name) {
 		this.name = name;
 	}
 
-	public Role(Long id, String name) {
+	public Rol(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}

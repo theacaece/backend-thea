@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="Permission") 
-public class Permission implements Serializable {
+@Table(name="Rol_Permiso") 
+public class Rol_Permiso implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -23,15 +23,20 @@ public class Permission implements Serializable {
     @Column(name = "id", updatable = false, nullable = false)
 	private Integer id = 0;
 	
-	@Column(name = "descripcion")
-	private String descripcion;
+	@Column(name = "id_rol")
+	private Integer id_rol;
 	
-	public Permission() {
+	@Column(name = "id_permiso")
+	private Integer id_permiso;
+	
+	public Rol_Permiso() {
 		
 	}
 	
-	public Permission(String descripcion) {
-		this.descripcion = descripcion;
+	public Rol_Permiso(Integer idRol,
+			Integer idPersona) {
+		this.id_rol = idRol;
+		this.id_permiso = idPersona;
 	}
 
 	public Integer getId() {
@@ -42,12 +47,20 @@ public class Permission implements Serializable {
 		this.id = id;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public Integer getIdRol() {
+		return id_rol;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setIdRol(Integer id_rol) {
+		this.id_rol = id_rol;
 	}
+
+	public Integer getIdPermiso() {
+		return id_permiso;
+	}
+
+	public void setIdPermiso(Integer id_permiso) {
+		this.id_permiso = id_permiso;
+	}	
 
 }
