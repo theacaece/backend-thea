@@ -24,6 +24,7 @@ import edu.caece.app.resources.LecturaExcel;
 @ComponentScan(basePackages = { "edu.caece.app", 
 								"edu.caece.app.controller", 
 								"edu.caece.app.domain",
+								"edu.caece.app.repository",
 								"edu.caece.app.service" })
 
 public class SpringDemoTheaApplication {

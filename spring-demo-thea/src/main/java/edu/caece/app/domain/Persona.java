@@ -3,10 +3,12 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="Persona") 
+@DynamicUpdate
 public class Persona implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

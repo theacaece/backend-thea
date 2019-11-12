@@ -17,42 +17,66 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.caece.app.domain.Persona;
+import edu.caece.app.domain.User;
 import edu.caece.app.repository.IPersonaRepositorio;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class PersonaController {
 
 	@Autowired
-	private IPersonaRepositorio repositorio;
+	private IPersonaRepositorio personaRepositorio;
 	
 	@RequestMapping(value = "/personas", method = RequestMethod.GET)
-	public Collection<Persona> getPersonas() {
-		return repositorio.findAll();
+	public Collection<Persona> getAll() {
+		return personaRepositorio.findAll();
 	}
 	
 	
 	@RequestMapping(value = "/personas/edit/{id}", method = RequestMethod.GET)
-	public Optional<Persona> getPersonaById(@PathVariable Long id) {
-		return repositorio.findById(id);
+	public Optional<Persona> getById(@PathVariable Long id) {
+		return personaRepositorio.findById(id);
 	}
 	
 	@PostMapping("/personas/save")
-	public void savePersona(@RequestBody Persona persona) {
-		boolean existe = repositorio.existsByDni(persona.getDni());
+	public void save(@RequestBody Persona persona) {
+		boolean existe = personaRepositorio.existsByDni(persona.getDni());
 		if (!existe) {
-			repositorio.save(persona);
+			personaRepositorio.save(persona);
+		}
+	}
+	
+	@PostMapping("/personas/update/{id}")
+	public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody Persona persona) {
+
+		Optional<Persona> _persona = personaRepositorio.findById(id);
+		boolean existe_username = personaRepositorio.existsByDni(persona.getDni());
+
+		if (_persona.isPresent()) {
+			Persona _person = _persona.get();
+			if (!existe_username || _person.getDni().equals(persona.getDni())) {
+				_person.setNombre(persona.getNombre());
+				_person.setApellido(persona.getApellido());
+				_person.setDni(persona.getDni());
+				_person.setMatricula(persona.getMatricula());
+				return new ResponseEntity<>(personaRepositorio.save(_person), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>("ERROR: La persona " + "\"" + persona.getDni() + "\"" + " ya existe",
+						HttpStatus.NOT_FOUND);
+			}
+		} else {
+			return new ResponseEntity<>("Error: el usuario no fue encontrado!", HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@DeleteMapping(path = { "/personas/{id}" })
-	public void deletePersona(@PathVariable("id") Long id) {
-		repositorio.deleteById(id);
+	public void delete(@PathVariable("id") Long id) {
+		personaRepositorio.deleteById(id);
 	}
 
 	@GetMapping("personas/exists/{dni}")
 	public ResponseEntity<Boolean> existByDni(@PathVariable String dni) {
-		return new ResponseEntity<>(repositorio.existsByDni(dni), HttpStatus.OK);
+		return new ResponseEntity<>(personaRepositorio.existsByDni(dni), HttpStatus.OK);
 	}
 
 }
