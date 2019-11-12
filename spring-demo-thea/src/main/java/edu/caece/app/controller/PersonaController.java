@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.caece.app.domain.Persona;
-import edu.caece.app.domain.User;
 import edu.caece.app.repository.IPersonaRepositorio;
 
 @RestController
@@ -50,11 +49,11 @@ public class PersonaController {
 	public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody Persona persona) {
 
 		Optional<Persona> _persona = personaRepositorio.findById(id);
-		boolean existe_username = personaRepositorio.existsByDni(persona.getDni());
+		boolean existe_dni = personaRepositorio.existsByDni(persona.getDni());
 
 		if (_persona.isPresent()) {
 			Persona _person = _persona.get();
-			if (!existe_username || _person.getDni().equals(persona.getDni())) {
+			if (!existe_dni || _person.getDni().equals(persona.getDni())) {
 				_person.setNombre(persona.getNombre());
 				_person.setApellido(persona.getApellido());
 				_person.setDni(persona.getDni());
