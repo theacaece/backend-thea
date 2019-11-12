@@ -73,7 +73,7 @@ public class LecturaCarpeta {
 		    	  
 				  // Crea Objeto Foto
 				  Foto foto = new Foto();
-		    	  foto.setIdPersona(carpeta.getName());
+		    	  foto.setDniPersona(carpeta.getName());
 		    	  foto.setNombreArchivo(archivos[i].getName());
 		    	  foto.setArchivo(archivoBlob);
 		    	  System.out.println(foto.toString());

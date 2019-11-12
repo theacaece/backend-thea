@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -31,13 +33,17 @@ public class Foto implements Serializable {
 	@Column(name="nombre_archivo")
 	private String nombreArchivo;
 
-	@Column(name="id_persona")
-	private String idPersona;
+	@Column(name="dni_persona")
+	private String dniPersona;
 	
+	//@ManyToOne
+	//@JoinColumn(name="dni_persona2")
+	//private Persona persona;
+
 	public Foto(byte[] archivo, 
 				String idPersona) {
 		this.archivo = archivo;
-		this.idPersona = idPersona;
+		this.dniPersona = idPersona;
 	}
 	
 	public Foto() {
@@ -68,18 +74,26 @@ public class Foto implements Serializable {
 		this.nombreArchivo = nombreArchivo;
 	}
 
-	public String getIdPersona() {
-		return idPersona;
+	public String getDniPersona() {
+		return dniPersona;
 	}
 
-	public void setIdPersona(String idPersona) {
-		this.idPersona = idPersona;
+	public void setDniPersona(String idPersona) {
+		this.dniPersona = idPersona;
 	}
+	
+	/*public Persona getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}*/
 	
 	public String toString (){
         String datosFoto = "Foto::" +
         					archivo + ":" +
-        					idPersona;
+        					dniPersona;
         return datosFoto;
     }
 

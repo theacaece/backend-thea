@@ -1,5 +1,7 @@
 package edu.caece.app.domain;
 import java.io.Serializable;
+//import java.util.ArrayList;
+//import java.util.List;
 
 import javax.persistence.*;
 
@@ -35,6 +37,9 @@ public class Persona implements Serializable {
 	@Column(name = "matricula")
 	private String matricula;
 	
+	//@OneToMany(mappedBy="persona")
+	//private List<Foto> fotos= new ArrayList<Foto>();
+
 	public Persona() {
 		
 	}
@@ -88,6 +93,18 @@ public class Persona implements Serializable {
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
 	}
+	
+	/*public List<Foto> getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(List<Foto> fotos) {
+		this.fotos = fotos;
+	}
+	
+	public void addFoto(Foto f) {
+		this.fotos.add(f);
+	}*/
 	
 	public String toString (){
         String datosPersona = "Persona::" + 
