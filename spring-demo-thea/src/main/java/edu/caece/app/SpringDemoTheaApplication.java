@@ -25,6 +25,9 @@ public class SpringDemoTheaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringDemoTheaApplication.class, args);
+		
+		//LecturaExcel lecturaExcel = new LecturaExcel();
+		//lecturaExcel.probar();
 	}
 
 	@Bean

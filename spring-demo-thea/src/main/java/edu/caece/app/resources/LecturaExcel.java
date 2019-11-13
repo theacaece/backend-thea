@@ -58,9 +58,9 @@ public class LecturaExcel {
 			obtenerRoles(rolRepositorio);
 			obtenerUsuarios(usuarioRepositorio);
 			obtenerFunciones(funcionRepositorio);
-			//obtenerPersonas(personaRepositorio);
+			obtenerPersonas(personaRepositorio);
 		} catch (Exception e) {
-			System.out.print(e.getMessage());
+			System.out.print("method inicializarBD :: " + e.getMessage());
 		}
 	}
 	
@@ -109,6 +109,21 @@ public class LecturaExcel {
 			sheet = worbook.getSheetAt(SOLAPA_PERSONAS);
 			personas = leerHojaPersonas();
 			guardarPersonas(personaRepositorio, personas);
+		} catch (Exception e) {
+			e.getMessage();
+		} finally {
+			return personas;
+		}
+	}
+	
+	@SuppressWarnings("finally")
+	public ArrayList<Persona> probar() {
+		ArrayList<Persona> personas = null;
+		try {			
+			leerArchivo();
+			sheet = worbook.getSheetAt(SOLAPA_PERSONAS);
+			personas = leerHojaPersonas();
+			//guardarPersonas(personaRepositorio, personas);
 		} catch (Exception e) {
 			e.getMessage();
 		} finally {
