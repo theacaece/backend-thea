@@ -16,28 +16,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.caece.app.domain.User;
-import edu.caece.app.repository.IUserRepository;
+import edu.caece.app.domain.Usuario;
+import edu.caece.app.repository.IUsuarioRepositorio;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
 	@Autowired
-	private IUserRepository userRepositorio;
+	private IUsuarioRepositorio userRepositorio;
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public Collection<User> getUsuarios() {
+	public Collection<Usuario> getUsuarios() {
 		return userRepositorio.findAll();
 	}
 	
 	@RequestMapping(value = "/users/edit/{id}", method = RequestMethod.GET)
-	public Optional<User> getUsuarioById(@PathVariable Long id) {
+	public Optional<Usuario> getUsuarioById(@PathVariable Long id) {
 		return userRepositorio.findById(id);
 	}
 	
 	@PostMapping("/users/save")
-	public void saveUsuario(@RequestBody User user) {
+	public void saveUsuario(@RequestBody Usuario user) {
 		userRepositorio.save(user);
 	}
 	
@@ -47,13 +47,13 @@ public class UserController {
 	}
 
 	@PostMapping("/users/update/{id}")
-	public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody User user) {
+	public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody Usuario user) {
 
-		Optional<User> _userData = userRepositorio.findById(id);
+		Optional<Usuario> _userData = userRepositorio.findById(id);
 		boolean existe_username = userRepositorio.existsByUsername(user.getUsername());
 
 		if (_userData.isPresent()) {
-			User _user = _userData.get();
+			Usuario _user = _userData.get();
 			if (!existe_username || _user.getUsername().equals(user.getUsername())) {
 				_user.setFirstname(user.getFirstname());
 				_user.setLastname(user.getLastname());

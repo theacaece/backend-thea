@@ -7,15 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity
-@Table(name="Foto") 
+@Entity(name = "Foto")
+@Table(name="foto") 
 public class Foto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -35,10 +33,6 @@ public class Foto implements Serializable {
 
 	@Column(name="dni_persona")
 	private String dniPersona;
-	
-	//@ManyToOne
-	//@JoinColumn(name="dni_persona2")
-	//private Persona persona;
 
 	public Foto(byte[] archivo, 
 				String idPersona) {
@@ -81,14 +75,6 @@ public class Foto implements Serializable {
 	public void setDniPersona(String idPersona) {
 		this.dniPersona = idPersona;
 	}
-	
-	/*public Persona getPersona() {
-		return persona;
-	}
-
-	public void setPersona(Persona persona) {
-		this.persona = persona;
-	}*/
 	
 	public String toString (){
         String datosFoto = "Foto::" +

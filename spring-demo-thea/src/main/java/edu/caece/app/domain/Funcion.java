@@ -1,18 +1,23 @@
 package edu.caece.app.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity
-@Table(name="Funcion") 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity(name = "Funcion")
+@Table(name="funcion") 
 public class Funcion implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -21,24 +26,33 @@ public class Funcion implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "id", updatable = false, nullable = false)
-	private Integer id = 0;
+	private Long id;
 	
 	@Column(name = "descripcion")
 	private String descripcion;
-
+	
+	@ManyToMany(mappedBy = "funciones")
+	@JsonIgnore
+	private List<Persona> personas;
+	
 	public Funcion() {
-		
+		this.personas = new ArrayList<Persona>();
+	}
+	
+	public Funcion(long id, String descripcion) {
+		this.id = id;
+		this.descripcion = descripcion;
 	}
 	
 	public Funcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

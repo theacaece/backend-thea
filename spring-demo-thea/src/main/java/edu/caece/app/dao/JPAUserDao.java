@@ -1,4 +1,4 @@
-package edu.caece.app.repository;
+package edu.caece.app.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

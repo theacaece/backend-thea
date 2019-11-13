@@ -1,4 +1,4 @@
-package edu.caece.app.repository;
+package edu.caece.app.dao;
 
 import edu.caece.app.domain.Persona;
 

@@ -11,15 +11,18 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
-@Table(name = "Rol")
+@Entity(name = "Rol")
+@Table(name = "rol")
 public class Rol {
 
 	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    @Column(name = "id", updatable = false, nullable = false)
 	private long id;
 
 	@Column(name = "name", nullable = false, unique = true)
@@ -27,19 +30,19 @@ public class Rol {
 
 	@ManyToMany(mappedBy = "roles")
 	@JsonIgnore
-	private List<User> users = new ArrayList<User>();
-
-	public Rol() {
-
-	}
-
-	public Rol(String name) {
-		this.name = name;
-	}
-
-	public Rol(Long id, String name) {
+	private List<Usuario> usuarios = new ArrayList<Usuario>();
+	
+	public Rol(long id) {
 		this.id = id;
-		this.name = name;
+	}
+
+	public Rol(String nombre) {
+		this.name = nombre;
+	}
+	
+	public Rol(long id, String nombre) {
+		this.id = id;
+		this.name = nombre;
 	}
 
 	public long getId() {
@@ -58,11 +61,11 @@ public class Rol {
 		this.name = name;
 	}
 
-	public List<User> getUsers() {
-		return users;
+	public List<Usuario> getUsers() {
+		return usuarios;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setUsers(List<Usuario> users) {
+		this.usuarios = users;
 	}
 }

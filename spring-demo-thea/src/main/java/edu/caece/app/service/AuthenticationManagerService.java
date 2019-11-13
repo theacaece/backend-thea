@@ -9,14 +9,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import edu.caece.app.config.Hash;
-import edu.caece.app.domain.User;
-import edu.caece.app.repository.IUserRepository;
+import edu.caece.app.domain.Usuario;
+import edu.caece.app.repository.IUsuarioRepositorio;
 
 @Service
 public class AuthenticationManagerService implements AuthenticationManager {
 
 	@Autowired
-	private IUserRepository usuarioRepositorio;
+	private IUsuarioRepositorio usuarioRepositorio;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -24,7 +24,7 @@ public class AuthenticationManagerService implements AuthenticationManager {
 		String username = authentication.getPrincipal().toString();
 		String password = authentication.getCredentials().toString();
 
-		User user = usuarioRepositorio.findByUsername(username);
+		Usuario user = usuarioRepositorio.findByUsername(username);
 
 		if (user == null)
 			throw new UsernameNotFoundException("INVALID CREDENTIALS");

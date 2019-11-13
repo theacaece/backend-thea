@@ -11,8 +11,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity
-@Table(name="Rol_Permiso") 
+@Entity(name = "Rol_Permiso")
+@Table(name="rol_permiso") 
 public class Rol_Permiso implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

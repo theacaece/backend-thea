@@ -8,19 +8,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import edu.caece.app.domain.User;
-import edu.caece.app.repository.IUserRepository;
+import edu.caece.app.domain.Usuario;
+import edu.caece.app.repository.IUsuarioRepositorio;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService{
 
 	@Autowired
-	private IUserRepository usuarioRepositorio;
+	private IUsuarioRepositorio usuarioRepositorio;
 	
 	@Override
 	public UserDetails loadUserByUsername(String _usuario) throws UsernameNotFoundException {
 		
-		User usuario = usuarioRepositorio.findByUsername(_usuario);
+		Usuario usuario = usuarioRepositorio.findByUsername(_usuario);
 		
 		if(usuario == null)
 			throw new UsernameNotFoundException("INVALID CREDENTIALS");

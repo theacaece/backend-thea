@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Usuario")
-public class User {
+public class Usuario {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -44,24 +44,18 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
-			CascadeType.DETACH }, fetch = FetchType.EAGER)
-	@JoinTable(name = "users_roles", 
-				joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    //@JsonIgnore
+	@ManyToMany(cascade = { CascadeType.MERGE, 
+							CascadeType.REMOVE, 
+							CascadeType.REFRESH,
+							CascadeType.DETACH }, 
+							fetch = FetchType.EAGER)
+	@JoinTable(name = "usuario_rol", 
+			   joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), 
+			   inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private List<Rol> roles;
 
-	public User() {
+	public Usuario() {
 		this.roles = new ArrayList<Rol>();
-	}
-
-	public void setRoles2(String[] roles) {
-		this.roles = new ArrayList<Rol>();
-		for (int i = 0; i < roles.length; i++) {
-			String[] rl = roles[i].split("#");
-			this.roles.add(new Rol(Long.parseLong(rl[0]), rl[1].toUpperCase()));
-		}
 	}
 
 	public long getId() {
@@ -112,7 +106,6 @@ public class User {
 		this.lastname = lastName;
 	}
 
-	
 	public List<Rol> getRoles() {
 		return roles;
 	}
@@ -121,8 +114,16 @@ public class User {
 		this.roles = roles;
 		this.roles.forEach(x -> x.getUsers().add(this));
 	}
-
-	@JsonIgnore
+	
+	public void addRol(Rol rol) {
+        roles.add(rol);
+    }
+ 
+    public void removeRol(Rol rol) {
+    	roles.remove(rol);
+    }
+    
+    @JsonIgnore
 	public String[] getRolesToArray() {
 		String[] rl = new String[roles.size()];
 		int i = 0;
@@ -132,5 +133,6 @@ public class User {
 			i++;
 		}
 		return rl;
-	}	
+	}
+	
 }

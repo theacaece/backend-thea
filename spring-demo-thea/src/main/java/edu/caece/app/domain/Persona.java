@@ -1,15 +1,17 @@
 package edu.caece.app.domain;
 import java.io.Serializable;
+import java.util.ArrayList;
 //import java.util.ArrayList;
 //import java.util.List;
+import java.util.List;
 
 import javax.persistence.*;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity
-@Table(name="Persona") 
+@Entity(name = "Persona")
+@Table(name="persona") 
 @DynamicUpdate
 public class Persona implements Serializable {
 	
@@ -30,18 +32,21 @@ public class Persona implements Serializable {
 	@Column(name = "dni", nullable = false)
 	private String dni;
 
-	@ManyToOne
-    @JoinColumn(name = "id_funcion")
-    private Funcion funcion;
-	
+	@ManyToMany(cascade = { CascadeType.MERGE, 
+							CascadeType.REMOVE, 
+							CascadeType.REFRESH,
+							CascadeType.DETACH }, 
+							fetch = FetchType.EAGER)
+	@JoinTable(name = "persona_funcion", 
+	joinColumns = @JoinColumn(name = "persona_id", referencedColumnName = "id"), 
+	inverseJoinColumns = @JoinColumn(name = "funcion_id", referencedColumnName = "id"))
+	private List<Funcion> funciones;
+
 	@Column(name = "matricula")
 	private String matricula;
 	
-	//@OneToMany(mappedBy="persona")
-	//private List<Foto> fotos= new ArrayList<Foto>();
-
 	public Persona() {
-		
+		this.funciones = new ArrayList<Funcion>();
 	}
 	
 	public Persona(String nombre,
@@ -94,17 +99,21 @@ public class Persona implements Serializable {
 		this.matricula = matricula;
 	}
 	
-	/*public List<Foto> getFotos() {
-		return fotos;
+	public List<Funcion> getFunciones() {
+		return funciones;
 	}
 
-	public void setFotos(List<Foto> fotos) {
-		this.fotos = fotos;
+	public void setFunciones(List<Funcion> funciones) {
+		this.funciones = funciones;
 	}
 	
-	public void addFoto(Foto f) {
-		this.fotos.add(f);
-	}*/
+	public void addFuncion(Funcion funcion) {
+		funciones.add(funcion);
+    }
+ 
+    public void removeFuncion(Funcion funcion) {
+    	funciones.remove(funcion);
+    }
 	
 	public String toString (){
         String datosPersona = "Persona::" + 

@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import edu.caece.app.domain.Foto;
+import edu.caece.app.repository.IFotoRepositorio;
 
 public class LecturaCarpeta {
   	
@@ -16,39 +17,22 @@ public class LecturaCarpeta {
 	ArrayList<Foto> fotos = null;
 	
 	@SuppressWarnings("finally")
-	public ArrayList<Foto> recorrerCarpeta() throws Exception {
+	public ArrayList<Foto> recorrerCarpetaFotos(IFotoRepositorio fotoRepositorio) throws Exception {
 	  fotos = new ArrayList<Foto>();
 	  	try {
-	  		// Obtiene Ruta de Carpeta Con Fotos de Personas
-	  		String path = System.getProperty("user.dir");
+	  		String path = System.getProperty("user.dir"); // Obtiene Ruta de Carpeta Con Fotos de Personas
 			rutaArchivo = path + RUTA_CSV;
 		    File carpeta = new File(rutaArchivo);
-		    
-		    // Obtiene Carpeta Con Fotos de Personas
-		    File[] archivos = carpeta.listFiles();
-		    
-		    // Verifica si esta vacio
-		    if (archivos != null && archivos.length != 0) {
-		    	
-		    	// Recorre Carpetas
-		    	for (int i=0; i< archivos.length; i++) {
-		    		
-		    		// Obtiene carpeta de fotos
-		    		File archivo = archivos[i];
-		    		
-		    		// Verifica si es directorio con matricula
-		        	if (archivo.isDirectory()) {
-		        		
-		        		// Imprime matricula del nombre de la carpeta
-		        		System.out.println(archivo.getName());
-		        		
-		        		// Obtiene datos de fotos
-		        		fotos = recorrerFotos(archivo);
+		    File[] archivos = carpeta.listFiles(); // Obtiene Carpeta Con Fotos de Personas
+		    if (archivos != null && archivos.length != 0) { // Verifica si esta vacio
+		    	for (int i=0; i< archivos.length; i++) { // Recorre Carpetas
+		    		File archivo = archivos[i]; // Obtiene carpeta de fotos
+		        	if (archivo.isDirectory()) { // Verifica si es directorio con matricula
+		        		fotos = recorrerFotos(archivo); // Obtiene datos de fotos
 		        	}
-		        
 		    	}
-		    	
 		    }
+		    guardarFotos(fotoRepositorio, fotos);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -59,12 +43,9 @@ public class LecturaCarpeta {
 	@SuppressWarnings("finally")
 	public ArrayList<Foto> recorrerFotos(File carpeta) throws Exception {
 	  try {
-		  // Obtiene fotos de la carpeta
-		  File[] archivos = carpeta.listFiles();
-		    
+		  File[] archivos = carpeta.listFiles(); // Obtiene fotos de la carpeta 
 		  // Verifica si la Carpeta de Fotos esta Vacia
 		  if (archivos != null && archivos.length != 0) {
-			  
 			  // Recorre Fotos de Carpeta
 			  for (int i=0; i< archivos.length; i++) {
 				  
@@ -86,6 +67,19 @@ public class LecturaCarpeta {
 			System.out.println(e.getMessage());
 		} finally {
 			return fotos;
+		}
+	}
+	
+	
+	public void guardarFotos(IFotoRepositorio fotoRepositorio,
+							 ArrayList<Foto> fotos) throws Exception {
+		try {
+			for (Foto foto: fotos) {
+				fotoRepositorio.save(foto);
+			}
+			fotoRepositorio.findAll().forEach(System.out::println);
+		} catch (Exception e) {
+			throw new Exception ("method guardarFotos" + e.getMessage());
 		}
 	}
 } 
