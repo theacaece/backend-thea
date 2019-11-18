@@ -27,22 +27,25 @@ public class UserController {
 	private IUsuarioRepositorio userRepositorio;
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public Collection<Usuario> getUsuarios() {
+	public Collection<Usuario> getAll() {
 		return userRepositorio.findAll();
 	}
 	
 	@RequestMapping(value = "/users/edit/{id}", method = RequestMethod.GET)
-	public Optional<Usuario> getUsuarioById(@PathVariable Long id) {
+	public Optional<Usuario> getById(@PathVariable Long id) {
 		return userRepositorio.findById(id);
 	}
 	
 	@PostMapping("/users/save")
-	public void saveUsuario(@RequestBody Usuario user) {
-		userRepositorio.save(user);
+	public void save(@RequestBody Usuario user) {
+		boolean existe = userRepositorio.existsByUsername(user.getUsername());
+		if (!existe) {
+			userRepositorio.save(user);
+		}
 	}
 	
 	@DeleteMapping(path = { "/users/{id}" })
-	public void deleteUsuario(@PathVariable("id") Long id) {
+	public void delete(@PathVariable("id") Long id) {
 		userRepositorio.deleteById(id);
 	}
 
@@ -72,7 +75,7 @@ public class UserController {
 	}
 
 	@GetMapping("users/exists/{username}")
-	public ResponseEntity<Boolean> existByUsername(@PathVariable String username) {
+	public ResponseEntity<Boolean> existsByUsername(@PathVariable String username) {
 		return new ResponseEntity<>(userRepositorio.existsByUsername(username), HttpStatus.OK);
 	}
 }

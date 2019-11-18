@@ -31,7 +31,6 @@ public class PersonaController {
 		return personaRepositorio.findAll();
 	}
 	
-	
 	@RequestMapping(value = "/personas/edit/{id}", method = RequestMethod.GET)
 	public Optional<Persona> getById(@PathVariable Long id) {
 		return personaRepositorio.findById(id);
