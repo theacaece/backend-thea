@@ -8,6 +8,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import edu.caece.app.Constantes;
 import edu.caece.app.config.Hash;
 import edu.caece.app.domain.Usuario;
 import edu.caece.app.repository.IUsuarioRepositorio;
@@ -20,19 +21,16 @@ public class AuthenticationManagerService implements AuthenticationManager {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
 		String username = authentication.getPrincipal().toString();
 		String password = authentication.getCredentials().toString();
-
 		Usuario user = usuarioRepositorio.findByUsername(username);
-
 		if (user == null)
-			throw new UsernameNotFoundException("INVALID CREDENTIALS");
+			throw new UsernameNotFoundException(Constantes.ERROR_USUARIO_INEXISTENTE);
 
 		if (user.getUsername().equals(username) && user.getPassword().equals(Hash.sha1(password))) {
 			return authentication;
 		} else {
-			throw new BadCredentialsException("INVALID CREDENTIALS");
+			throw new BadCredentialsException(Constantes.ERROR_AUTENTICACION);
 		}
 	}
 }

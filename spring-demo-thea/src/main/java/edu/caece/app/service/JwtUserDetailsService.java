@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import edu.caece.app.Constantes;
 import edu.caece.app.domain.Usuario;
 import edu.caece.app.repository.IUsuarioRepositorio;
 
@@ -23,7 +24,7 @@ public class JwtUserDetailsService implements UserDetailsService{
 		Usuario usuario = usuarioRepositorio.findByUsername(_usuario);
 		
 		if(usuario == null)
-			throw new UsernameNotFoundException("INVALID CREDENTIALS");
+			throw new UsernameNotFoundException(Constantes.ERROR_USUARIO_INEXISTENTE);
 		
 		UserBuilder builder = null;
 		builder = org.springframework.security.core.userdetails.User.withUsername(_usuario);

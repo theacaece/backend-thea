@@ -14,7 +14,7 @@ public class Constantes {
   public static final String ERROR_PASSWORD_INVALIDA = "La contraseña es inválida";
   
   public static final String ERROR_USUARIO_EXISTENTE = "ERROR: El usuario ya existe";
-  public static final String ERROR_USUARIO_INEXISTENTE = "Error: El usuario no fue encontrado.";
+  public static final String ERROR_USUARIO_INEXISTENTE = "Usuario no fue encontrado.";
   public static final String ERROR_USUARIO_GUARDAR = "Error: El usuario no se guardo correctamente.";
   
   public static final String ERROR_PERSONA_EXISTENTE = "ERROR: La persona ya existe";
