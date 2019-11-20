@@ -2,14 +2,17 @@ package edu.caece.app.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity(name = "Foto")
@@ -30,18 +33,18 @@ public class Foto implements Serializable {
 	
 	@Column(name="nombre_archivo")
 	private String nombreArchivo;
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "persona_dni", referencedColumnName = "dni")
+    private Persona persona;
 
-	@Column(name="dni_persona")
-	private String dniPersona;
-
+	public Foto() {
+		
+	}
+	
 	public Foto(byte[] archivo, 
 				String idPersona) {
 		this.archivo = archivo;
-		this.dniPersona = idPersona;
-	}
-	
-	public Foto() {
-		
 	}
 
 	public Integer getId() {
@@ -68,19 +71,17 @@ public class Foto implements Serializable {
 		this.nombreArchivo = nombreArchivo;
 	}
 
-	public String getDniPersona() {
-		return dniPersona;
+	public Persona getPersona() {
+		return persona;
 	}
 
-	public void setDniPersona(String idPersona) {
-		this.dniPersona = idPersona;
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 	
-	public String toString (){
+	public String toString () {
         String datosFoto = "Foto::" +
-        					archivo + ":" +
-        					dniPersona;
+        					archivo + ":";
         return datosFoto;
     }
-
 }

@@ -1,9 +1,9 @@
 package edu.caece.app.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
-//import java.util.ArrayList;
-//import java.util.List;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -16,21 +16,29 @@ import org.hibernate.annotations.GenericGenerator;
 public class Persona implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "id", updatable = false, nullable = false)
-	private long id;
-
+	private Long id;
+	
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
 
 	@Column(name = "apellido", nullable = false)
 	private String apellido;
-
-	@Column(name = "dni", nullable = false)
+	
+	@Column(name = "dni")
 	private String dni;
+
+	@OneToMany(fetch=FetchType.EAGER)
+	@JoinColumn(name = "persona_dni", nullable = false, insertable=false, updatable=false)
+    private Set<Foto> fotos;
+	
+	@OneToMany(fetch=FetchType.EAGER)
+	@JoinColumn(name = "persona_dni", nullable = false, insertable=false, updatable=false)
+	private Set<Registro> registros;
 
 	@ManyToMany(cascade = { CascadeType.MERGE, 
 							CascadeType.REMOVE, 
@@ -38,7 +46,7 @@ public class Persona implements Serializable {
 							CascadeType.DETACH }, 
 							fetch = FetchType.EAGER)
 	@JoinTable(name = "persona_funcion", 
-	joinColumns = @JoinColumn(name = "persona_id", referencedColumnName = "id"), 
+	joinColumns = @JoinColumn(name = "persona_dni", referencedColumnName = "dni"), 
 	inverseJoinColumns = @JoinColumn(name = "funcion_id", referencedColumnName = "id"))
 	private List<Funcion> funciones;
 
@@ -46,6 +54,8 @@ public class Persona implements Serializable {
 	private String matricula;
 	
 	public Persona() {
+		this.fotos = new HashSet<Foto>();
+		this.registros = new HashSet<Registro>();
 		this.funciones = new ArrayList<Funcion>();
 	}
 	
@@ -113,6 +123,38 @@ public class Persona implements Serializable {
  
     public void removeFuncion(Funcion funcion) {
     	funciones.remove(funcion);
+    }
+	
+	public Set<Foto> getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(Set<Foto> fotos) {
+		this.fotos = fotos;
+	}
+	
+	public void addFoto(Foto foto) {
+        fotos.add(foto);
+    }
+ 
+    public void removeFoto(Foto foto) {
+    	fotos.remove(foto);
+    }
+    
+	public Set<Registro> getRegistros() {
+		return registros;
+	}
+
+	public void setRegistros(Set<Registro> registros) {
+		this.registros = registros;
+	}
+	
+	public void addRegistro(Registro registro) {
+        registros.add(registro);
+    }
+ 
+    public void removeFoto(Registro registro) {
+    	registros.remove(registro);
     }
 	
 	public String toString (){

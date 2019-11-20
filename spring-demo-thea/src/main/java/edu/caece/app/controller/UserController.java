@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.caece.app.Constantes;
 import edu.caece.app.domain.Usuario;
 import edu.caece.app.repository.IUsuarioRepositorio;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
-
+	
 	@Autowired
 	private IUsuarioRepositorio userRepositorio;
 
@@ -37,11 +38,12 @@ public class UserController {
 	}
 	
 	@PostMapping("/users/save")
-	public void save(@RequestBody Usuario user) {
+	public ResponseEntity<Object> save(@RequestBody Usuario user) {
 		boolean existe = userRepositorio.existsByUsername(user.getUsername());
 		if (!existe) {
-			userRepositorio.save(user);
+			return new ResponseEntity<>(userRepositorio.save(user), HttpStatus.OK);
 		}
+		return new ResponseEntity<>(Constantes.ERROR_USUARIO_GUARDAR, HttpStatus.NOT_FOUND);
 	}
 	
 	@DeleteMapping(path = { "/users/{id}" })
@@ -66,11 +68,10 @@ public class UserController {
 
 				return new ResponseEntity<>(userRepositorio.save(_user), HttpStatus.OK);
 			} else {
-				return new ResponseEntity<>("ERROR: el usuario " + "\"" + user.getUsername() + "\"" + " ya existe",
-						HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(Constantes.ERROR_USUARIO_EXISTENTE, HttpStatus.NOT_FOUND);
 			}
 		} else {
-			return new ResponseEntity<>("Error: el usuario no fue encontrado!", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(Constantes.ERROR_USUARIO_INEXISTENTE, HttpStatus.NOT_FOUND);
 		}
 	}
 

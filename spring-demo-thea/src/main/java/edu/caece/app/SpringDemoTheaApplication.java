@@ -56,9 +56,8 @@ public class SpringDemoTheaApplication {
 			lecturaExcel.inicializarBD(usuarioRepositorio,
 									   rolRepositorio,
 									   personaRepositorio,
-									   funcionRepositorio);
-			LecturaCarpeta lecturaCarpeta = new LecturaCarpeta();
-			lecturaCarpeta.recorrerCarpetaFotos(fotoRepositorio);
+									   funcionRepositorio,
+									   fotoRepositorio);
 		} catch (Exception e) {
 			throw new Exception ("method inicializarBD :: " + e.getMessage());
 		}

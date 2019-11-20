@@ -17,6 +17,7 @@ import edu.caece.app.domain.Funcion;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.Rol;
 import edu.caece.app.domain.Usuario;
+import edu.caece.app.repository.IFotoRepositorio;
 import edu.caece.app.repository.IPersonaRepositorio;
 import edu.caece.app.repository.IRolRepositorio;
 import edu.caece.app.repository.IUsuarioRepositorio;
@@ -24,7 +25,7 @@ import edu.caece.app.repository.IUsuarioRepositorio;
 public class LecturaExcel {
 
 	// RUTA DENTRO DEL MISMO PROYECTO
-	protected String RUTA_CSV = "\\src\\main\\resources\\bd\\TP-FINAL\\DatosBD.xlsx";
+	protected String RUTA_CSV = "/src/main/resources/bd/TP-FINAL/DatosBD.xlsx";
 	protected String rutaArchivo = "";
 	
 	XSSFWorkbook worbook = null;
@@ -37,6 +38,7 @@ public class LecturaExcel {
 	
 	HashMap<Long, Rol> roles = new HashMap<Long, Rol>();
 	HashMap<Long, Funcion> funciones = new HashMap<Long, Funcion>();
+	HashMap<String, Persona> personas = new HashMap<String, Persona>();
 	
 	public void leerArchivo() {
 		try {
@@ -53,14 +55,25 @@ public class LecturaExcel {
 	public void inicializarBD(IUsuarioRepositorio usuarioRepositorio, 
 							  IRolRepositorio rolRepositorio,
 							  IPersonaRepositorio personaRepositorio,
-							  IFuncionRepositorio funcionRepositorio) {
+							  IFuncionRepositorio funcionRepositorio,
+							  IFotoRepositorio fotoRepositorio) {
 		try {
 			obtenerRoles(rolRepositorio);
 			obtenerUsuarios(usuarioRepositorio);
 			obtenerFunciones(funcionRepositorio);
 			obtenerPersonas(personaRepositorio);
+			obtenerFotos(fotoRepositorio);
 		} catch (Exception e) {
 			System.out.print("method inicializarBD :: " + e.getMessage());
+		}
+	}
+	
+	public void obtenerFotos(IFotoRepositorio fotoRepositorio) {
+		try {
+			LecturaCarpeta lecturaCarpeta = new LecturaCarpeta();
+			lecturaCarpeta.recorrerCarpetaFotos(fotoRepositorio, personas);
+		} catch (Exception e) {
+			System.out.print(e.getMessage());
 		}
 	}
 	
@@ -107,8 +120,8 @@ public class LecturaExcel {
 		try {			
 			leerArchivo();
 			sheet = worbook.getSheetAt(SOLAPA_PERSONAS);
-			personas = leerHojaPersonas();
-			guardarPersonas(personaRepositorio, personas);
+			leerHojaPersonas();
+			guardarPersonas(personaRepositorio);
 		} catch (Exception e) {
 			e.getMessage();
 		} finally {
@@ -122,8 +135,8 @@ public class LecturaExcel {
 		try {			
 			leerArchivo();
 			sheet = worbook.getSheetAt(SOLAPA_PERSONAS);
-			personas = leerHojaPersonas();
-			//guardarPersonas(personaRepositorio, personas);
+			leerHojaPersonas();
+			//guardarPersonas(personaRepositorio);
 		} catch (Exception e) {
 			e.getMessage();
 		} finally {
@@ -184,8 +197,8 @@ public class LecturaExcel {
 		}
 	}
 
-	public ArrayList<Persona> leerHojaPersonas() {
-		ArrayList<Persona> personas = new ArrayList<Persona>(); // Creacion de Lista de Personas
+	public void leerHojaPersonas() {
+		personas = new HashMap<String, Persona>(); // Creacion de Lista de Personas
 		Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
 		Row fila;
 		rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos 
@@ -201,8 +214,9 @@ public class LecturaExcel {
 				celda = iterador.next(); // Leo Celda Apellido del Excel
 				persona.setApellido(celda.getStringCellValue());
 				celda = iterador.next(); // Leo Celda DNI del Excel
-				persona.setDni(celda.getStringCellValue());
-				celda = iterador.next();
+				String dni = celda.getStringCellValue();
+				persona.setDni(dni);
+				celda = iterador.next(); // Leo Funcion del Excel
 				Long id_funcion = (long) celda.getNumericCellValue();
 				Funcion funcion = funciones.get(id_funcion);
 				persona.addFuncion(funcion);
@@ -211,10 +225,9 @@ public class LecturaExcel {
 				
 				System.out.println(persona.toString());
 				
-				personas.add(persona); // Agrego a Lista de Personas
+				personas.put(dni, persona); // Agrego a Lista de Personas
 			}
 		}
-		return personas;
 	}
 	
 	public void leerHojaFunciones() {
@@ -271,10 +284,9 @@ public class LecturaExcel {
 		}
 	}
 	
-	public void guardarPersonas(IPersonaRepositorio personRepository,
-         ArrayList<Persona> persons) throws Exception {
+	public void guardarPersonas(IPersonaRepositorio personRepository) throws Exception {
 		try {
-			for (Persona person: persons) {
+			for (Persona person: personas.values()) {
 				personRepository.save(person);
 			}
 			personRepository.findAll().forEach(System.out::println);

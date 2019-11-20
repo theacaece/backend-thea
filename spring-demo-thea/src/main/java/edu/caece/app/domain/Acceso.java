@@ -2,11 +2,15 @@ package edu.caece.app.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -22,21 +26,16 @@ public class Acceso implements Serializable {
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "id", updatable = false, nullable = false)
 	private Integer id = 0;
-	
-	@Column(name = "id_usuario")
-	private String idUsuario;
 
 	@Column(name = "fecha_acceso")
 	private String fechaAcceso;
 	
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "username", referencedColumnName = "usuario")
+//    private Usuario usuario;
+	
 	public Acceso() {
 		
-	}
-	
-	public Acceso(String idUsuario,
-			      String fechaAcceso) {
-		this.idUsuario = idUsuario;
-		this.fechaAcceso = fechaAcceso;
 	}
 	
 	public Integer getId() {
@@ -47,13 +46,13 @@ public class Acceso implements Serializable {
 		this.id = id;
 	}
 
-	public String getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(String idUsuario) {
-		this.idUsuario = idUsuario;
-	}
+//	public Usuario getUsuario() {
+//		return usuario;
+//	}
+//
+//	public void setUsuario(Usuario usuario) {
+//		this.usuario = usuario;
+//	}
 
 	public String getFechaAcceso() {
 		return fechaAcceso;

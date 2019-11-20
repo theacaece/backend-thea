@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.caece.app.Constantes;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.repository.IPersonaRepositorio;
 
@@ -37,11 +38,12 @@ public class PersonaController {
 	}
 	
 	@PostMapping("/personas/save")
-	public void save(@RequestBody Persona persona) {
+	public ResponseEntity<Object> save(@RequestBody Persona persona) {
 		boolean existe = personaRepositorio.existsByDni(persona.getDni());
 		if (!existe) {
-			personaRepositorio.save(persona);
+			return new ResponseEntity<>(personaRepositorio.save(persona), HttpStatus.OK);
 		}
+		return new ResponseEntity<>(Constantes.ERROR_PERSONA_GUARDAR, HttpStatus.NOT_FOUND);
 	}
 	
 	@PostMapping("/personas/update/{id}")
@@ -59,11 +61,10 @@ public class PersonaController {
 				_person.setMatricula(persona.getMatricula());
 				return new ResponseEntity<>(personaRepositorio.save(_person), HttpStatus.OK);
 			} else {
-				return new ResponseEntity<>("ERROR: La persona " + "\"" + persona.getDni() + "\"" + " ya existe",
-						HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(Constantes.ERROR_PERSONA_EXISTENTE, HttpStatus.NOT_FOUND);
 			}
 		} else {
-			return new ResponseEntity<>("Error: el usuario no fue encontrado!", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(Constantes.ERROR_PERSONA_INEXISTENTE, HttpStatus.NOT_FOUND);
 		}
 	}
 	

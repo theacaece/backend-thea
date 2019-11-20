@@ -30,10 +30,10 @@ public class Rol {
 
 	@ManyToMany(mappedBy = "roles")
 	@JsonIgnore
-	private List<Usuario> usuarios = new ArrayList<Usuario>();
+	private List<Usuario> usuarios;
 	
-	public Rol(long id) {
-		this.id = id;
+	public Rol() {
+		this.usuarios = new ArrayList<Usuario>();
 	}
 
 	public Rol(String nombre) {
@@ -61,11 +61,11 @@ public class Rol {
 		this.name = name;
 	}
 
-	public List<Usuario> getUsers() {
+	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
-	public void setUsers(List<Usuario> users) {
+	public void setUsuarios(List<Usuario> users) {
 		this.usuarios = users;
 	}
 }

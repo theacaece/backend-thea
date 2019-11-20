@@ -1,7 +1,9 @@
 package edu.caece.app.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.CascadeType;
@@ -13,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -43,6 +46,10 @@ public class Usuario {
 
 	@Column(name = "password", nullable = false)
 	private String password;
+	
+//	@OneToMany(fetch=FetchType.EAGER)
+//	@JoinColumn(name = "username", nullable = false, insertable=false, updatable=false)
+//    private Set<Acceso> accesos;
 
 	@ManyToMany(cascade = { CascadeType.MERGE, 
 							CascadeType.REMOVE, 
@@ -56,6 +63,7 @@ public class Usuario {
 
 	public Usuario() {
 		this.roles = new ArrayList<Rol>();
+		//this.accesos = new HashSet<Acceso>();
 	}
 
 	public long getId() {
@@ -112,7 +120,7 @@ public class Usuario {
 
 	public void setRoles(List<Rol> roles) {
 		this.roles = roles;
-		this.roles.forEach(x -> x.getUsers().add(this));
+		this.roles.forEach(x -> x.getUsuarios().add(this));
 	}
 	
 	public void addRol(Rol rol) {
@@ -122,6 +130,22 @@ public class Usuario {
     public void removeRol(Rol rol) {
     	roles.remove(rol);
     }
+
+//	public Set<Acceso> getAccesos() {
+//		return accesos;
+//	}
+//
+//	public void setAccesos(Set<Acceso> accesos) {
+//		this.accesos = accesos;
+//	}
+//	
+//	public void addAcceso(Acceso acceso) {
+//		accesos.add(acceso);
+//    }
+// 
+//    public void removeAcceso(Acceso acceso) {
+//    	accesos.remove(acceso);
+//    }
     
     @JsonIgnore
 	public String[] getRolesToArray() {
@@ -134,5 +158,5 @@ public class Usuario {
 		}
 		return rl;
 	}
-	
+    
 }
