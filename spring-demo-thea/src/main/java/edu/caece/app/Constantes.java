@@ -21,5 +21,4 @@ public class Constantes {
   public static final String ERROR_PERSONA_INEXISTENTE = "Error: La persona no fue encontrada.";
   public static final String ERROR_PERSONA_GUARDAR = "Error: La persona no se guardo correctamente.";
   
-
 }
