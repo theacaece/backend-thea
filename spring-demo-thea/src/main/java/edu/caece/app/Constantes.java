@@ -20,7 +20,9 @@ public class Constantes {
   
   // ERRORRES PERSONAS
   public static final String ERROR_PERSONA_INEXISTENTE = "Persona no encontrada.";
-  public static final String ERROR_DNI_EXISTENTE = "Usuario con DNI indicado existente";
-  public static final String ERROR_MATRICULA_EXISTENTE = "Usuario con matricula indicada existente";
+  public static final String ERROR_DNI_EXISTENTE = "DNI indicado existente";
+  public static final String ERROR_MATRICULA_EXISTENTE = "Matricula indicada existente";
   
+  //ERRORRES USUARIOS
+  public static final String ERROR_FOTO_INEXISTENTE = "No se encontraron fotos.";
 }

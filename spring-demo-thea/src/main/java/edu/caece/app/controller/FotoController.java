@@ -1,7 +1,10 @@
 package edu.caece.app.controller;
 
 import java.util.Collection;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.caece.app.Constantes;
 import edu.caece.app.domain.Foto;
 import edu.caece.app.repository.IFotoRepositorio;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class FotoController {
+	
+	protected final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	private IFotoRepositorio fotoRepositorio;
@@ -26,9 +32,17 @@ public class FotoController {
 		return fotoRepositorio.findAll();
 	}
 
-	/*@RequestMapping(value = "/fotos/dni", method = RequestMethod.GET)
+	@RequestMapping(value = "/fotos/dni/{dni}", method = RequestMethod.GET)
 	public ResponseEntity<Object> getAllByDni(@PathVariable String dni) {
-		return new ResponseEntity<>(fotoRepositorio.findFotosByDni(dni), HttpStatus.OK);
-	}*/
+		log.info("Buscando fotos con DNI: " + dni);
+		List<Foto> fotos = fotoRepositorio.findFotosByDni(dni);
+		if (fotos == null || fotos.size() == 0) {
+			log.warn("Fotos no encontradas");
+			return new ResponseEntity<>(Constantes.ERROR_FOTO_INEXISTENTE, HttpStatus.NOT_FOUND);
+		} else {
+			log.info("Fotos encontradas, cantidad: " + fotos.size());
+			return new ResponseEntity<>(fotoRepositorio.findFotosByDni(dni), HttpStatus.OK);
+		}
+	}
 	
 }
