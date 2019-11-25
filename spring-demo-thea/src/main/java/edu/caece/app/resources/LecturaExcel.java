@@ -10,14 +10,16 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import edu.caece.app.config.Hash;
-import edu.caece.app.dao.IFuncionRepositorio;
 import edu.caece.app.domain.Funcion;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.Rol;
 import edu.caece.app.domain.Usuario;
 import edu.caece.app.repository.IFotoRepositorio;
+import edu.caece.app.repository.IFuncionRepositorio;
 import edu.caece.app.repository.IPersonaRepositorio;
 import edu.caece.app.repository.IRolRepositorio;
 import edu.caece.app.repository.IUsuarioRepositorio;
@@ -40,10 +42,11 @@ public class LecturaExcel {
 	HashMap<Long, Funcion> funciones = new HashMap<Long, Funcion>();
 	HashMap<String, Persona> personas = new HashMap<String, Persona>();
 	
+	protected final Logger log = LoggerFactory.getLogger(getClass());
+	
 	public void leerArchivo() {
 		try {
-			// Lectura Excel
-			String path = System.getProperty("user.dir");
+			String path = System.getProperty("user.dir"); // Lectura Excel
 			rutaArchivo = path + RUTA_CSV;
 			FileInputStream file = new FileInputStream(new File(rutaArchivo));
 			worbook = new XSSFWorkbook(file); 
@@ -149,7 +152,7 @@ public class LecturaExcel {
 		Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
 		Row fila;
 		rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos 
-		System.out.println("Lista Usuarios");
+		//System.out.println("Lista Usuarios");
 		while (rowIterator.hasNext()) { // Se Recorre Cada Fila Hasta el Final
 			fila = rowIterator.next(); // Recorro Fila del Excel
 			Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
@@ -181,7 +184,7 @@ public class LecturaExcel {
 		Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
 		Row fila;
 		rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos
-		System.out.println("Lista Roles"); // Se Recorre Cada Fila Hasta el Final
+		//System.out.println("Lista Roles"); // Se Recorre Cada Fila Hasta el Final
 		while (rowIterator.hasNext()) {
 			fila = rowIterator.next(); // Recorro Fila del Excel
 			Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
@@ -202,7 +205,7 @@ public class LecturaExcel {
 		Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
 		Row fila;
 		rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos 
-		System.out.println("Lista Personas"); // Se Recorre Cada Fila Hasta el Final
+		//System.out.println("Lista Personas"); // Se Recorre Cada Fila Hasta el Final
 		while (rowIterator.hasNext()) {
 			fila = rowIterator.next(); // Recorro Fila del Excel
 			Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
@@ -223,7 +226,7 @@ public class LecturaExcel {
 				celda = iterador.next(); // Leo Celda Matricula del Excel
 				persona.setMatricula(celda.getStringCellValue());
 				
-				System.out.println(persona.toString());
+				//System.out.println(persona.toString());
 				
 				personas.put(dni, persona); // Agrego a Lista de Personas
 			}
@@ -234,7 +237,7 @@ public class LecturaExcel {
 		Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
 		Row fila;
 		rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos 
-		System.out.println("Lista Funciones"); // Se Recorre Cada Fila Hasta el Final
+		//System.out.println("Lista Funciones"); // Se Recorre Cada Fila Hasta el Final
 		while (rowIterator.hasNext()) {
 			fila = rowIterator.next(); // Recorro Fila del Excel
 			Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
@@ -256,7 +259,7 @@ public class LecturaExcel {
 			for (Usuario user: users) {
 				usuarioRepositorio.save(user);
 			}
-			usuarioRepositorio.findAll().forEach(System.out::println);
+			//usuarioRepositorio.findAll().forEach(System.out::println);
 		} catch (Exception e) {
 			throw new Exception ("method guardarDatosUsuarios :: " + e.getMessage());
 		}
@@ -267,7 +270,7 @@ public class LecturaExcel {
 			for (Rol rol: roles.values()) {
 				rolRepositorio.save(rol);
 			}
-			rolRepositorio.findAll().forEach(System.out::println);	
+			//rolRepositorio.findAll().forEach(System.out::println);	
 		} catch (Exception e) {
 			throw new Exception ("method guardarDatosRoles :: " + e.getMessage());
 		}
@@ -278,7 +281,7 @@ public class LecturaExcel {
 			for (Funcion funcion: funciones.values()) {
 				funcionRepositorio.save(funcion);
 			}
-			funcionRepositorio.findAll().forEach(System.out::println);	
+			//funcionRepositorio.findAll().forEach(System.out::println);	
 		} catch (Exception e) {
 			throw new Exception ("method guardarFunciones :: " + e.getMessage());
 		}
@@ -289,7 +292,7 @@ public class LecturaExcel {
 			for (Persona person: personas.values()) {
 				personRepository.save(person);
 			}
-			personRepository.findAll().forEach(System.out::println);
+			//personRepository.findAll().forEach(System.out::println);
 		} catch (Exception e) {
 			throw new Exception ("method guardarDatosPersonas :: " + e.getMessage());
 		}

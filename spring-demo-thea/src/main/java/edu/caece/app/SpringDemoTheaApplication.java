@@ -1,14 +1,16 @@
 package edu.caece.app;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import edu.caece.app.dao.IFuncionRepositorio;
 import edu.caece.app.repository.IPersonaRepositorio;
 import edu.caece.app.repository.IFotoRepositorio;
+import edu.caece.app.repository.IFuncionRepositorio;
 import edu.caece.app.repository.IRolRepositorio;
 import edu.caece.app.repository.IUsuarioRepositorio;
 import edu.caece.app.resources.LecturaExcel;
@@ -21,6 +23,8 @@ import edu.caece.app.resources.LecturaExcel;
 								"edu.caece.app.service" })
 
 public class SpringDemoTheaApplication {
+	
+	protected final Logger log = LoggerFactory.getLogger(getClass());
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringDemoTheaApplication.class, args);
@@ -42,6 +46,7 @@ public class SpringDemoTheaApplication {
 						  personaRepositorio,
 						  funcionRepositorio,
 						  fotoRepositorio);
+			log.info(Constantes.LOG_BBDD);
 		};
 	 }
 	

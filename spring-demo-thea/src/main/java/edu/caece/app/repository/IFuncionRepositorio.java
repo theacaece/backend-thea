@@ -1,4 +1,4 @@
-package edu.caece.app.dao;
+package edu.caece.app.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

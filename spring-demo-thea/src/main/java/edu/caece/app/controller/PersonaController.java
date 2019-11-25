@@ -39,29 +39,45 @@ public class PersonaController {
 	
 	@PostMapping("/personas/save")
 	public ResponseEntity<Object> save(@RequestBody Persona persona) {
-		boolean existe = personaRepositorio.existsByDni(persona.getDni());
-		if (!existe) {
-			return new ResponseEntity<>(personaRepositorio.save(persona), HttpStatus.OK);
+		boolean existe_dni = personaRepositorio.existsByDni(persona.getDni());
+		boolean existe_matricula = personaRepositorio.existsByMatricula(persona.getMatricula());
+		if (!existe_dni) {
+			if (!existe_matricula) {
+				return new ResponseEntity<>(personaRepositorio.save(persona), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(Constantes.ERROR_MATRICULA_EXISTENTE, HttpStatus.NOT_FOUND);
+			}
+		} else {
+			return new ResponseEntity<>(Constantes.ERROR_DNI_EXISTENTE, HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(Constantes.ERROR_PERSONA_GUARDAR, HttpStatus.NOT_FOUND);
 	}
 	
+	/**
+	 * @param id
+	 * @param persona
+	 * @return
+	 */
 	@PostMapping("/personas/update/{id}")
 	public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody Persona persona) {
 
 		Optional<Persona> _persona = personaRepositorio.findById(id);
 		boolean existe_dni = personaRepositorio.existsByDni(persona.getDni());
-
+		boolean existe_matricula = personaRepositorio.existsByDni(persona.getMatricula());
+		
 		if (_persona.isPresent()) {
 			Persona _person = _persona.get();
 			if (!existe_dni || _person.getDni().equals(persona.getDni())) {
-				_person.setNombre(persona.getNombre());
-				_person.setApellido(persona.getApellido());
-				_person.setDni(persona.getDni());
-				_person.setMatricula(persona.getMatricula());
-				return new ResponseEntity<>(personaRepositorio.save(_person), HttpStatus.OK);
+				if (!existe_matricula || _person.getMatricula().equals(persona.getMatricula())) {
+					_person.setNombre(persona.getNombre());
+					_person.setApellido(persona.getApellido());
+					_person.setDni(persona.getDni());
+					_person.setMatricula(persona.getMatricula());
+					return new ResponseEntity<>(personaRepositorio.save(_person), HttpStatus.OK);
+				} else {
+					return new ResponseEntity<>(Constantes.ERROR_PERSONA_INEXISTENTE, HttpStatus.NOT_FOUND);
+				}
 			} else {
-				return new ResponseEntity<>(Constantes.ERROR_PERSONA_EXISTENTE, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(Constantes.ERROR_PERSONA_INEXISTENTE, HttpStatus.NOT_FOUND);
 			}
 		} else {
 			return new ResponseEntity<>(Constantes.ERROR_PERSONA_INEXISTENTE, HttpStatus.NOT_FOUND);
@@ -76,6 +92,11 @@ public class PersonaController {
 	@GetMapping("personas/exists/{dni}")
 	public ResponseEntity<Boolean> existByDni(@PathVariable String dni) {
 		return new ResponseEntity<>(personaRepositorio.existsByDni(dni), HttpStatus.OK);
+	}
+	
+	@GetMapping("personas/exists/{matricula}")
+	public ResponseEntity<Boolean> existByMatricula(@PathVariable String matricula) {
+		return new ResponseEntity<>(personaRepositorio.existsByMatricula(matricula), HttpStatus.OK);
 	}
 
 }

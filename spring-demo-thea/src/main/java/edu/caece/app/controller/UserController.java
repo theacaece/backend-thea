@@ -42,8 +42,9 @@ public class UserController {
 		boolean existe = userRepositorio.existsByUsername(user.getUsername());
 		if (!existe) {
 			return new ResponseEntity<>(userRepositorio.save(user), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(Constantes.ERROR_USUARIO_EXISTENTE, HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(Constantes.ERROR_USUARIO_GUARDAR, HttpStatus.NOT_FOUND);
 	}
 	
 	@DeleteMapping(path = { "/users/{id}" })
@@ -68,7 +69,7 @@ public class UserController {
 
 				return new ResponseEntity<>(userRepositorio.save(_user), HttpStatus.OK);
 			} else {
-				return new ResponseEntity<>(Constantes.ERROR_USUARIO_EXISTENTE, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(Constantes.ERROR_USUARIO_INEXISTENTE, HttpStatus.NOT_FOUND);
 			}
 		} else {
 			return new ResponseEntity<>(Constantes.ERROR_USUARIO_INEXISTENTE, HttpStatus.NOT_FOUND);

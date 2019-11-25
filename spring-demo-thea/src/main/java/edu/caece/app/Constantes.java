@@ -5,20 +5,22 @@ public class Constantes {
   private Constantes() {
 
   }
-    
+  
+  public static final String LOG_BBDD = "Se inicializaron los datos en la base de datos correctamente.";
+   
+  // ERRORES GENERICOS
   public static final String ERROR_AUTENTICACION = "Error de autenticación";
   
+  //ERRORRES USUARIOS
+  public static final String ERROR_USUARIO_EXISTENTE = "Usuario existente.";
+  public static final String ERROR_USUARIO_INEXISTENTE = "Usuario no encontrado.";
   public static final String ERROR_USUARIO_NO_AUTORIZADO = "Usuario no autorizado";
   public static final String ERROR_USUARIO_NO_HABILITADO = "Usuario deshabilitado";  
+  public static final String ERROR_PASSWORD_INVALIDA = "Contraseña inválida";
   
-  public static final String ERROR_PASSWORD_INVALIDA = "La contraseña es inválida";
-  
-  public static final String ERROR_USUARIO_EXISTENTE = "ERROR: El usuario ya existe";
-  public static final String ERROR_USUARIO_INEXISTENTE = "Usuario no fue encontrado.";
-  public static final String ERROR_USUARIO_GUARDAR = "Error: El usuario no se guardo correctamente.";
-  
-  public static final String ERROR_PERSONA_EXISTENTE = "ERROR: La persona ya existe";
-  public static final String ERROR_PERSONA_INEXISTENTE = "Error: La persona no fue encontrada.";
-  public static final String ERROR_PERSONA_GUARDAR = "Error: La persona no se guardo correctamente.";
+  // ERRORRES PERSONAS
+  public static final String ERROR_PERSONA_INEXISTENTE = "Persona no encontrada.";
+  public static final String ERROR_DNI_EXISTENTE = "Usuario con DNI indicado existente";
+  public static final String ERROR_MATRICULA_EXISTENTE = "Usuario con matricula indicada existente";
   
 }

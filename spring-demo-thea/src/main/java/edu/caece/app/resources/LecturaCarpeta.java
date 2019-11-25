@@ -54,7 +54,7 @@ public class LecturaCarpeta {
 				  foto.setPersona(persona);
 		    	  foto.setNombreArchivo(archivos[i].getName());
 		    	  foto.setArchivo(archivoBlob);
-		    	  System.out.println(foto.toString());
+		    	  //System.out.println(foto.toString());
 		    	  fotos.put(archivos[i].getName(), foto); // Agrego Foto a la Lista de Fotos
 			  }
 		    }
@@ -72,7 +72,7 @@ public class LecturaCarpeta {
 			for (Foto foto: fotos.values()) {
 				fotoRepositorio.save(foto);
 			}
-			fotoRepositorio.findAll().forEach(System.out::println);
+			//fotoRepositorio.findAll().forEach(System.out::println);
 		} catch (Exception e) {
 			throw new Exception ("method guardarFotos :: " + e.getMessage());
 		}
