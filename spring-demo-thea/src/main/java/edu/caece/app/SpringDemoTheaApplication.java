@@ -27,10 +27,19 @@ public class SpringDemoTheaApplication {
 	protected final Logger log = LoggerFactory.getLogger(getClass());
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringDemoTheaApplication.class, args);
-		
-		//LecturaExcel lecturaExcel = new LecturaExcel();
-		//lecturaExcel.probar();
+		try {
+			SpringApplication.run(SpringDemoTheaApplication.class, args);
+			
+			//LecturaExcel lecturaExcel = new LecturaExcel();
+			//lecturaExcel.probar();
+			
+			//HashMap<String, Persona> personas = new HashMap<String, Persona>();
+			//LecturaCarpeta lecturaCarpeta = new LecturaCarpeta();
+			//lecturaCarpeta.leerCarpeta(personas);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Bean

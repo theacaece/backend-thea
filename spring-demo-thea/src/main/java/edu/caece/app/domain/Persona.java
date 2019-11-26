@@ -67,13 +67,16 @@ public class Persona implements Serializable {
 		this.apellido = apellido;
 		this.dni = dni;
 		this.matricula = matricula;
+		this.fotos = new HashSet<Foto>();
+		this.registros = new HashSet<Registro>();
+		this.funciones = new ArrayList<Funcion>();
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

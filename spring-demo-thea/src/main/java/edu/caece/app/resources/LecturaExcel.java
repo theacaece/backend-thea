@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,13 +66,14 @@ public class LecturaExcel {
 			obtenerUsuarios(usuarioRepositorio);
 			obtenerFunciones(funcionRepositorio);
 			obtenerPersonas(personaRepositorio);
-			obtenerFotos(fotoRepositorio);
+			obtenerFotos(personaRepositorio, fotoRepositorio);
 		} catch (Exception e) {
 			System.out.print("method inicializarBD :: " + e.getMessage());
 		}
 	}
 	
-	public void obtenerFotos(IFotoRepositorio fotoRepositorio) {
+	public void obtenerFotos(IPersonaRepositorio personaRepositorio, 
+							 IFotoRepositorio fotoRepositorio) {
 		try {
 			LecturaCarpeta lecturaCarpeta = new LecturaCarpeta();
 			lecturaCarpeta.recorrerCarpetaFotos(fotoRepositorio, personas);
@@ -292,7 +294,9 @@ public class LecturaExcel {
 			for (Persona person: personas.values()) {
 				personRepository.save(person);
 			}
-			//personRepository.findAll().forEach(System.out::println);
+			personRepository.findAll().forEach(System.out::println);
+		} catch (ConstraintViolationException e) {
+			throw new Exception ("method guardarPersonas :: ConstraintViolationException :: " + e.getMessage());
 		} catch (Exception e) {
 			throw new Exception ("method guardarDatosPersonas :: " + e.getMessage());
 		}

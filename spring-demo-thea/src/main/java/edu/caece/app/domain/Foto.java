@@ -34,8 +34,8 @@ public class Foto implements Serializable {
 	@Column(name="nombre_archivo")
 	private String nombreArchivo;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "persona_dni", referencedColumnName = "dni")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "persona_dni", referencedColumnName = "dni", nullable = false)
     private Persona persona;
 
 	public Foto() {
