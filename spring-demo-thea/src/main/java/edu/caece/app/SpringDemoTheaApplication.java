@@ -43,7 +43,7 @@ public class SpringDemoTheaApplication {
 
 		return args -> {
 			Stream.of("Francisco;Ferrari;jferrari;ff@gmail.com;ffff;1#admin",
-					"Javier;Michelson;jmichelson;jm@gmail.com;jjjj;2#user,1#admin",
+					"Javier;Michelson;jmichelson;jm@gmail.com;jjjj;2#user",
 					"Juan;Salinas;jsalinas;js@gmail.com;ssss;2#user,1#admin",
 					"Pablo;Garcia;pgarcia;pg@gmail.com;gggg;1#admin").forEach(alumno -> {
 
