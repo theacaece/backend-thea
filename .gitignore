@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-HELP.md
-target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
@@ -20,17 +17,13 @@ target/
 *.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
 build/
+bin/
+target/
 
 ### VS Code ###
 .vscode/
 =======
-/project.xml
+project.xml
 >>>>>>> branch 'master' of https://github.com/mastengo/backend-thea.git
-/bin/
+bin/
