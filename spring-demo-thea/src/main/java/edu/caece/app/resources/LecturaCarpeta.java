@@ -51,12 +51,11 @@ public class LecturaCarpeta {
 		    	}
 		    }
 		} catch (Exception e) {
-			System.out.println("method recorrerCarpetaFotos :: " + e.getMessage());
+			System.out.println("method leerCarpeta :: " + e.getMessage());
 		}
 	}
 
-	public void recorrerFotos(File carpeta,
-							  HashMap<String, Persona> personas) throws Exception {
+	public void recorrerFotos(File carpeta, HashMap<String, Persona> personas) throws Exception {
 	  try {
 		  File[] archivos = carpeta.listFiles(); // Obtiene fotos de la carpeta 
 		  if (archivos != null && archivos.length != 0) { // Verifica si la Carpeta de Fotos esta Vacia

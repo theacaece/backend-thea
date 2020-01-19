@@ -33,11 +33,11 @@ public class Persona implements Serializable {
 	private String dni;
 
 	@OneToMany(fetch=FetchType.EAGER)
-	@JoinColumn(name = "persona_dni", nullable = false, insertable=false, updatable=false)
+	@JoinColumn(name = "persona_dni", nullable = true)
     private Set<Foto> fotos;
 	
 	@OneToMany(fetch=FetchType.EAGER)
-	@JoinColumn(name = "persona_dni", nullable = false, insertable=false, updatable=false)
+	@JoinColumn(name = "persona_dni", nullable = true)
 	private Set<Registro> registros;
 
 	@ManyToMany(cascade = { CascadeType.MERGE, 

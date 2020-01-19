@@ -1,5 +1,7 @@
 package edu.caece.app;
 
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
@@ -9,10 +11,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 import edu.caece.app.repository.IPersonaRepositorio;
+import edu.caece.app.domain.Persona;
 import edu.caece.app.repository.IFotoRepositorio;
 import edu.caece.app.repository.IFuncionRepositorio;
 import edu.caece.app.repository.IRolRepositorio;
 import edu.caece.app.repository.IUsuarioRepositorio;
+import edu.caece.app.resources.LecturaCarpeta;
 import edu.caece.app.resources.LecturaExcel;
 
 @SpringBootApplication

@@ -66,7 +66,7 @@ public class LecturaExcel {
 			obtenerUsuarios(usuarioRepositorio);
 			obtenerFunciones(funcionRepositorio);
 			obtenerPersonas(personaRepositorio);
-			obtenerFotos(personaRepositorio, fotoRepositorio);
+			//obtenerFotos(personaRepositorio, fotoRepositorio);
 		} catch (Exception e) {
 			System.out.print("method inicializarBD :: " + e.getMessage());
 		}
@@ -203,35 +203,39 @@ public class LecturaExcel {
 	}
 
 	public void leerHojaPersonas() {
-		personas = new HashMap<String, Persona>(); // Creacion de Lista de Personas
-		Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
-		Row fila;
-		rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos 
-		//System.out.println("Lista Personas"); // Se Recorre Cada Fila Hasta el Final
-		while (rowIterator.hasNext()) {
-			fila = rowIterator.next(); // Recorro Fila del Excel
-			Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
-			Cell celda; // Se Recorre Cada Celda de la fila del Excel
-			while (iterador.hasNext()) {
-				Persona persona = new Persona(); // Creo Objeto Persona
-				celda = iterador.next(); // Leo Celda Nombre del Excel
-				persona.setNombre(celda.getStringCellValue());
-				celda = iterador.next(); // Leo Celda Apellido del Excel
-				persona.setApellido(celda.getStringCellValue());
-				celda = iterador.next(); // Leo Celda DNI del Excel
-				String dni = celda.getStringCellValue();
-				persona.setDni(dni);
-				celda = iterador.next(); // Leo Funcion del Excel
-				Long id_funcion = (long) celda.getNumericCellValue();
-				Funcion funcion = funciones.get(id_funcion);
-				persona.addFuncion(funcion);
-				celda = iterador.next(); // Leo Celda Matricula del Excel
-				persona.setMatricula(celda.getStringCellValue());
-				
-				//System.out.println(persona.toString());
-				
-				personas.put(dni, persona); // Agrego a Lista de Personas
+		try {
+			personas = new HashMap<String, Persona>(); // Creacion de Lista de Personas
+			Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
+			Row fila;
+			rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos 
+			//System.out.println("Lista Personas"); // Se Recorre Cada Fila Hasta el Final
+			while (rowIterator.hasNext()) {
+				fila = rowIterator.next(); // Recorro Fila del Excel
+				Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
+				Cell celda; // Se Recorre Cada Celda de la fila del Excel
+				while (iterador.hasNext()) {
+					Persona persona = new Persona(); // Creo Objeto Persona
+					celda = iterador.next(); // Leo Celda Nombre del Excel
+					persona.setNombre(celda.getStringCellValue());
+					celda = iterador.next(); // Leo Celda Apellido del Excel
+					persona.setApellido(celda.getStringCellValue());
+					celda = iterador.next(); // Leo Celda DNI del Excel
+					String dni = celda.getStringCellValue();
+					persona.setDni(dni);
+					celda = iterador.next(); // Leo Funcion del Excel
+					Long id_funcion = (long) celda.getNumericCellValue();
+					Funcion funcion = funciones.get(id_funcion);
+					persona.addFuncion(funcion);
+					celda = iterador.next(); // Leo Celda Matricula del Excel
+					persona.setMatricula(celda.getStringCellValue());
+					
+					//System.out.println(persona.toString());
+					
+					personas.put(dni, persona); // Agrego a Lista de Personas
+				}
 			}
+		} catch (Exception e) {
+			System.out.print("method leerHojaPersonas :: " + e.getMessage());
 		}
 	}
 	
