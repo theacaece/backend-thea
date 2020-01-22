@@ -1,4 +1,4 @@
-package edu.caece.app.controller;
+	package edu.caece.app.controller;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Usuario;
 import edu.caece.app.repository.IUsuarioRepositorio;
+import org.springframework.data.domain.Sort;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -29,8 +30,12 @@ public class UserController {
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public Collection<Usuario> getAll() {
-		return userRepositorio.findAll();
+		return userRepositorio.findAll(sortByApellido());
 	}
+
+    private Sort sortByApellido() {
+        return new Sort(Sort.Direction.ASC, "lastname");
+    }
 	
 	@RequestMapping(value = "/users/edit/{id}", method = RequestMethod.GET)
 	public Optional<Usuario> getById(@PathVariable Long id) {
