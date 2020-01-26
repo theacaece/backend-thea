@@ -158,5 +158,10 @@ public class Usuario {
 		}
 		return rl;
 	}
+
+	public String toString () {
+        String datosUsuario = this.id+this.firstname+this.lastname+this.email+this.username+this.password;
+        return datosUsuario;
+    }
     
 }
