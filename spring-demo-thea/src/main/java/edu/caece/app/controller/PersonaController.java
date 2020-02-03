@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.repository.IPersonaRepositorio;
+import org.springframework.data.domain.Sort;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -26,10 +27,14 @@ public class PersonaController {
 
 	@Autowired
 	private IPersonaRepositorio personaRepositorio;
-	
+
+    private Sort sortByApellido() {
+        return new Sort(Sort.Direction.ASC, "apellido");
+    }
+
 	@RequestMapping(value = "/personas", method = RequestMethod.GET)
 	public Collection<Persona> getAll() {
-		return personaRepositorio.findAll();
+		return personaRepositorio.findAll(sortByApellido());
 	}
 	
 	@RequestMapping(value = "/personas/edit/{id}", method = RequestMethod.GET)

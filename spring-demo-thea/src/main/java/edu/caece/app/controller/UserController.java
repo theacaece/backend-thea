@@ -33,21 +33,21 @@ public class UserController {
 	@Autowired
 	private IUsuarioRepositorio userRepositorio;
 
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public Collection<Usuario> getAll() {
-		return userRepositorio.findAll(sortByApellido());
-	}
-
-    private Sort sortByApellido() {
+    private Sort sortByLastname() {
         return new Sort(Sort.Direction.ASC, "lastname");
     }
+    
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	public Collection<Usuario> getAll() {
+		return userRepositorio.findAll(sortByLastname());
+	}
 	
 	@RequestMapping(value = "/users/edit/{id}", method = RequestMethod.GET)
 	public Optional<Usuario> getById(@PathVariable Long id) {
 		return userRepositorio.findById(id);
 	}
-	
-	@PostMapping("/users/save")
+
+	@RequestMapping(value = "/users/save", method = RequestMethod.POST)
 	public ResponseEntity<Object> save(@RequestBody Usuario user) {
 		log.info(user.toString());
 		log.info(Constantes.INFO_USUARIO_SAVE);
@@ -92,7 +92,7 @@ public class UserController {
 	}
 
 	@GetMapping("users/exists/{username}")
-	public ResponseEntity<Boolean> existsByUsername(@PathVariable String username) {
-		return new ResponseEntity<>(userRepositorio.existsByUsername(username), HttpStatus.OK);
+	public boolean existsByUsername(@PathVariable String username) {
+		return userRepositorio.existsByUsername(username);
 	}
 }

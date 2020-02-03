@@ -103,7 +103,7 @@ public class Usuario {
 	}
 
 	public void setFirstname(String firstName) {
-		this.firstname = firstName;
+		this.firstname = firstName.toUpperCase();
 	}
 
 	public String getLastname() {
@@ -111,7 +111,7 @@ public class Usuario {
 	}
 
 	public void setLastname(String lastName) {
-		this.lastname = lastName;
+		this.lastname = lastName.toUpperCase();
 	}
 
 	public List<Rol> getRoles() {
