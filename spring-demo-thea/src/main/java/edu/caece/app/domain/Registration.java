@@ -1,5 +1,5 @@
 package edu.caece.app.domain;
 
-public class Record {
+public class Registration {
 	
 }
