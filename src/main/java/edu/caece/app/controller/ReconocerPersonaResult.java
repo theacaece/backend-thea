@@ -1,6 +1,8 @@
 package edu.caece.app.controller;
 
-public class DetectionResult {
+public class ReconocerPersonaResult {
+	
+	private boolean recognized = false;
 	
 	private boolean authorized = false;
 	
@@ -8,14 +10,22 @@ public class DetectionResult {
 	
 	private String message;
 	
-	public DetectionResult() {
+	public ReconocerPersonaResult() {
 	}
 	
-	public DetectionResult(boolean authorized, String name, String message) {
+	public ReconocerPersonaResult(boolean recognized, boolean authorized, String name, String message) {
 		super();
+		this.recognized = recognized;
 		this.authorized = authorized;
 		this.name = name;
 		this.message = message;
+	}
+	
+	public boolean isRecognized() {
+		return recognized;
+	}
+	public void setRecognized(boolean recognized) {
+		this.recognized = recognized;
 	}
 	public boolean isAuthorized() {
 		return authorized;

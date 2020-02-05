@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.caece.app.config.Hash;
 import edu.caece.app.domain.User;
-import edu.caece.app.repository.IUserRepository;
+import edu.caece.app.repository.UserRepository;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
 	@Autowired
-	private IUserRepository repository;
+	private UserRepository repository;
 
 	@RequestMapping(value = "/users/list", method = RequestMethod.GET)
 	public Collection<User> get() {

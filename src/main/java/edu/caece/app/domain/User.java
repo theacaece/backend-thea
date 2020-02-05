@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
 
 	@Id
 	@Column(name = "id")
@@ -38,11 +38,13 @@ public class User {
 	@Column(name = "email", nullable = false)
 	private String email;
 
+	/**
+	 * TODO: SHA-256 password y mecanísmo para login de usuario con el valor calculado
+	 */
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
-			CascadeType.DETACH }, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinTable(name = "users_roles", 
 				joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
@@ -119,41 +121,14 @@ public class User {
 	public List<Role> getRoles() {
 		return roles;
 	}
-
 	
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 		this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
-//	public String getRolesSeparetedComma() {
-//
-//		String result = "";
-//		int i = 1;
-//
-//		for (Role role : roles) {
-//
-//			result += role.getName();
-//
-//			if (i < roles.size()) {
-//				result += ", ";
-//				i++;
-//			}
-//		}
-//
-//		return result;
-//	}
 	@JsonIgnore
 	public String[] getRolesToArray() {
-
-		String[] rl = new String[roles.size()];
-		int i = 0;
-
-		for (Role r : roles) {
-			rl[i] = r.getName();
-			i++;
-		}
-		
-		return rl;
+		return this.roles.stream().toArray(String[]::new);
 	}	
 }
