@@ -1,4 +1,4 @@
-package edu.caece.app.controller;
+package edu.caece.app.controller.dto;
 
 public class ReconocerPersonaResult {
 	

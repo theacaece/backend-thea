@@ -1,12 +1,11 @@
 package edu.caece.app;
 
+import java.util.Locale;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
-import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,8 +14,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import edu.caece.app.domain.Function;
 import edu.caece.app.domain.Person;
 import edu.caece.app.repository.FunctionRepository;
 import edu.caece.app.repository.PersonRepository;
@@ -30,6 +30,13 @@ public class TheaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TheaApplication.class, args);
+	}
+	
+	@Bean
+	public LocaleResolver localeResolver() {
+	    SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
+	    sessionLocaleResolver.setDefaultLocale(Locale.getDefault());
+	    return sessionLocaleResolver;
 	}
 
 	@Bean

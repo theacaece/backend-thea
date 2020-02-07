@@ -1,6 +1,7 @@
 package edu.caece.app.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,8 +14,17 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "roles")
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class Role {
 
 	@Id

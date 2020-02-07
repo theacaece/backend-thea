@@ -1,6 +1,5 @@
 package edu.caece.app.controller;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.caece.app.controller.dto.ReconocerPersonaResult;
 import edu.caece.app.domain.Person;
 import edu.caece.app.service.ReconocimientoService;
 
@@ -31,7 +31,7 @@ public class ReconocedorController {
 	@RequestMapping(value = "/reconocer", method = RequestMethod.GET)
 	public ReconocerPersonaResult reconocer(@RequestBody byte[] payload) {
 		if (this.isValidImage(payload)) {
-			Person persona = reconocimientoService.reconocer(payload);
+			Person persona = reconocimientoService.recognize(payload);
 			if (persona!= null) {
 				return new ReconocerPersonaResult(true, persona.isEntryAllowed(), persona.getFullName(), "Bienvenido a la facultad");
 			}

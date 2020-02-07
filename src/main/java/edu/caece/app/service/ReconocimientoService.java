@@ -7,6 +7,6 @@ import edu.caece.app.domain.Person;
 @Service
 public interface ReconocimientoService {
 
-	public Person reconocer(byte[] imagenCara);
+	public Person recognize(byte[] imagenCara);
 
 }
