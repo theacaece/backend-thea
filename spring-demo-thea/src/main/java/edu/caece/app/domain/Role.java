@@ -1,7 +1,7 @@
 package edu.caece.app.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +19,7 @@ public class Role {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Column(name = "name", nullable = false, unique = true)
@@ -27,17 +27,19 @@ public class Role {
 
 	@ManyToMany(mappedBy = "roles")
 	@JsonIgnore
-	private List<User> users = new ArrayList<User>();
+	private Set<User> users;
 
 	public Role() {
-
+		this.users = new HashSet<User>();
 	}
 
 	public Role(String name) {
+		this.users = new HashSet<User>();
 		this.name = name;
 	}
 
 	public Role(Long id, String name) {
+		this.users = new HashSet<User>();
 		this.id = id;
 		this.name = name;
 	}
@@ -58,11 +60,11 @@ public class Role {
 		this.name = name;
 	}
 
-	public List<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 }

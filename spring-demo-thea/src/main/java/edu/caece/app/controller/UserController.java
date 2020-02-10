@@ -39,6 +39,7 @@ public class UserController {
 			x.setPassword(null);
 			users.add(x);
 		});
+		
 		return users.stream().collect(Collectors.toList());
 	}
 
@@ -90,7 +91,7 @@ public class UserController {
 
 		if (_userData.isPresent()) {
 			repository.deleteById(id);
-			return new ResponseEntity<String>("el usuario ha sido eliminado!", HttpStatus.OK);
+			return new ResponseEntity<String>("El usuario ha sido eliminado!", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Usuario no encontrado!", HttpStatus.NOT_FOUND);
 		}

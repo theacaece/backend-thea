@@ -1,7 +1,7 @@
 package edu.caece.app.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.CascadeType;
@@ -23,7 +23,7 @@ public class User {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Column(name = "firstName", nullable = false)
@@ -43,21 +43,19 @@ public class User {
 
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
 			CascadeType.DETACH }, fetch = FetchType.EAGER)
-	@JoinTable(name = "users_roles", 
-				joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    //@JsonIgnore
-	private List<Role> roles;
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	//@JsonIgnore
+	private Set<Role> roles;
 
 	public User() {
-		this.roles = new ArrayList<Role>();
+		this.roles = new HashSet<Role>();
 	}
 
 	public User(String name, String... roles) {
 		String[] rl = new String[2];
 		this.username = name;
 
-		this.roles = new ArrayList<Role>();
+		this.roles = new HashSet<Role>();
 
 		for (int i = 0; i < roles.length; i++) {
 			rl = roles[i].split("#");
@@ -75,7 +73,7 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() { 
+	public String getUsername() {
 		return username;
 	}
 
@@ -115,13 +113,11 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 		this.roles.forEach(x -> x.getUsers().add(this));
 	}
@@ -143,6 +139,7 @@ public class User {
 //
 //		return result;
 //	}
+	
 	@JsonIgnore
 	public String[] getRolesToArray() {
 
@@ -153,7 +150,7 @@ public class User {
 			rl[i] = r.getName();
 			i++;
 		}
-		
+
 		return rl;
-	}	
+	}
 }
