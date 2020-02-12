@@ -16,7 +16,7 @@ public class UserLogPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 	
 	@Column(name = "user_access_date")
