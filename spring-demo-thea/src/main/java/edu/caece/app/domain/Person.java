@@ -5,10 +5,10 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -34,14 +34,14 @@ public class Person {
 	private long registrationNumber;
 	
 	
-	@OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
-	private Set<PersonPhoto> photos;
-	
-	
+//	@OneToMany(fetch=FetchType.EAGER)
+//	private Set<PersonPhoto> photos;
+//	
+	@OneToMany(fetch=FetchType.EAGER)
 	private Set<PersonLog> registrations;
 	
 	
-	private Set<Function> functions;
+	//private Set<Function> functions;
 	
 	
 }
