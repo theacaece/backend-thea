@@ -1,7 +1,5 @@
 package edu.caece.app;
 
-import java.util.HashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
@@ -10,13 +8,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import edu.caece.app.repository.IPersonaRepositorio;
-import edu.caece.app.domain.Persona;
 import edu.caece.app.repository.IFotoRepositorio;
 import edu.caece.app.repository.IFuncionRepositorio;
+import edu.caece.app.repository.IPersonaRepositorio;
+import edu.caece.app.repository.IRegistroRepositorio;
 import edu.caece.app.repository.IRolRepositorio;
 import edu.caece.app.repository.IUsuarioRepositorio;
-import edu.caece.app.resources.LecturaCarpeta;
 import edu.caece.app.resources.LecturaExcel;
 
 @SpringBootApplication
@@ -30,7 +27,7 @@ public class SpringDemoTheaApplication {
 	
 	protected final Logger log = LoggerFactory.getLogger(getClass());
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		try {
 			SpringApplication.run(SpringDemoTheaApplication.class, args);
 			
@@ -42,7 +39,7 @@ public class SpringDemoTheaApplication {
 			//lecturaCarpeta.leerCarpeta(personas);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Exception ("method main() :: " + e.getMessage());
 		}
 	}
 
@@ -51,6 +48,7 @@ public class SpringDemoTheaApplication {
 			               IRolRepositorio rolRepositorio,
 			               IPersonaRepositorio personaRepositorio,
 			               IFuncionRepositorio funcionRepositorio,
+			               IRegistroRepositorio registroRepositorio,
 			               IFotoRepositorio fotoRepositorio) throws Exception {
 		return args -> {
 	
@@ -58,6 +56,7 @@ public class SpringDemoTheaApplication {
 						  rolRepositorio,
 						  personaRepositorio,
 						  funcionRepositorio,
+						  registroRepositorio,
 						  fotoRepositorio);
 			log.info(Constantes.LOG_BBDD);
 		};
@@ -67,6 +66,7 @@ public class SpringDemoTheaApplication {
             				  IRolRepositorio rolRepositorio,
             				  IPersonaRepositorio personaRepositorio,
             				  IFuncionRepositorio funcionRepositorio,
+            				  IRegistroRepositorio registroRepositorio,
             				  IFotoRepositorio fotoRepositorio) throws Exception {
 		try {
 			LecturaExcel lecturaExcel = new LecturaExcel();
@@ -74,9 +74,11 @@ public class SpringDemoTheaApplication {
 									   rolRepositorio,
 									   personaRepositorio,
 									   funcionRepositorio,
+									   registroRepositorio,
 									   fotoRepositorio);
+			System.out.print("Fin method inicializarBD() ");
 		} catch (Exception e) {
-			throw new Exception ("method inicializarBD :: " + e.getMessage());
+			throw new Exception ("Error method inicializarBD() :: " + e.getMessage());
 		}
 	}
 

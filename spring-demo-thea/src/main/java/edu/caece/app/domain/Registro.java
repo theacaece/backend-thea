@@ -1,22 +1,22 @@
 package edu.caece.app.domain;
-
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
+import lombok.Data;
+
 @Entity(name = "Registro")
-@Table(name="registro") 
+@Table(name="Registro") 
+@DynamicUpdate
+@Data
 public class Registro implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -25,47 +25,62 @@ public class Registro implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "id", updatable = false, nullable = false)
-	private Integer id = 0;
+	private Long id;
 	
-	@Column(name = "fecha_ingreso")
-	private String fechaIngreso;
+	@Column(name = "nombre", nullable = false)
+	private String nombre;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "persona_dni", referencedColumnName = "dni")
-    private Persona persona;
+	@Column(name = "apellido", nullable = false)
+	private String apellido;
+	
+	@Column(name = "dni")
+	private String dni;
+
+	@Column(name = "matricula")
+	private String matricula;
 	
 	public Registro() {
-		
+
 	}
 	
-	public Registro(Persona persona,
-					String fechaIngreso) {
-		this.persona = persona;
-		this.fechaIngreso = fechaIngreso;
-	}
-
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public Persona getPersona() {
-		return persona;
+	
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setPersona(Persona persona) {
-		this.persona = persona;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public String getFechaIngreso() {
-		return fechaIngreso;
+	public String getApellido() {
+		return apellido;
 	}
 
-	public void setFechaIngreso(String fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 
 }

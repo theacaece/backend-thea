@@ -10,9 +10,12 @@ import javax.persistence.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
+import lombok.Data;
+
 @Entity(name = "Persona")
 @Table(name="persona") 
 @DynamicUpdate
+@Data
 public class Persona implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -158,15 +161,6 @@ public class Persona implements Serializable {
  
     public void removeFoto(Registro registro) {
     	registros.remove(registro);
-    }
-	
-	public String toString (){
-        String datosPersona = "Persona::" + 
-        					  nombre + ":" + 
-        					  apellido + ":" + 
-        					  dni + ":" + 
-        					  matricula;
-        return datosPersona;
     }
 
 }
