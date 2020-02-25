@@ -32,6 +32,7 @@ public class PersonPhoto {
 
 	public PersonPhoto() {
 		this.id = new PersonPhotoPK();
+		this.person = new Person();
 		id.setPhotoId(Hash.getId());
 	}
 	

@@ -44,7 +44,7 @@ public class User {
 
 	@OneToMany(mappedBy = "user")
 	private Set<UserPhoto> photos;
-	
+
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
 			CascadeType.DETACH }, fetch = FetchType.EAGER)
@@ -52,14 +52,15 @@ public class User {
 
 	public User() {
 		this.roles = new HashSet<Role>();
+		this.photos = new HashSet<UserPhoto>();
 	}
 
 	public User(String name, String... roles) {
-		
-		String[] rl = new String[2];
-		this.username = name;
 
+		String[] rl = new String[2];
 		this.roles = new HashSet<Role>();
+		this.photos = new HashSet<UserPhoto>();
+		this.username = name;
 
 		for (int i = 0; i < roles.length; i++) {
 			rl = roles[i].split("#");

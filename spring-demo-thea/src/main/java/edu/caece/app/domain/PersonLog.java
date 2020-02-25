@@ -35,6 +35,7 @@ public class PersonLog {
 		
 	public PersonLog() {
 		this.id = new PersonLogPK();
+		this.person = new Person();
 		id.setLogId(Hash.getId());
 	}
 

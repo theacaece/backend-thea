@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import edu.caece.app.domain.PersonLog;
 
-public interface IPersonLogRepository extends JpaRepository<PersonLog, Long> {
+public interface IPersonLogRepository extends JpaRepository<PersonLog, String> {
 
 }
