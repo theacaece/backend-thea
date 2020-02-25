@@ -54,7 +54,7 @@ public class JwtAuthenticationController {
 		
 		User user = repository_users.findByUsername(authenticationRequest.getUsername());
 				
-		log.setUser(user);
+		log.setUser(user); //
 		log.setAccessDate(new Date());
 		log.setMessage("INGRESO AL SISTEMA");
 		
