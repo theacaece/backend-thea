@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "functions")
 public class Function {
@@ -24,7 +26,8 @@ public class Function {
 	@Column(name = "name")
 	private String name;
 
-	@ManyToMany(mappedBy = "functions")
+	@ManyToMany(mappedBy = "functions", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<Person> person;
 
 	public Function() {
