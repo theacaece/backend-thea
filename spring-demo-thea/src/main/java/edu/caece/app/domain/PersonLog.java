@@ -53,6 +53,7 @@ public class PersonLog {
 
 	public void setPerson(Person person) {
 		this.person = person;
+		this.id.setPersonId(person.getId());
 	}
 
 	public Date getAccessDate() {

@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import edu.caece.app.config.Hash;
 
 @Entity
@@ -25,6 +27,7 @@ public class UserLog {
 	@ManyToOne
 	@MapsId("user_id")
 	@JoinColumn(name = "user_id")
+	@JsonIgnore
 	private User user;
 	
 	@Column(name = "message", nullable = true, length = 150)
@@ -54,6 +57,7 @@ public class UserLog {
 
 	public void setUser(User user) {
 		this.user = user;
+		this.id.setUserId(user.getId());
 	}
 
 	public String getMessage() {

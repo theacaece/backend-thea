@@ -24,7 +24,7 @@ public class Function {
 	@Column(name = "name")
 	private String name;
 
-	@ManyToMany(mappedBy = "functions", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "functions")
 	private Set<Person> person;
 
 	public Function() {

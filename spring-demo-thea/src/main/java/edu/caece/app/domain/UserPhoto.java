@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import edu.caece.app.config.Hash;
 
 @Entity
@@ -23,6 +25,7 @@ public class UserPhoto {
 	@ManyToOne
 	@MapsId("user_id")
 	@JoinColumn(name = "user_id")
+	@JsonIgnore
 	private User user;
 	
 	@Column(name = "photo")
@@ -49,6 +52,7 @@ public class UserPhoto {
 
 	public void setUser(User user) {
 		this.user = user;
+		this.id.setUserId(user.getId());
 	}
 
 	public byte[] getPhoto() {

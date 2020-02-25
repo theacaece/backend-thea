@@ -50,6 +50,7 @@ public class PersonPhoto {
 
 	public void setPerson(Person person) {
 		this.person = person;
+		this.id.setPersonId(person.getId());
 	}
 
 	public byte[] getPhoto() {

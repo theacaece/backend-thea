@@ -42,9 +42,12 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<UserPhoto> photos;
 
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	private Set<UserLog> logs;
+	
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
 			CascadeType.DETACH }, fetch = FetchType.EAGER)
@@ -133,6 +136,14 @@ public class User {
 
 	public void setPhotos(Set<UserPhoto> photos) {
 		this.photos = photos;
+	}
+
+	public Set<UserLog> getLogs() {
+		return logs;
+	}
+
+	public void setLogs(Set<UserLog> logs) {
+		this.logs = logs;
 	}
 
 	@JsonIgnore
