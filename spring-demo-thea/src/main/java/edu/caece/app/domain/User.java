@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,10 +42,12 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 
+	@OneToMany(mappedBy = "user")
+	private Set<UserPhoto> photos;
+	
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
 			CascadeType.DETACH }, fetch = FetchType.EAGER)
-	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-	//@JsonIgnore
 	private Set<Role> roles;
 
 	public User() {
@@ -52,6 +55,7 @@ public class User {
 	}
 
 	public User(String name, String... roles) {
+		
 		String[] rl = new String[2];
 		this.username = name;
 
@@ -62,7 +66,7 @@ public class User {
 			this.roles.add(new Role(Long.parseLong(rl[0]), rl[1].toUpperCase()));
 		}
 
-		this.roles.forEach(x -> x.getUsers().add(this));
+		// this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
 	public long getId() {
@@ -119,27 +123,17 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
-		this.roles.forEach(x -> x.getUsers().add(this));
+		// this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
-//	public String getRolesSeparetedComma() {
-//
-//		String result = "";
-//		int i = 1;
-//
-//		for (Role role : roles) {
-//
-//			result += role.getName();
-//
-//			if (i < roles.size()) {
-//				result += ", ";
-//				i++;
-//			}
-//		}
-//
-//		return result;
-//	}
-	
+	public Set<UserPhoto> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(Set<UserPhoto> photos) {
+		this.photos = photos;
+	}
+
 	@JsonIgnore
 	public String[] getRolesToArray() {
 

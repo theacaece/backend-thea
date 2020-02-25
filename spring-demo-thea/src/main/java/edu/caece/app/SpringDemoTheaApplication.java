@@ -33,12 +33,11 @@ public class SpringDemoTheaApplication {
 		roles.add(new Role(2L, "USER"));
 
 		repository_role.saveAll(roles);
-
 		repository_role.findAll().forEach(x -> {
 
 			System.out.print(x.getId() + " | " + x.getName());
 			System.out.println();
-
+			
 		});
 
 		return args -> {

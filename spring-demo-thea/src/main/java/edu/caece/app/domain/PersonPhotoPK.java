@@ -6,34 +6,33 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class PersonLogPK implements Serializable{
-
+public class PersonPhotoPK implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "log_id")
-	private String logId;
+	@Column(name = "photo_id")
+	private String photoId;
 	
 	@Column(name = "person_id")
 	private long personId;
 	
+	public PersonPhotoPK() {
 	
-	public PersonLogPK() {
-		
-	}
-	
-	public String getLogId() {
-		return logId;
 	}
 
-	public void setLogId(String logId) {
-		this.logId = logId;
+	public String getPhotoId() {
+		return photoId;
 	}
 
-	public Long getPersonId() {
+	public void setPhotoId(String photoId) {
+		this.photoId = photoId;
+	}
+
+	public long getPersonId() {
 		return personId;
 	}
 
-	public void setPersonId(Long personId) {
+	public void setPersonId(long personId) {
 		this.personId = personId;
 	}
 
@@ -41,8 +40,8 @@ public class PersonLogPK implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((logId == null) ? 0 : logId.hashCode());
 		result = prime * result + (int) (personId ^ (personId >>> 32));
+		result = prime * result + ((photoId == null) ? 0 : photoId.hashCode());
 		return result;
 	}
 
@@ -54,13 +53,13 @@ public class PersonLogPK implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PersonLogPK other = (PersonLogPK) obj;
-		if (logId == null) {
-			if (other.logId != null)
-				return false;
-		} else if (!logId.equals(other.logId))
-			return false;
+		PersonPhotoPK other = (PersonPhotoPK) obj;
 		if (personId != other.personId)
+			return false;
+		if (photoId == null) {
+			if (other.photoId != null)
+				return false;
+		} else if (!photoId.equals(other.photoId))
 			return false;
 		return true;
 	}
