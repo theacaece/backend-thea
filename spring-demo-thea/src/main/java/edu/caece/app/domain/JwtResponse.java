@@ -32,5 +32,4 @@ public class JwtResponse implements Serializable {
 		this.jwttoken = jwttoken;
 		this.userDetails = userDetail;
 	}
-
 }

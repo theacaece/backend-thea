@@ -1,7 +1,7 @@
 package edu.caece.app.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.CascadeType;
@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,7 +24,7 @@ public class User {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Column(name = "firstName", nullable = false)
@@ -41,30 +42,35 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	private Set<UserPhoto> photos;
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	private Set<UserLog> logs;
+	
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
 			CascadeType.DETACH }, fetch = FetchType.EAGER)
-	@JoinTable(name = "users_roles", 
-				joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    //@JsonIgnore
-	private List<Role> roles;
+	private Set<Role> roles;
 
 	public User() {
-		this.roles = new ArrayList<Role>();
+		this.roles = new HashSet<Role>();
+		this.photos = new HashSet<UserPhoto>();
 	}
 
 	public User(String name, String... roles) {
-		String[] rl = new String[2];
-		this.username = name;
 
-		this.roles = new ArrayList<Role>();
+		String[] rl = new String[2];
+		this.roles = new HashSet<Role>();
+		this.photos = new HashSet<UserPhoto>();
+		this.username = name;
 
 		for (int i = 0; i < roles.length; i++) {
 			rl = roles[i].split("#");
 			this.roles.add(new Role(Long.parseLong(rl[0]), rl[1].toUpperCase()));
 		}
 
-		this.roles.forEach(x -> x.getUsers().add(this));
+		// this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
 	public long getId() {
@@ -75,7 +81,7 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() { 
+	public String getUsername() {
 		return username;
 	}
 
@@ -115,34 +121,31 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
-		this.roles.forEach(x -> x.getUsers().add(this));
+		// this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
-//	public String getRolesSeparetedComma() {
-//
-//		String result = "";
-//		int i = 1;
-//
-//		for (Role role : roles) {
-//
-//			result += role.getName();
-//
-//			if (i < roles.size()) {
-//				result += ", ";
-//				i++;
-//			}
-//		}
-//
-//		return result;
-//	}
+	public Set<UserPhoto> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(Set<UserPhoto> photos) {
+		this.photos = photos;
+	}
+
+	public Set<UserLog> getLogs() {
+		return logs;
+	}
+
+	public void setLogs(Set<UserLog> logs) {
+		this.logs = logs;
+	}
+
 	@JsonIgnore
 	public String[] getRolesToArray() {
 
@@ -153,7 +156,7 @@ public class User {
 			rl[i] = r.getName();
 			i++;
 		}
-		
+
 		return rl;
-	}	
+	}
 }
