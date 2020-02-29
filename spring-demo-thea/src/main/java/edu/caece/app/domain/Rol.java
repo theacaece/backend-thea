@@ -2,7 +2,6 @@ package edu.caece.app.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,62 +9,62 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.GenericGenerator;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 @Entity(name = "Rol")
 @Table(name = "rol")
+@Data
 public class Rol {
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
-    @Column(name = "id", updatable = false, nullable = false)
-	private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+  @GenericGenerator(name = "native", strategy = "native")
+  @Column(name = "id", updatable = false, nullable = false)
+  private long id;
 
-	@Column(name = "name", nullable = false, unique = true)
-	private String name;
+  @Column(name = "name", nullable = false, unique = true)
+  private String name;
 
-	@ManyToMany(mappedBy = "roles")
-	@JsonIgnore
-	private List<Usuario> usuarios;
-	
-	public Rol() {
-		this.usuarios = new ArrayList<Usuario>();
-	}
+  @ManyToMany(mappedBy = "roles")
+  @JsonIgnore
+  private List<Usuario> usuarios;
 
-	public Rol(String nombre) {
-		this.name = nombre;
-	}
-	
-	public Rol(long id, String nombre) {
-		this.id = id;
-		this.name = nombre;
-	}
+  public Rol() {
+    this.usuarios = new ArrayList<Usuario>();
+  }
 
-	public long getId() {
-		return id;
-	}
+  public Rol(String nombre) {
+    this.name = nombre;
+  }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+  public Rol(long id, String nombre) {
+    this.id = id;
+    this.name = nombre;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public long getId() {
+    return id;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setId(long id) {
+    this.id = id;
+  }
 
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setUsuarios(List<Usuario> users) {
-		this.usuarios = users;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public List<Usuario> getUsuarios() {
+    return usuarios;
+  }
+
+  public void setUsuarios(List<Usuario> users) {
+    this.usuarios = users;
+  }
 }

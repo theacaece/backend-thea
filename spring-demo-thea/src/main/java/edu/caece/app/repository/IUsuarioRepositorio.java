@@ -5,8 +5,8 @@ import edu.caece.app.domain.Usuario;
 
 public interface IUsuarioRepositorio extends JpaRepository<Usuario, Long> {
 
-	Usuario findByUsername(String usuario);
-	
-	boolean existsByUsername(String usuario);
-		
+  Usuario findByUsername(String usuario);
+
+  boolean existsByUsername(String usuario);
+
 }
