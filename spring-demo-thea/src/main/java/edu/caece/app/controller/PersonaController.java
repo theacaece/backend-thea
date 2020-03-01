@@ -48,7 +48,7 @@ public class PersonaController {
     if (!existe_dni) {
       return new ResponseEntity<>(Constantes.ERROR_MATRICULA_EXISTENTE, HttpStatus.NOT_FOUND);
     } else {
-      return new ResponseEntity<>(Constantes.ERROR_DNI_EXISTENTE, HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(Constantes.INFO_DNI_EXISTENTE, HttpStatus.NOT_FOUND);
     }
   }
 

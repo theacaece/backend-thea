@@ -28,8 +28,11 @@ public class Constantes {
   public static final String ERROR_PASSWORD_INVALIDA = "Contraseña inválida";
 
   // ERRORES PERSONAS
+  public static final String INFO_PERSONA_EXISTENTE = "Persona encontrada.";
+  public static final String INFO_DNI_EXISTENTE = "DNI indicado encontrado.";
+
   public static final String ERROR_PERSONA_INEXISTENTE = "Persona no encontrada.";
-  public static final String ERROR_DNI_EXISTENTE = "DNI indicado existente";
+  public static final String ERROR_DNI_INEXISTENTE = "DNI indicado inexistente";
   public static final String ERROR_MATRICULA_EXISTENTE = "Matricula indicada existente";
 
   // ERRORES USUARIOS

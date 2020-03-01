@@ -33,7 +33,6 @@ public class SpringDemoTheaApplication {
       // HashMap<String, Persona> personas = new HashMap<String, Persona>();
       // LecturaCarpeta lecturaCarpeta = new LecturaCarpeta();
       // lecturaCarpeta.leerCarpeta(personas);
-
     } catch (Exception e) {
       throw new Exception("method main() :: " + e.getMessage());
     }

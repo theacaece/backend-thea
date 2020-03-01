@@ -11,16 +11,14 @@ import edu.caece.app.domain.Usuario;
 public interface IRegistroRepositorio extends JpaRepository<Registro, Long> {
 
   @Modifying
-  @Query("UPDATE Registro r SET r.nombre = :nombre, r.apellido = :apellido, r.dni = :dni, r.matricula = :matricula where r.id = :id")
+  @Query("UPDATE Registro r SET r.nombre = :nombre, r.apellido = :apellido, r.dni = :dni, r.fechaIngreso = :fechaIngreso where r.id = :id")
   void updateRegistro(@Param("nombre") String nombre, @Param("apellido") String apellido,
-      @Param("dni") String dni, @Param("matricula") String matricula, @Param("id") Long id);
+      @Param("dni") String dni, @Param("fechaIngreso") String fechaIngreso, @Param("id") Long id);
 
   Optional<Registro> getRegistroById(Long id);
 
   Usuario findByDni(String dni);
 
   boolean existsByDni(String dni);
-
-  boolean existsByMatricula(String dni);
 
 }

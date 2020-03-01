@@ -283,11 +283,9 @@ public class LecturaExcel {
           celda = iterador.next(); // Leo Celda DNI del Excel
           String dni = celda.getStringCellValue();
           registro.setDni(dni);
-          celda = iterador.next(); // Leo Celda Matricula del Excel
-          registro.setMatricula(celda.getStringCellValue());
-
+          celda = iterador.next(); // Leo Celda Fecha Ingreso del Excel
+          registro.setFechaIngreso(FuncionesUtiles.obtenerFecha(celda.getStringCellValue()));
           System.out.println(registro.toString());
-
           registros.put(dni, registro); // Agrego a Lista de Registros
         }
       }

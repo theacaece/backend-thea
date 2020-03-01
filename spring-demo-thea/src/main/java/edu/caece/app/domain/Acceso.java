@@ -21,7 +21,7 @@ public class Acceso implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
   @GenericGenerator(name = "native", strategy = "native")
   @Column(name = "id", updatable = false, nullable = false)
-  private Integer id = 0;
+  private Integer id;
 
   @Column(name = "fecha_acceso")
   private String fechaAcceso;

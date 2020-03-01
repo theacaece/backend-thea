@@ -1,12 +1,15 @@
 package edu.caece.app.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
@@ -34,18 +37,19 @@ public class Registro implements Serializable {
   @Column(name = "dni")
   private String dni;
 
-  @Column(name = "matricula")
-  private String matricula;
+  @Column(name = "fechaIngreso", nullable = false)
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date fechaIngreso;
 
   public Registro() {
 
   }
 
-  public Registro(String nombre, String apellido, String dni, String matricula) {
+  public Registro(String nombre, String apellido, String dni, Date fechaIngreso) {
     this.nombre = nombre;
     this.apellido = apellido;
     this.dni = dni;
-    this.matricula = matricula;
+    this.fechaIngreso = fechaIngreso;
   }
 
   public Long getId() {
@@ -80,12 +84,12 @@ public class Registro implements Serializable {
     this.dni = dni;
   }
 
-  public String getMatricula() {
-    return matricula;
+  public Date getFechaIngreso() {
+    return fechaIngreso;
   }
 
-  public void setMatricula(String matricula) {
-    this.matricula = matricula;
+  public void setFechaIngreso(Date fecha_ingreso) {
+    this.fechaIngreso = fecha_ingreso;
   }
 
 }
