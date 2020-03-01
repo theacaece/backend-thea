@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Usuario;
 import edu.caece.app.repository.IUsuarioRepositorio;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class UserController {
 
   protected final Logger log = LoggerFactory.getLogger(getClass());

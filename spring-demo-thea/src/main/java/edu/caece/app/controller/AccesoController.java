@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.domain.Acceso;
 import edu.caece.app.repository.IAccesoRepositorio;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class AccesoController {
 
   @Autowired

@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Foto;
 import edu.caece.app.repository.IFotoRepositorio;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class FotoController {
 
   protected final Logger log = LoggerFactory.getLogger(getClass());

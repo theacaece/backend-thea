@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.repository.IPersonaRepositorio;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class PersonaController {
 
   @Autowired
@@ -41,15 +43,10 @@ public class PersonaController {
   }
 
   @PostMapping("/personas/save")
-  public ResponseEntity<Object> save(@RequestBody Persona persona) {
-    boolean existe_dni = personaRepositorio.existsByDni(persona.getDni());
-    boolean existe_matricula = personaRepositorio.existsByMatricula(persona.getMatricula());
+  public ResponseEntity<Object> save(@RequestBody String dni) {
+    boolean existe_dni = personaRepositorio.existsByDni(dni);
     if (!existe_dni) {
-      if (!existe_matricula) {
-        return new ResponseEntity<>(personaRepositorio.save(persona), HttpStatus.OK);
-      } else {
-        return new ResponseEntity<>(Constantes.ERROR_MATRICULA_EXISTENTE, HttpStatus.NOT_FOUND);
-      }
+      return new ResponseEntity<>(Constantes.ERROR_MATRICULA_EXISTENTE, HttpStatus.NOT_FOUND);
     } else {
       return new ResponseEntity<>(Constantes.ERROR_DNI_EXISTENTE, HttpStatus.NOT_FOUND);
     }

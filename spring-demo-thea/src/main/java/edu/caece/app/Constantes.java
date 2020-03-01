@@ -9,10 +9,13 @@ public class Constantes {
   public static final String LOG_BBDD =
       "Se inicializaron los datos en la base de datos correctamente.";
 
+  public static final String INFO_REGISTRO_ALL = "OBTIENE REGISTROS";
+  public static final String INFO_REGISTRO_SAVE = "AGREGA REGISTRO";
+
+  public static final String INFO_USUARIO_ALL = "OBTIENE USUARIOS";
   public static final String INFO_USUARIO_SAVE = "AGREGA USUARIO";
   public static final String INFO_USUARIO_DELETE = "ELIMINA USUARIO";
   public static final String INFO_USUARIO_UPDATE = "MODIFICA USUARIO";
-
 
   // ERRORES GENERICOS
   public static final String ERROR_AUTENTICACION = "Error de autenticación";

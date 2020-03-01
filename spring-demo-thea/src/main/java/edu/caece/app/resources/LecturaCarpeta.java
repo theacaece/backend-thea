@@ -15,7 +15,7 @@ public class LecturaCarpeta {
 
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
-  protected String RUTA_CSV = "/src/main/resources/bd/TP-FINAL/Fotos"; // RUTA DENTRO DEL MISMO
+  protected String RUTA_CSV = "/src/main/resources/bd/TP-FINAL/Fotos"; // RUTA EN EL MISMO
                                                                        // PROYECTO
   protected String rutaArchivo = "";
 

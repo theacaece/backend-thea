@@ -38,7 +38,7 @@ public class LecturaExcel {
   protected int SOLAPA_FUNCIONES = 1;
   protected int SOLAPA_USUARIOS = 2;
   protected int SOLAPA_PERSONAS = 3;
-  protected int SOLAPA_REGISTROS = 3;
+  protected int SOLAPA_REGISTROS = 4;
 
   HashMap<Long, Rol> roles = new HashMap<Long, Rol>();
   HashMap<Long, Funcion> funciones = new HashMap<Long, Funcion>();
@@ -275,7 +275,7 @@ public class LecturaExcel {
         Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
         Cell celda; // Se Recorre Cada Celda de la fila del Excel
         while (iterador.hasNext()) {
-          Registro registro = new Registro(); // Creo Objeto Persona
+          Registro registro = new Registro(); // Creo Objeto Registro
           celda = iterador.next(); // Leo Celda Nombre del Excel
           registro.setNombre(celda.getStringCellValue());
           celda = iterador.next(); // Leo Celda Apellido del Excel
@@ -283,7 +283,6 @@ public class LecturaExcel {
           celda = iterador.next(); // Leo Celda DNI del Excel
           String dni = celda.getStringCellValue();
           registro.setDni(dni);
-          celda = iterador.next();
           celda = iterador.next(); // Leo Celda Matricula del Excel
           registro.setMatricula(celda.getStringCellValue());
 
@@ -293,7 +292,7 @@ public class LecturaExcel {
         }
       }
     } catch (Exception e) {
-      System.out.print("method leerHojaPersonas :: " + e.getMessage());
+      System.out.print("method leerHojaRegistros :: " + e.getMessage());
     }
   }
 

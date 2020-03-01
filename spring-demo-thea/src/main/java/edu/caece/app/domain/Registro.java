@@ -41,6 +41,13 @@ public class Registro implements Serializable {
 
   }
 
+  public Registro(String nombre, String apellido, String dni, String matricula) {
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.dni = dni;
+    this.matricula = matricula;
+  }
+
   public Long getId() {
     return id;
   }
