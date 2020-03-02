@@ -64,15 +64,19 @@ public class LecturaCarpeta {
                                                                                      // Imagen del
                                                                                      // Archivo con
                                                                                      // la Foto
-          Foto foto = new Foto(); // Crea Objeto Foto
           Persona persona = personas.get(carpeta.getName());
-          foto.setPersona(persona);
-          foto.setNombreArchivo(archivos[i].getName());
-          foto.setArchivo(archivoBlob);
-          persona.addFoto(foto);
-          log.info("Cantidad :: " + fotos.size() + " :: Carpeta :: " + carpeta.getName()
-              + " :: Foto :: " + archivos[i].getName());
-          fotos.put(archivos[i].getName(), foto); // Agrego Foto a la Lista de Fotos
+          if (persona != null) {
+            Foto foto = new Foto(); // Crea Objeto Foto
+            foto.setPersona(persona);
+            foto.setNombreArchivo(archivos[i].getName());
+            foto.setArchivo(archivoBlob);
+            persona.addFoto(foto);
+            log.info("Cantidad :: " + fotos.size() + " :: Carpeta :: " + carpeta.getName()
+                + " :: Foto :: " + archivos[i].getName());
+            fotos.put(archivos[i].getName(), foto); // Agrego Foto a la Lista de Fotos
+          } else {
+            System.out.println("La persona no existe :: DNI :: " + carpeta.getName());
+          }
         }
       }
     } catch (Exception e) {

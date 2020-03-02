@@ -67,7 +67,7 @@ public class LecturaExcel {
       obtenerFunciones(funcionRepositorio);
       obtenerPersonas(personaRepositorio);
       obtenerRegistros(registroRepositorio);
-      // obtenerFotos(personaRepositorio, fotoRepositorio);
+      obtenerFotos(personaRepositorio, fotoRepositorio);
     } catch (Exception e) {
       System.out.print("method inicializarBD :: " + e.getMessage());
     }
