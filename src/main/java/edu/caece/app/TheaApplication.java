@@ -25,9 +25,6 @@ import edu.caece.app.repository.PersonRepository;
 @ComponentScan(basePackages = { "edu.caece.app", "edu.caece.app.controller", "edu.caece.app.service" })
 public class TheaApplication {
 
-	@PersistenceUnit
-	private EntityManagerFactory entityManagerFactory;
-
 	public static void main(String[] args) {
 		SpringApplication.run(TheaApplication.class, args);
 	}
@@ -44,15 +41,12 @@ public class TheaApplication {
 	ApplicationRunner init(PersonRepository personRepository, FunctionRepository functionRepository) {
 		
 		return (args) -> {
-			EntityManager em = entityManagerFactory.createEntityManager();
-			em.getTransaction().begin();
 //			Function alumno = new Function("alumno");
 //			alumno = functionRepository.save(alumno);
 			personRepository.save(new Person("Matias","Bava","11111111","Matricula001",true));
 			personRepository.save(new Person("Javier","Michelson","11111112","Matricula002",true));
 			personRepository.save(new Person("Maximiliano","Astengo","11111113","Matricula003",false));
 			personRepository.save(new Person("Maria Natalia","Gonzalez","11111114","Matricula004",true));
-			em.getTransaction().commit();
 		};
 	}
 

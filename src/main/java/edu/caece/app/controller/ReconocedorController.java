@@ -28,7 +28,7 @@ public class ReconocedorController {
 	@Autowired
 	private ReconocimientoService reconocimientoService;
 
-	@RequestMapping(value = "/reconocer", method = RequestMethod.GET)
+	@RequestMapping(value = "/reconocer", method = RequestMethod.POST)
 	public ReconocerPersonaResult reconocer(@RequestBody byte[] payload) {
 		if (this.isValidImage(payload)) {
 			Person persona = reconocimientoService.recognize(payload);
