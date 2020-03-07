@@ -52,11 +52,6 @@ public class PersonaController {
     }
   }
 
-  /**
-   * @param id
-   * @param persona
-   * @return
-   */
   @PostMapping("/personas/update/{id}")
   public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody Persona persona) {
 

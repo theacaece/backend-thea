@@ -53,7 +53,6 @@ public class Usuario {
 
   public Usuario() {
     this.roles = new ArrayList<Rol>();
-    // this.accesos = new HashSet<Acceso>();
   }
 
   public long getId() {

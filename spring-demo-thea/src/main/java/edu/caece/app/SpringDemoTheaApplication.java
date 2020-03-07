@@ -26,13 +26,6 @@ public class SpringDemoTheaApplication {
   public static void main(String[] args) throws Exception {
     try {
       SpringApplication.run(SpringDemoTheaApplication.class, args);
-
-      // LecturaExcel lecturaExcel = new LecturaExcel();
-      // lecturaExcel.probar();
-
-      // HashMap<String, Persona> personas = new HashMap<String, Persona>();
-      // LecturaCarpeta lecturaCarpeta = new LecturaCarpeta();
-      // lecturaCarpeta.leerCarpeta(personas);
     } catch (Exception e) {
       throw new Exception("method main() :: " + e.getMessage());
     }
@@ -43,13 +36,23 @@ public class SpringDemoTheaApplication {
       IPersonaRepositorio personaRepositorio, IFuncionRepositorio funcionRepositorio,
       IRegistroRepositorio registroRepositorio, IFotoRepositorio fotoRepositorio) throws Exception {
     return args -> {
-
       inicializarBD(usuarioRepositorio, rolRepositorio, personaRepositorio, funcionRepositorio,
           registroRepositorio, fotoRepositorio);
       log.info(Constantes.LOG_BBDD);
     };
   }
 
+  /**
+   * INICIALIZA TODA LA BD CON LOS DATOS
+   * 
+   * @param usuarioRepositorio
+   * @param rolRepositorio
+   * @param personaRepositorio
+   * @param funcionRepositorio
+   * @param registroRepositorio
+   * @param fotoRepositorio
+   * @throws Exception
+   */
   public void inicializarBD(IUsuarioRepositorio usuarioRepositorio, IRolRepositorio rolRepositorio,
       IPersonaRepositorio personaRepositorio, IFuncionRepositorio funcionRepositorio,
       IRegistroRepositorio registroRepositorio, IFotoRepositorio fotoRepositorio) throws Exception {

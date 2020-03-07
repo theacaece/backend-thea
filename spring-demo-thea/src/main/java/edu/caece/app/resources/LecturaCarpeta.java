@@ -15,8 +15,8 @@ public class LecturaCarpeta {
 
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
-  protected String RUTA_CSV = "/src/main/resources/bd/TP-FINAL/Fotos"; // RUTA EN EL MISMO
-                                                                       // PROYECTO
+  // RUTA EN EL MISMO PROYECTO
+  protected String RUTA_CSV = "/src/main/resources/bd/TP-FINAL/Fotos";
   protected String rutaArchivo = "";
 
   HashMap<String, Foto> fotos = null;
@@ -59,11 +59,7 @@ public class LecturaCarpeta {
       File[] archivos = carpeta.listFiles(); // Obtiene fotos de la carpeta
       if (archivos != null && archivos.length != 0) { // Verifica si la Carpeta de Fotos esta Vacia
         for (int i = 0; i < archivos.length; i++) { // Recorre Fotos de Carpeta
-          byte[] archivoBlob = Files.readAllBytes(Paths.get(archivos[i].getPath())); // Obtiene
-                                                                                     // Bytes de
-                                                                                     // Imagen del
-                                                                                     // Archivo con
-                                                                                     // la Foto
+          byte[] archivoBlob = Files.readAllBytes(Paths.get(archivos[i].getPath())); // Obtiene Bytes de Imagen del Archivo con la Foto
           Persona persona = personas.get(carpeta.getName());
           if (persona != null) {
             Foto foto = new Foto(); // Crea Objeto Foto

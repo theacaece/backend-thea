@@ -376,7 +376,6 @@ public class LecturaExcel {
         System.out.println("Se guarda :: " + registro.toString()); // Se Recorre Cada Fila Hasta el
                                                                    // Final
       }
-      // registroRepository.findAll().forEach(System.out::println);
     } catch (ConstraintViolationException e) {
       throw new Exception(
           "method guardarRegistros :: ConstraintViolationException :: " + e.getMessage());

@@ -31,7 +31,6 @@ public class AuthenticationManagerService implements AuthenticationManager {
       throw new UsernameNotFoundException(Constantes.ERROR_USUARIO_INEXISTENTE);
     } else {
       if (user.getUsername().equals(username) && user.getPassword().equals(Hash.sha1(password))) {
-        // accesoRepositorio.save(user);
         return authentication;
       } else {
         throw new BadCredentialsException(Constantes.ERROR_AUTENTICACION);
