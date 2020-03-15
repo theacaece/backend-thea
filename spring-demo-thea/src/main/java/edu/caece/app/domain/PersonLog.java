@@ -34,7 +34,7 @@ public class PersonLog {
 	private String message;
 		
 	public PersonLog() {
-		this.id = new PersonLogPK();https://github.com/flowsta/github 
+		this.id = new PersonLogPK(); 
 		this.person = new Person();
 		id.setLogId(Hash.getId());
 	}
@@ -56,7 +56,7 @@ public class PersonLog {
 		this.id.setPersonId(person.getId());
 	}
 
-	public Date getAccessDate() {https://github.com/flowsta/github 
+	public Date getAccessDate() {
 		return accessDate;
 	}
 
