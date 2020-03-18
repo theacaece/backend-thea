@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +18,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+
 import lombok.Data;
 
 @Entity(name = "Persona")
@@ -43,14 +46,10 @@ public class Persona implements Serializable {
 
   @Column(name = "dni")
   private String dni;
-
-  @OneToMany(fetch = FetchType.EAGER)
-  @JoinColumn(name = "persona_dni", nullable = true)
-  private Set<Foto> fotos;
-
-  @OneToMany(fetch = FetchType.EAGER)
-  @JoinColumn(name = "persona_dni", nullable = true)
-  private Set<Registro> registros;
+//
+//  @OneToMany(fetch = FetchType.EAGER)
+//  @JoinColumn(name = "persona_dni", nullable = true)
+//  private Set<Foto> fotos;
 
   @ManyToMany(
       cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
@@ -62,10 +61,12 @@ public class Persona implements Serializable {
 
   @Column(name = "matricula")
   private String matricula;
+  
+  @Column
+  private boolean entryAllowed = false;
 
   public Persona() {
-    this.fotos = new HashSet<Foto>();
-    this.registros = new HashSet<Registro>();
+//    this.fotos = new HashSet<Foto>();
     this.funciones = new ArrayList<Funcion>();
   }
 
@@ -74,8 +75,7 @@ public class Persona implements Serializable {
     this.apellido = apellido;
     this.dni = dni;
     this.matricula = matricula;
-    this.fotos = new HashSet<Foto>();
-    this.registros = new HashSet<Registro>();
+//    this.fotos = new HashSet<Foto>();
     this.funciones = new ArrayList<Funcion>();
   }
 
@@ -135,36 +135,32 @@ public class Persona implements Serializable {
     funciones.remove(funcion);
   }
 
-  public Set<Foto> getFotos() {
-    return fotos;
+//  public Set<Foto> getFotos() {
+//    return fotos;
+//  }
+//
+//  public void setFotos(Set<Foto> fotos) {
+//    this.fotos = fotos;
+//  }
+//
+//  public void addFoto(Foto foto) {
+//    fotos.add(foto);
+//  }
+//
+//  public void removeFoto(Foto foto) {
+//    fotos.remove(foto);
+//  }
+  
+  public boolean isEntryAllowed() {
+    return entryAllowed;
   }
 
-  public void setFotos(Set<Foto> fotos) {
-    this.fotos = fotos;
+  public void setEntryAllowed(boolean entryAllowed) {
+    this.entryAllowed = entryAllowed;
   }
-
-  public void addFoto(Foto foto) {
-    fotos.add(foto);
-  }
-
-  public void removeFoto(Foto foto) {
-    fotos.remove(foto);
-  }
-
-  public Set<Registro> getRegistros() {
-    return registros;
-  }
-
-  public void setRegistros(Set<Registro> registros) {
-    this.registros = registros;
-  }
-
-  public void addRegistro(Registro registro) {
-    registros.add(registro);
-  }
-
-  public void removeFoto(Registro registro) {
-    registros.remove(registro);
+  
+  public String getFullName() {
+    return String.join(" ", this.getNombre(), this.getApellido());
   }
 
 }

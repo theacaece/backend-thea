@@ -26,26 +26,26 @@ public class Foto implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
   @GenericGenerator(name = "native", strategy = "native")
   @Column(name = "id", updatable = false, nullable = false)
-  private Integer id = 0;
-
-  @Lob
-  @Column(name = "archivo")
-  private byte[] archivo;
-
-  @Column(name = "nombre_archivo")
-  private String nombreArchivo;
-
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "persona_dni", referencedColumnName = "dni", nullable = false)
-  private Persona persona;
-
-  public Foto() {
-
-  }
-
-  public Foto(byte[] archivo, String idPersona) {
-    this.archivo = archivo;
-  }
+  private Integer id;
+//
+//  @Lob
+//  @Column(name = "archivo")
+//  private byte[] archivo;
+//
+//  @Column(name = "nombre_archivo")
+//  private String nombreArchivo;
+//
+//  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//  @JoinColumn(name = "persona_dni", referencedColumnName = "dni", nullable = false)
+//  private Persona persona;
+//
+//  public Foto() {
+//
+//  }
+//
+//  public Foto(byte[] archivo, String idPersona) {
+//    this.archivo = archivo;
+//  }
 
   public Integer getId() {
     return id;
@@ -54,29 +54,29 @@ public class Foto implements Serializable {
   public void setId(Integer id) {
     this.id = id;
   }
-
-  public byte[] getArchivo() {
-    return archivo;
-  }
-
-  public void setArchivo(byte[] archivo) {
-    this.archivo = archivo;
-  }
-
-  public String getNombreArchivo() {
-    return nombreArchivo;
-  }
-
-  public void setNombreArchivo(String nombreArchivo) {
-    this.nombreArchivo = nombreArchivo;
-  }
-
-  public Persona getPersona() {
-    return persona;
-  }
-
-  public void setPersona(Persona persona) {
-    this.persona = persona;
-  }
+//
+//  public byte[] getArchivo() {
+//    return archivo;
+//  }
+//
+//  public void setArchivo(byte[] archivo) {
+//    this.archivo = archivo;
+//  }
+//
+//  public String getNombreArchivo() {
+//    return nombreArchivo;
+//  }
+//
+//  public void setNombreArchivo(String nombreArchivo) {
+//    this.nombreArchivo = nombreArchivo;
+//  }
+//
+//  public Persona getPersona() {
+//    return persona;
+//  }
+//
+//  public void setPersona(Persona persona) {
+//    this.persona = persona;
+//  }
 
 }

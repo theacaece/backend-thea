@@ -7,7 +7,7 @@ import java.util.HashMap;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import edu.caece.app.domain.Foto;
+//import edu.caece.app.domain.Foto;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.repository.IFotoRepositorio;
 
@@ -19,10 +19,10 @@ public class LecturaCarpeta {
   protected String RUTA_CSV = "/src/main/resources/bd/TP-FINAL/Fotos";
   protected String rutaArchivo = "";
 
-  HashMap<String, Foto> fotos = null;
+//  HashMap<String, Foto> fotos = null;
 
   public LecturaCarpeta() {
-    fotos = new HashMap<String, Foto>();
+//    fotos = new HashMap<String, Foto>();
   }
 
   public void recorrerCarpetaFotos(IFotoRepositorio fotoRepositorio,
@@ -62,14 +62,14 @@ public class LecturaCarpeta {
           byte[] archivoBlob = Files.readAllBytes(Paths.get(archivos[i].getPath())); // Obtiene Bytes de Imagen del Archivo con la Foto
           Persona persona = personas.get(carpeta.getName());
           if (persona != null) {
-            Foto foto = new Foto(); // Crea Objeto Foto
-            foto.setPersona(persona);
-            foto.setNombreArchivo(archivos[i].getName());
-            foto.setArchivo(archivoBlob);
-            persona.addFoto(foto);
-            log.info("Cantidad :: " + fotos.size() + " :: Carpeta :: " + carpeta.getName()
-                + " :: Foto :: " + archivos[i].getName());
-            fotos.put(archivos[i].getName(), foto); // Agrego Foto a la Lista de Fotos
+//            Foto foto = new Foto(); // Crea Objeto Foto
+//            foto.setPersona(persona);
+//            foto.setNombreArchivo(archivos[i].getName());
+//            foto.setArchivo(archivoBlob);
+//            persona.addFoto(foto);
+//            log.info("Cantidad :: " + fotos.size() + " :: Carpeta :: " + carpeta.getName()
+//                + " :: Foto :: " + archivos[i].getName());
+//            fotos.put(archivos[i].getName(), foto); // Agrego Foto a la Lista de Fotos
           } else {
             System.out.println("La persona no existe :: DNI :: " + carpeta.getName());
           }
@@ -83,11 +83,11 @@ public class LecturaCarpeta {
 
   public void guardarFotos(IFotoRepositorio fotoRepositorio) throws Exception {
     try {
-      for (Foto foto : fotos.values()) {
-        log.info("Foto :: " + foto.getNombreArchivo());
-        fotoRepositorio.save(foto);
-      }
-      fotoRepositorio.findAll().forEach(System.out::println);
+//      for (Foto foto : fotos.values()) {
+//        log.info("Foto :: " + foto.getNombreArchivo());
+//        fotoRepositorio.save(foto);
+//      }
+//      fotoRepositorio.findAll().forEach(System.out::println);
     } catch (ConstraintViolationException e) {
       throw new Exception(
           "method guardarFotos :: ConstraintViolationException :: " + e.getMessage());
