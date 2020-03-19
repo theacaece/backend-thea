@@ -12,6 +12,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import edu.caece.app.Constantes;
 import edu.caece.app.config.Hash;
 import edu.caece.app.domain.Funcion;
 import edu.caece.app.domain.Persona;
@@ -34,12 +36,10 @@ public class LecturaExcel {
   XSSFWorkbook worbook = null;
   XSSFSheet sheet = null;
 
-  protected int SOLAPA_ROLES = 0;
-  protected int SOLAPA_FUNCIONES = 1;
-  protected int SOLAPA_USUARIOS = 2;
-  protected int SOLAPA_PERSONAS = 3;
-  protected int SOLAPA_REGISTROS = 4;
-
+  protected int SOLAPA_USUARIOS = 0;
+  protected int SOLAPA_PERSONAS = 1;
+  protected int SOLAPA_REGISTROS = 2;
+  
   HashMap<Long, Rol> roles = new HashMap<Long, Rol>();
   HashMap<Long, Funcion> funciones = new HashMap<Long, Funcion>();
   HashMap<String, Persona> personas = new HashMap<String, Persona>();
@@ -47,125 +47,83 @@ public class LecturaExcel {
 
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
-  public void leerArchivo() {
+  public void leerArchivo() throws Exception {
     try {
+      log.info(Constantes.BBDD_LECTURA);
       String path = System.getProperty("user.dir"); // Lectura Excel
       rutaArchivo = path + RUTA_CSV;
       FileInputStream file = new FileInputStream(new File(rutaArchivo));
       worbook = new XSSFWorkbook(file);
     } catch (Exception e) {
-      System.out.println("method leerArchivo :: " + e.getMessage());
+    	throw new Exception("method leerArchivo :: " + e.getMessage());
     }
   }
 
-  public void inicializarBD(IUsuarioRepositorio usuarioRepositorio, IRolRepositorio rolRepositorio,
+  public void obtenerDatosBD(IUsuarioRepositorio usuarioRepositorio, IRolRepositorio rolRepositorio,
       IPersonaRepositorio personaRepositorio, IFuncionRepositorio funcionRepositorio,
-      IRegistroRepositorio registroRepositorio, IFotoRepositorio fotoRepositorio) {
-    try {
-      obtenerRoles(rolRepositorio);
-      obtenerUsuarios(usuarioRepositorio);
-      obtenerFunciones(funcionRepositorio);
-      obtenerPersonas(personaRepositorio);
-      obtenerRegistros(registroRepositorio);
-      obtenerFotos(personaRepositorio, fotoRepositorio);
-    } catch (Exception e) {
-      System.out.print("method inicializarBD :: " + e.getMessage());
-    }
+      IRegistroRepositorio registroRepositorio, IFotoRepositorio fotoRepositorio) throws Exception {
+      log.info(Constantes.BBDD_DATOS);
+	  try {
+	      leerArchivo();
+	      guardarRoles(rolRepositorio);
+	      guardarFunciones(funcionRepositorio);
+	      //obtenerUsuarios(usuarioRepositorio);
+	      //obtenerPersonas(personaRepositorio);
+	      obtenerRegistros(registroRepositorio);
+	      //obtenerFotos(personaRepositorio, fotoRepositorio);
+	    } catch (Exception e) {
+	    	throw new Exception("method inicializarBD :: " + e.getMessage());
+	    }
   }
 
   public void obtenerFotos(IPersonaRepositorio personaRepositorio,
-      IFotoRepositorio fotoRepositorio) {
+      IFotoRepositorio fotoRepositorio) throws Exception {
+	log.info(Constantes.BBDD_DATOS_FOTOS);  
     try {
       LecturaCarpeta lecturaCarpeta = new LecturaCarpeta();
       lecturaCarpeta.recorrerCarpetaFotos(fotoRepositorio, personas);
     } catch (Exception e) {
-      System.out.print("method obtenerFotos :: " + e.getMessage());
+    	throw new Exception("method obtenerFotos :: " + e.getMessage());
     }
   }
 
-  public void obtenerRoles(IRolRepositorio rolRepositorio) {
+  public void obtenerUsuarios(IUsuarioRepositorio usuarioRepositorio) throws Exception {
+	log.info(Constantes.BBDD_DATOS_USUARIOS);
     try {
-      leerArchivo();
-      sheet = worbook.getSheetAt(SOLAPA_ROLES);
-      leerHojaRoles();
-      guardarRoles(rolRepositorio);
-    } catch (Exception e) {
-      System.out.println("method obtenerRoles :: " + e.getMessage());
-    }
-  }
-
-  @SuppressWarnings("finally")
-  public ArrayList<Usuario> obtenerUsuarios(IUsuarioRepositorio usuarioRepositorio) {
-    ArrayList<Usuario> usuarios = null;
-    try {
-      leerArchivo();
       sheet = worbook.getSheetAt(SOLAPA_USUARIOS);
-      usuarios = leerHojaUsuarios();
+      ArrayList<Usuario> usuarios = leerHojaUsuarios();
       guardarUsuarios(usuarioRepositorio, usuarios);
     } catch (Exception e) {
-      System.out.print("method obtenerUsuarios :: " + e.getMessage());
-    } finally {
-      return usuarios;
+    	throw new Exception("method obtenerUsuarios :: " + e.getMessage());
     }
   }
 
-  public void obtenerFunciones(IFuncionRepositorio funcionRepositorio) {
-    try {
-      leerArchivo();
-      sheet = worbook.getSheetAt(SOLAPA_FUNCIONES);
-      leerHojaFunciones();
-      guardarFunciones(funcionRepositorio);
-    } catch (Exception e) {
-      System.out.println("method obtenerFunciones :: " + e.getMessage());
-    }
-  }
-
-  @SuppressWarnings("finally")
-  public ArrayList<Persona> obtenerPersonas(IPersonaRepositorio personaRepositorio) {
-    ArrayList<Persona> personas = null;
+  public void obtenerPersonas(IPersonaRepositorio personaRepositorio) throws Exception {
+	log.info(Constantes.BBDD_DATOS_PERSONAS);  
     try {
       leerArchivo();
       sheet = worbook.getSheetAt(SOLAPA_PERSONAS);
       leerHojaPersonas();
       guardarPersonas(personaRepositorio);
     } catch (Exception e) {
-      System.out.println("method obtenerPersonas :: " + e.getMessage());
-    } finally {
-      return personas;
+    	throw new Exception("method obtenerPersonas :: " + e.getMessage());
     }
   }
 
-  @SuppressWarnings("finally")
-  public ArrayList<Registro> obtenerRegistros(IRegistroRepositorio registroRepositorio) {
-    ArrayList<Registro> registros = null;
+  public void obtenerRegistros(IRegistroRepositorio registroRepositorio) throws Exception {
+	log.info(Constantes.BBDD_DATOS_REGISTROS);   
     try {
       leerArchivo();
       sheet = worbook.getSheetAt(SOLAPA_REGISTROS);
       leerHojaRegistros();
       guardarRegistros(registroRepositorio);
     } catch (Exception e) {
-      System.out.println("method obtenerRegistros :: " + e.getMessage());
-    } finally {
-      return registros;
+    	throw new Exception("method obtenerRegistros :: " + e.getMessage());
     }
   }
 
-  @SuppressWarnings("finally")
-  public ArrayList<Persona> probar() {
-    ArrayList<Persona> personas = null;
-    try {
-      leerArchivo();
-      sheet = worbook.getSheetAt(SOLAPA_PERSONAS);
-      leerHojaPersonas();
-      // guardarPersonas(personaRepositorio);
-    } catch (Exception e) {
-      System.out.println("method probar :: " + e.getMessage());
-    } finally {
-      return personas;
-    }
-  }
-
-  public ArrayList<Usuario> leerHojaUsuarios() {
+  public ArrayList<Usuario> leerHojaUsuarios() throws Exception {
+	log.info(Constantes.BBDD_DATOS_REGISTROS);   
     ArrayList<Usuario> usuarios = new ArrayList<Usuario>(); // Creacion de Lista de Usuarios
     try {
       Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
@@ -197,36 +155,12 @@ public class LecturaExcel {
         }
       }
     } catch (Exception e) {
-      System.out.println("method leerHojaUsuarios :: " + e.getMessage());
+    	throw new Exception("method leerHojaUsuarios :: " + e.getMessage());
     }
     return usuarios;
   }
 
-  public void leerHojaRoles() {
-    try {
-      Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
-      Row fila;
-      rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos
-      // System.out.println("Lista Roles"); // Se Recorre Cada Fila Hasta el Final
-      while (rowIterator.hasNext()) {
-        fila = rowIterator.next(); // Recorro Fila del Excel
-        Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
-        Cell celda;
-        while (iterador.hasNext()) { // Se Recorre Cada Celda de la fila del Excel
-          celda = iterador.next(); // Leo Celda Id Rol
-          Long id = (long) celda.getNumericCellValue();
-          celda = iterador.next(); // Leo Celda Nombre Rol
-          String nombre = celda.getStringCellValue();
-          Rol rol = new Rol(id, nombre);
-          roles.put(rol.getId(), rol); // Agrego a Lista de Usuarios
-        }
-      }
-    } catch (Exception e) {
-      System.out.print("method leerHojaRoles :: " + e.getMessage());
-    }
-  }
-
-  public void leerHojaPersonas() {
+  public void leerHojaPersonas() throws Exception {
     try {
       personas = new HashMap<String, Persona>(); // Creacion de Lista de Personas
       Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
@@ -259,11 +193,11 @@ public class LecturaExcel {
         }
       }
     } catch (Exception e) {
-      System.out.print("method leerHojaPersonas :: " + e.getMessage());
+    	throw new Exception("method leerHojaPersonas :: " + e.getMessage());
     }
   }
 
-  public void leerHojaRegistros() {
+  public void leerHojaRegistros() throws Exception {
     registros = new HashMap<String, Registro>(); // Creacion de Lista de Personas
     try {
       Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
@@ -290,31 +224,7 @@ public class LecturaExcel {
         }
       }
     } catch (Exception e) {
-      System.out.print("method leerHojaRegistros :: " + e.getMessage());
-    }
-  }
-
-  public void leerHojaFunciones() throws Exception {
-    try {
-      Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
-      Row fila;
-      rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos
-      // System.out.println("Lista Funciones"); // Se Recorre Cada Fila Hasta el Final
-      while (rowIterator.hasNext()) {
-        fila = rowIterator.next(); // Recorro Fila del Excel
-        Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
-        Cell celda; // Se Recorre Cada Celda de la fila del Excel
-        while (iterador.hasNext()) {
-          celda = iterador.next(); // Leo Celda Id Funcion
-          Long id = (long) celda.getNumericCellValue();
-          celda = iterador.next(); // Leo Celda Nombre Funcion
-          String nombre = celda.getStringCellValue();
-          Funcion funcion = new Funcion(id, nombre);
-          funciones.put(id, funcion); // Agrego a Lista de Usuarios
-        }
-      }
-    } catch (Exception e) {
-      throw new Exception("method leerHojaFunciones :: " + e.getMessage());
+    	throw new Exception("method leerHojaRegistros :: " + e.getMessage());
     }
   }
 
@@ -327,28 +237,6 @@ public class LecturaExcel {
       usuarioRepositorio.findAll().forEach(System.out::println);
     } catch (Exception e) {
       throw new Exception("method guardarDatosUsuarios :: " + e.getMessage());
-    }
-  }
-
-  public void guardarRoles(IRolRepositorio rolRepositorio) throws Exception {
-    try {
-      for (Rol rol : roles.values()) {
-        rolRepositorio.save(rol);
-      }
-      rolRepositorio.findAll().forEach(System.out::println);
-    } catch (Exception e) {
-      throw new Exception("method guardarDatosRoles :: " + e.getMessage());
-    }
-  }
-
-  public void guardarFunciones(IFuncionRepositorio funcionRepositorio) throws Exception {
-    try {
-      for (Funcion funcion : funciones.values()) {
-        funcionRepositorio.save(funcion);
-      }
-      funcionRepositorio.findAll().forEach(System.out::println);
-    } catch (Exception e) {
-      throw new Exception("method guardarFunciones :: " + e.getMessage());
     }
   }
 
@@ -381,6 +269,38 @@ public class LecturaExcel {
           "method guardarRegistros :: ConstraintViolationException :: " + e.getMessage());
     } catch (Exception e) {
       throw new Exception("method guardarRegistros :: " + e.getMessage());
+    }
+  }
+  
+  public void guardarRoles(IRolRepositorio rolRepository) throws Exception {
+    try {
+    	Rol rol1 = new Rol("ADMIN");
+    	Rol rol2 = new Rol("USER");
+    	Rol rol3 = new Rol("SECURITY");
+    	rolRepository.save(rol1);
+    	rolRepository.save(rol2);
+    	rolRepository.save(rol3);
+    	roles.put(1L, rol1);
+    	roles.put(2L, rol2);
+    	roles.put(3L, rol3);
+    } catch (Exception e) {
+      throw new Exception("method guardarRoles :: " + e.getMessage());
+    }
+  }
+
+  public void guardarFunciones(IFuncionRepositorio funcionRepository) throws Exception {
+    try {
+    	Funcion funcion1 = new Funcion("Profesor");
+    	Funcion funcion2 = new Funcion("Alumno");
+    	Funcion funcion3 = new Funcion("Administrativo");
+    	funcionRepository.save(funcion1);
+    	funcionRepository.save(funcion2);
+    	funcionRepository.save(funcion3);
+    	funciones.put(1L, funcion1);
+    	funciones.put(2L, funcion2);
+    	funciones.put(3L, funcion3);
+    } catch (Exception e) {
+      throw new Exception("method guardarFunciones :: " + e.getMessage());
     }
   }
 

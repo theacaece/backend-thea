@@ -7,7 +7,7 @@ import java.util.HashMap;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import edu.caece.app.domain.Foto;
+import edu.caece.app.domain.Foto;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.repository.IFotoRepositorio;
 
@@ -19,10 +19,10 @@ public class LecturaCarpeta {
   protected String RUTA_CSV = "/src/main/resources/bd/TP-FINAL/Fotos";
   protected String rutaArchivo = "";
 
-//  HashMap<String, Foto> fotos = null;
+  HashMap<String, Foto> fotos = null;
 
   public LecturaCarpeta() {
-//    fotos = new HashMap<String, Foto>();
+    fotos = new HashMap<String, Foto>();
   }
 
   public void recorrerCarpetaFotos(IFotoRepositorio fotoRepositorio,

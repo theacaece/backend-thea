@@ -39,11 +39,6 @@ public class Rol {
     this.name = nombre;
   }
 
-  public Rol(long id, String nombre) {
-    this.id = id;
-    this.name = nombre;
-  }
-
   public long getId() {
     return id;
   }

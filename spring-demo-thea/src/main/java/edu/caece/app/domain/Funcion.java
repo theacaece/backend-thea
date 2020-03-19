@@ -38,11 +38,6 @@ public class Funcion implements Serializable {
     this.personas = new ArrayList<Persona>();
   }
 
-  public Funcion(long id, String descripcion) {
-    this.id = id;
-    this.descripcion = descripcion;
-  }
-
   public Funcion(String descripcion) {
     this.descripcion = descripcion;
   }

@@ -30,11 +30,15 @@ public class AuthenticationManagerService implements AuthenticationManager {
     if (user == null) {
       throw new UsernameNotFoundException(Constantes.ERROR_USUARIO_INEXISTENTE);
     } else {
-      if (user.getUsername().equals(username) && user.getPassword().equals(Hash.sha1(password))) {
-        return authentication;
-      } else {
-        throw new BadCredentialsException(Constantes.ERROR_AUTENTICACION);
-      }
+       try {
+		  if (user.getUsername().equals(username) && user.getPassword().equals(Hash.sha1(password))) {
+		    return authentication;
+		  } else {
+		    throw new BadCredentialsException(Constantes.ERROR_AUTENTICACION);
+		  }
+		} catch (Exception e) {
+			throw new BadCredentialsException(Constantes.ERROR_AUTENTICACION);
+		}
     }
   }
 }

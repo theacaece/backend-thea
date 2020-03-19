@@ -27,7 +27,7 @@ public class SpringDemoTheaApplication {
     try {
       SpringApplication.run(SpringDemoTheaApplication.class, args);
     } catch (Exception e) {
-      throw new Exception("method main() :: " + e.getMessage());
+      throw new Exception("Error method main() :: " + e.getMessage());
     }
   }
 
@@ -38,7 +38,6 @@ public class SpringDemoTheaApplication {
     return args -> {
       inicializarBD(usuarioRepositorio, rolRepositorio, personaRepositorio, funcionRepositorio,
           registroRepositorio, fotoRepositorio);
-      log.info(Constantes.LOG_BBDD);
     };
   }
 
@@ -58,11 +57,11 @@ public class SpringDemoTheaApplication {
       IRegistroRepositorio registroRepositorio, IFotoRepositorio fotoRepositorio) throws Exception {
     try {
       LecturaExcel lecturaExcel = new LecturaExcel();
-      lecturaExcel.inicializarBD(usuarioRepositorio, rolRepositorio, personaRepositorio,
+      lecturaExcel.obtenerDatosBD(usuarioRepositorio, rolRepositorio, personaRepositorio,
           funcionRepositorio, registroRepositorio, fotoRepositorio);
       System.out.print("Fin method inicializarBD() ");
     } catch (Exception e) {
-      throw new Exception("Error method inicializarBD() :: " + e.getMessage());
+      throw new Exception("method inicializarBD() :: " + e.getMessage());
     }
   }
 
