@@ -68,9 +68,9 @@ public class LecturaExcel {
 	      guardarRoles(rolRepositorio);
 	      guardarFunciones(funcionRepositorio);
 	      //obtenerUsuarios(usuarioRepositorio);
-	      //obtenerPersonas(personaRepositorio);
+	      obtenerPersonas(personaRepositorio);
 	      obtenerRegistros(registroRepositorio);
-	      //obtenerFotos(personaRepositorio, fotoRepositorio);
+	      obtenerFotos(personaRepositorio, fotoRepositorio);
 	    } catch (Exception e) {
 	    	throw new Exception("method inicializarBD :: " + e.getMessage());
 	    }

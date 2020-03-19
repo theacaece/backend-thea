@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class Funcion implements Serializable {
   @Column(name = "descripcion")
   private String descripcion;
 
-  @ManyToMany(mappedBy = "funciones")
+  @ManyToMany(fetch = FetchType.EAGER, mappedBy = "funciones")
   @JsonIgnore
   private List<Persona> personas;
 

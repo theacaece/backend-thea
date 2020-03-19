@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class Rol {
   @Column(name = "name", nullable = false, unique = true)
   private String name;
 
-  @ManyToMany(mappedBy = "roles")
+  @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
   @JsonIgnore
   private List<Usuario> usuarios;
 
