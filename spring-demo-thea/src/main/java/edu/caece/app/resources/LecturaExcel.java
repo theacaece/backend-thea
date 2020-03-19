@@ -49,7 +49,7 @@ public class LecturaExcel {
 
   public void leerArchivo() throws Exception {
     try {
-      log.info(Constantes.BBDD_LECTURA);
+      log.info(Constantes.EXCEL_INICIO);
       String path = System.getProperty("user.dir"); // Lectura Excel
       rutaArchivo = path + RUTA_CSV;
       FileInputStream file = new FileInputStream(new File(rutaArchivo));
@@ -62,12 +62,12 @@ public class LecturaExcel {
   public void obtenerDatosBD(IUsuarioRepositorio usuarioRepositorio, IRolRepositorio rolRepositorio,
       IPersonaRepositorio personaRepositorio, IFuncionRepositorio funcionRepositorio,
       IRegistroRepositorio registroRepositorio, IFotoRepositorio fotoRepositorio) throws Exception {
-      log.info(Constantes.BBDD_DATOS);
+      log.info(Constantes.EXCEL_LECTURA);
 	  try {
 	      leerArchivo();
 	      guardarRoles(rolRepositorio);
 	      guardarFunciones(funcionRepositorio);
-	      //obtenerUsuarios(usuarioRepositorio);
+	      obtenerUsuarios(usuarioRepositorio);
 	      obtenerPersonas(personaRepositorio);
 	      obtenerRegistros(registroRepositorio);
 	      obtenerFotos(personaRepositorio, fotoRepositorio);
@@ -78,7 +78,7 @@ public class LecturaExcel {
 
   public void obtenerFotos(IPersonaRepositorio personaRepositorio,
       IFotoRepositorio fotoRepositorio) throws Exception {
-	log.info(Constantes.BBDD_DATOS_FOTOS);  
+	log.info(Constantes.EXCEL_LECTURA_FOTOS);  
     try {
       LecturaCarpeta lecturaCarpeta = new LecturaCarpeta();
       lecturaCarpeta.recorrerCarpetaFotos(fotoRepositorio, personas);
@@ -88,7 +88,7 @@ public class LecturaExcel {
   }
 
   public void obtenerUsuarios(IUsuarioRepositorio usuarioRepositorio) throws Exception {
-	log.info(Constantes.BBDD_DATOS_USUARIOS);
+	log.info(Constantes.EXCEL_LECTURA_USUARIOS);
     try {
       sheet = worbook.getSheetAt(SOLAPA_USUARIOS);
       ArrayList<Usuario> usuarios = leerHojaUsuarios();
@@ -99,7 +99,7 @@ public class LecturaExcel {
   }
 
   public void obtenerPersonas(IPersonaRepositorio personaRepositorio) throws Exception {
-	log.info(Constantes.BBDD_DATOS_PERSONAS);  
+	log.info(Constantes.EXCEL_LECTURA_PERSONAS);  
     try {
       leerArchivo();
       sheet = worbook.getSheetAt(SOLAPA_PERSONAS);
@@ -149,9 +149,13 @@ public class LecturaExcel {
           usuario.setPassword(Hash.sha1(celda.getStringCellValue()));
           celda = iterador.next();// Leo Celda Rol del Excel
           Long id_rol = (long) celda.getNumericCellValue();
-          Rol rol = roles.get(id_rol);
-          usuario.addRol(rol);
-          usuarios.add(usuario); // Agrego a Lista de Usuarios
+//          Rol rol = roles.get(id_rol);
+//          if (rol != null) {
+//        	  usuario.addRol(rol);
+//        	  usuarios.add(usuario); // Agrego a Lista de Usuarios
+//          } else {
+//        	  throw new Exception("method leerHojaUsuarios :: No existe el rol");
+//          }
         }
       }
     } catch (Exception e) {

@@ -6,12 +6,12 @@ public class Constantes {
 
   }
 
-  public static final String BBDD_LECTURA = "Preparo Lectura de Datos en BBDD";
-  public static final String BBDD_DATOS = "Lectura datos en BBDD";
-  public static final String BBDD_DATOS_FOTOS = "Lectura Fotos en BBDD";
-  public static final String BBDD_DATOS_USUARIOS = "Lectura Usuarios en BBDD"; 
-  public static final String BBDD_DATOS_PERSONAS = "Lectura Personas en BBDD";
-  public static final String BBDD_DATOS_REGISTROS = "Lectura Registros en BBDD";
+  public static final String EXCEL_INICIO = "Inicio Lectura de Datos en Excel";
+  public static final String EXCEL_LECTURA = "Lectura datos en Excel";
+  public static final String EXCEL_LECTURA_FOTOS = "Lectura Fotos en Excel";
+  public static final String EXCEL_LECTURA_USUARIOS = "Lectura Usuarios en Excel"; 
+  public static final String EXCEL_LECTURA_PERSONAS = "Lectura Personas en Excel";
+  public static final String BBDD_DATOS_REGISTROS = "Lectura Registros en Excel";
 
   public static final String INFO_REGISTRO_ALL = "OBTIENE REGISTROS";
   public static final String INFO_REGISTRO_SAVE = "AGREGA REGISTRO";
