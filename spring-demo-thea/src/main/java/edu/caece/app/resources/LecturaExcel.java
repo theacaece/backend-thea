@@ -12,7 +12,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import edu.caece.app.Constantes;
 import edu.caece.app.config.Hash;
 import edu.caece.app.domain.Funcion;
@@ -39,7 +38,7 @@ public class LecturaExcel {
   protected int SOLAPA_USUARIOS = 0;
   protected int SOLAPA_PERSONAS = 1;
   protected int SOLAPA_REGISTROS = 2;
-  
+
   HashMap<Long, Rol> roles = new HashMap<Long, Rol>();
   HashMap<Long, Funcion> funciones = new HashMap<Long, Funcion>();
   HashMap<String, Persona> personas = new HashMap<String, Persona>();
@@ -55,75 +54,75 @@ public class LecturaExcel {
       FileInputStream file = new FileInputStream(new File(rutaArchivo));
       worbook = new XSSFWorkbook(file);
     } catch (Exception e) {
-    	throw new Exception("method leerArchivo :: " + e.getMessage());
+      throw new Exception("method leerArchivo :: " + e.getMessage());
     }
   }
 
   public void obtenerDatosBD(IUsuarioRepositorio usuarioRepositorio, IRolRepositorio rolRepositorio,
       IPersonaRepositorio personaRepositorio, IFuncionRepositorio funcionRepositorio,
       IRegistroRepositorio registroRepositorio, IFotoRepositorio fotoRepositorio) throws Exception {
-      log.info(Constantes.EXCEL_LECTURA);
-	  try {
-	      leerArchivo();
-	      guardarRoles(rolRepositorio);
-	      guardarFunciones(funcionRepositorio);
-	      obtenerUsuarios(usuarioRepositorio);
-	      obtenerPersonas(personaRepositorio);
-	      obtenerRegistros(registroRepositorio);
-	      obtenerFotos(personaRepositorio, fotoRepositorio);
-	    } catch (Exception e) {
-	    	throw new Exception("method inicializarBD :: " + e.getMessage());
-	    }
+    log.info(Constantes.EXCEL_LECTURA);
+    try {
+      leerArchivo();
+      guardarRoles(rolRepositorio);
+      guardarFunciones(funcionRepositorio);
+      obtenerUsuarios(usuarioRepositorio);
+      obtenerPersonas(personaRepositorio);
+      obtenerRegistros(registroRepositorio);
+      obtenerFotos(personaRepositorio, fotoRepositorio);
+    } catch (Exception e) {
+      throw new Exception("method inicializarBD :: " + e.getMessage());
+    }
   }
 
-  public void obtenerFotos(IPersonaRepositorio personaRepositorio,
-      IFotoRepositorio fotoRepositorio) throws Exception {
-	log.info(Constantes.EXCEL_LECTURA_FOTOS);  
+  public void obtenerFotos(IPersonaRepositorio personaRepositorio, IFotoRepositorio fotoRepositorio)
+      throws Exception {
+    log.info(Constantes.EXCEL_LECTURA_FOTOS);
     try {
       LecturaCarpeta lecturaCarpeta = new LecturaCarpeta();
       lecturaCarpeta.recorrerCarpetaFotos(fotoRepositorio, personas);
     } catch (Exception e) {
-    	throw new Exception("method obtenerFotos :: " + e.getMessage());
+      throw new Exception("method obtenerFotos :: " + e.getMessage());
     }
   }
 
   public void obtenerUsuarios(IUsuarioRepositorio usuarioRepositorio) throws Exception {
-	log.info(Constantes.EXCEL_LECTURA_USUARIOS);
+    log.info(Constantes.EXCEL_LECTURA_USUARIOS);
     try {
       sheet = worbook.getSheetAt(SOLAPA_USUARIOS);
       ArrayList<Usuario> usuarios = leerHojaUsuarios();
       guardarUsuarios(usuarioRepositorio, usuarios);
     } catch (Exception e) {
-    	throw new Exception("method obtenerUsuarios :: " + e.getMessage());
+      throw new Exception("method obtenerUsuarios :: " + e.getMessage());
     }
   }
 
   public void obtenerPersonas(IPersonaRepositorio personaRepositorio) throws Exception {
-	log.info(Constantes.EXCEL_LECTURA_PERSONAS);  
+    log.info(Constantes.EXCEL_LECTURA_PERSONAS);
     try {
       leerArchivo();
       sheet = worbook.getSheetAt(SOLAPA_PERSONAS);
       leerHojaPersonas();
       guardarPersonas(personaRepositorio);
     } catch (Exception e) {
-    	throw new Exception("method obtenerPersonas :: " + e.getMessage());
+      throw new Exception("method obtenerPersonas :: " + e.getMessage());
     }
   }
 
   public void obtenerRegistros(IRegistroRepositorio registroRepositorio) throws Exception {
-	log.info(Constantes.BBDD_DATOS_REGISTROS);   
+    log.info(Constantes.BBDD_DATOS_REGISTROS);
     try {
       leerArchivo();
       sheet = worbook.getSheetAt(SOLAPA_REGISTROS);
       leerHojaRegistros();
       guardarRegistros(registroRepositorio);
     } catch (Exception e) {
-    	throw new Exception("method obtenerRegistros :: " + e.getMessage());
+      throw new Exception("method obtenerRegistros :: " + e.getMessage());
     }
   }
 
   public ArrayList<Usuario> leerHojaUsuarios() throws Exception {
-	log.info(Constantes.BBDD_DATOS_REGISTROS);   
+    log.info(Constantes.BBDD_DATOS_REGISTROS);
     ArrayList<Usuario> usuarios = new ArrayList<Usuario>(); // Creacion de Lista de Usuarios
     try {
       Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
@@ -149,17 +148,17 @@ public class LecturaExcel {
           usuario.setPassword(Hash.sha1(celda.getStringCellValue()));
           celda = iterador.next();// Leo Celda Rol del Excel
           Long id_rol = (long) celda.getNumericCellValue();
-//          Rol rol = roles.get(id_rol);
-//          if (rol != null) {
-//        	  usuario.addRol(rol);
-//        	  usuarios.add(usuario); // Agrego a Lista de Usuarios
-//          } else {
-//        	  throw new Exception("method leerHojaUsuarios :: No existe el rol");
-//          }
+          // Rol rol = roles.get(id_rol);
+          // if (rol != null) {
+          // usuario.addRol(rol);
+          // usuarios.add(usuario); // Agrego a Lista de Usuarios
+          // } else {
+          // throw new Exception("method leerHojaUsuarios :: No existe el rol");
+          // }
         }
       }
     } catch (Exception e) {
-    	throw new Exception("method leerHojaUsuarios :: " + e.getMessage());
+      throw new Exception("method leerHojaUsuarios :: " + e.getMessage());
     }
     return usuarios;
   }
@@ -197,7 +196,7 @@ public class LecturaExcel {
         }
       }
     } catch (Exception e) {
-    	throw new Exception("method leerHojaPersonas :: " + e.getMessage());
+      throw new Exception("method leerHojaPersonas :: " + e.getMessage());
     }
   }
 
@@ -228,7 +227,7 @@ public class LecturaExcel {
         }
       }
     } catch (Exception e) {
-    	throw new Exception("method leerHojaRegistros :: " + e.getMessage());
+      throw new Exception("method leerHojaRegistros :: " + e.getMessage());
     }
   }
 
@@ -275,18 +274,18 @@ public class LecturaExcel {
       throw new Exception("method guardarRegistros :: " + e.getMessage());
     }
   }
-  
+
   public void guardarRoles(IRolRepositorio rolRepository) throws Exception {
     try {
-    	Rol rol1 = new Rol("ADMIN");
-    	Rol rol2 = new Rol("USER");
-    	Rol rol3 = new Rol("SECURITY");
-    	rolRepository.save(rol1);
-    	rolRepository.save(rol2);
-    	rolRepository.save(rol3);
-    	roles.put(1L, rol1);
-    	roles.put(2L, rol2);
-    	roles.put(3L, rol3);
+      Rol rol1 = new Rol("ADMIN");
+      Rol rol2 = new Rol("USER");
+      Rol rol3 = new Rol("SECURITY");
+      rolRepository.save(rol1);
+      rolRepository.save(rol2);
+      rolRepository.save(rol3);
+      roles.put(1L, rol1);
+      roles.put(2L, rol2);
+      roles.put(3L, rol3);
     } catch (Exception e) {
       throw new Exception("method guardarRoles :: " + e.getMessage());
     }
@@ -294,15 +293,15 @@ public class LecturaExcel {
 
   public void guardarFunciones(IFuncionRepositorio funcionRepository) throws Exception {
     try {
-    	Funcion funcion1 = new Funcion("Profesor");
-    	Funcion funcion2 = new Funcion("Alumno");
-    	Funcion funcion3 = new Funcion("Administrativo");
-    	funcionRepository.save(funcion1);
-    	funcionRepository.save(funcion2);
-    	funcionRepository.save(funcion3);
-    	funciones.put(1L, funcion1);
-    	funciones.put(2L, funcion2);
-    	funciones.put(3L, funcion3);
+      Funcion funcion1 = new Funcion("Profesor");
+      Funcion funcion2 = new Funcion("Alumno");
+      Funcion funcion3 = new Funcion("Administrativo");
+      funcionRepository.save(funcion1);
+      funcionRepository.save(funcion2);
+      funcionRepository.save(funcion3);
+      funciones.put(1L, funcion1);
+      funciones.put(2L, funcion2);
+      funciones.put(3L, funcion3);
     } catch (Exception e) {
       throw new Exception("method guardarFunciones :: " + e.getMessage());
     }

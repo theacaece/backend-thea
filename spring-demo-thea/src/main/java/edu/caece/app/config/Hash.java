@@ -17,7 +17,7 @@ public class Hash {
 
   /* Retorna un hash a partir de un tipo y un texto */
   private static String getHash(String txt, String hashType) throws Exception {
-	String resultado = null;
+    String resultado = null;
     try {
       java.security.MessageDigest md = java.security.MessageDigest.getInstance(hashType);
       byte[] array = md.digest(txt.getBytes());
@@ -27,7 +27,7 @@ public class Hash {
       }
       resultado = sb.toString();
     } catch (java.security.NoSuchAlgorithmException e) {
-    	throw new Exception("method getHash :: " + e.getMessage());
+      throw new Exception("method getHash :: " + e.getMessage());
     }
     return resultado;
   }

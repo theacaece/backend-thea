@@ -59,17 +59,21 @@ public class LecturaCarpeta {
       File[] archivos = carpeta.listFiles(); // Obtiene fotos de la carpeta
       if (archivos != null && archivos.length != 0) { // Verifica si la Carpeta de Fotos esta Vacia
         for (int i = 0; i < archivos.length; i++) { // Recorre Fotos de Carpeta
-          byte[] archivoBlob = Files.readAllBytes(Paths.get(archivos[i].getPath())); // Obtiene Bytes de Imagen del Archivo con la Foto
+          byte[] archivoBlob = Files.readAllBytes(Paths.get(archivos[i].getPath())); // Obtiene
+                                                                                     // Bytes de
+                                                                                     // Imagen del
+                                                                                     // Archivo con
+                                                                                     // la Foto
           Persona persona = personas.get(carpeta.getName());
           if (persona != null) {
-//            Foto foto = new Foto(); // Crea Objeto Foto
-//            foto.setPersona(persona);
-//            foto.setNombreArchivo(archivos[i].getName());
-//            foto.setArchivo(archivoBlob);
-//            persona.addFoto(foto);
-//            log.info("Cantidad :: " + fotos.size() + " :: Carpeta :: " + carpeta.getName()
-//                + " :: Foto :: " + archivos[i].getName());
-//            fotos.put(archivos[i].getName(), foto); // Agrego Foto a la Lista de Fotos
+            // Foto foto = new Foto(); // Crea Objeto Foto
+            // foto.setPersona(persona);
+            // foto.setNombreArchivo(archivos[i].getName());
+            // foto.setArchivo(archivoBlob);
+            // persona.addFoto(foto);
+            // log.info("Cantidad :: " + fotos.size() + " :: Carpeta :: " + carpeta.getName()
+            // + " :: Foto :: " + archivos[i].getName());
+            // fotos.put(archivos[i].getName(), foto); // Agrego Foto a la Lista de Fotos
           } else {
             System.out.println("La persona no existe :: DNI :: " + carpeta.getName());
           }
@@ -83,11 +87,11 @@ public class LecturaCarpeta {
 
   public void guardarFotos(IFotoRepositorio fotoRepositorio) throws Exception {
     try {
-//      for (Foto foto : fotos.values()) {
-//        log.info("Foto :: " + foto.getNombreArchivo());
-//        fotoRepositorio.save(foto);
-//      }
-//      fotoRepositorio.findAll().forEach(System.out::println);
+      for (Foto foto : fotos.values()) {
+        log.info("Foto :: " + foto.getNombreArchivo());
+        fotoRepositorio.save(foto);
+      }
+      fotoRepositorio.findAll().forEach(System.out::println);
     } catch (ConstraintViolationException e) {
       throw new Exception(
           "method guardarFotos :: ConstraintViolationException :: " + e.getMessage());

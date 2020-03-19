@@ -13,7 +13,7 @@ import edu.caece.app.domain.Foto;
 
 public interface IFotoRepositorio extends JpaRepository<Foto, Long> {
 
-//  @Query("SELECT f FROM Foto f WHERE f.persona.dni = :dni")
-//  List<Foto> findFotosByDni(@Param("dni") String dni);
+  @Query("SELECT f FROM Foto f WHERE f.persona.dni = :dni")
+  List<Foto> findFotosByDni(@Param("dni") String dni);
 
 }
