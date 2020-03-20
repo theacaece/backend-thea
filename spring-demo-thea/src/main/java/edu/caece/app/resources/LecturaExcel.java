@@ -122,7 +122,7 @@ public class LecturaExcel {
   }
 
   public ArrayList<Usuario> leerHojaUsuarios() throws Exception {
-    log.info(Constantes.BBDD_DATOS_REGISTROS);
+    log.info(Constantes.EXCEL_LECTURA_USUARIOS);
     ArrayList<Usuario> usuarios = new ArrayList<Usuario>(); // Creacion de Lista de Usuarios
     try {
       Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
@@ -151,7 +151,7 @@ public class LecturaExcel {
           // Rol rol = roles.get(id_rol);
           // if (rol != null) {
           // usuario.addRol(rol);
-          // usuarios.add(usuario); // Agrego a Lista de Usuarios
+          usuarios.add(usuario); // Agrego a Lista de Usuarios
           // } else {
           // throw new Exception("method leerHojaUsuarios :: No existe el rol");
           // }
@@ -233,11 +233,14 @@ public class LecturaExcel {
 
   public void guardarUsuarios(IUsuarioRepositorio usuarioRepositorio, ArrayList<Usuario> users)
       throws Exception {
+    log.info(Constantes.SEPARADOR);
+    log.info(Constantes.BBDD_GUARDA_USUARIOS);
     try {
       for (Usuario user : users) {
         usuarioRepositorio.save(user);
       }
       usuarioRepositorio.findAll().forEach(System.out::println);
+      log.info(Constantes.SEPARADOR);
     } catch (Exception e) {
       throw new Exception("method guardarDatosUsuarios :: " + e.getMessage());
     }
