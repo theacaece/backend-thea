@@ -3,6 +3,7 @@ package edu.caece.app.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -57,6 +58,23 @@ public class Funcion implements Serializable {
 
   public void setDescripcion(String descripcion) {
     this.descripcion = descripcion;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, descripcion);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Funcion other = (Funcion) obj;
+    return Objects.equals(id, other.id) && Objects.equals(descripcion, other.descripcion);
   }
 
 }

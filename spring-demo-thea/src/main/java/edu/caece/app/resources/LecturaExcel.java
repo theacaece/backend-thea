@@ -110,7 +110,7 @@ public class LecturaExcel {
   }
 
   public void obtenerRegistros(IRegistroRepositorio registroRepositorio) throws Exception {
-    log.info(Constantes.BBDD_DATOS_REGISTROS);
+    log.info(Constantes.EXCEL_LECTURA_REGISTROS);
     try {
       leerArchivo();
       sheet = worbook.getSheetAt(SOLAPA_REGISTROS);
@@ -169,7 +169,6 @@ public class LecturaExcel {
       Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
       Row fila;
       rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos
-      // System.out.println("Lista Personas"); // Se Recorre Cada Fila Hasta el Final
       while (rowIterator.hasNext()) {
         fila = rowIterator.next(); // Recorro Fila del Excel
         Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
@@ -189,9 +188,7 @@ public class LecturaExcel {
           persona.addFuncion(funcion);
           celda = iterador.next(); // Leo Celda Matricula del Excel
           persona.setMatricula(celda.getStringCellValue());
-
           System.out.println(persona.toString());
-
           personas.put(dni, persona); // Agrego a Lista de Personas
         }
       }
@@ -233,14 +230,12 @@ public class LecturaExcel {
 
   public void guardarUsuarios(IUsuarioRepositorio usuarioRepositorio, ArrayList<Usuario> users)
       throws Exception {
-    log.info(Constantes.SEPARADOR);
     log.info(Constantes.BBDD_GUARDA_USUARIOS);
     try {
       for (Usuario user : users) {
         usuarioRepositorio.save(user);
       }
       usuarioRepositorio.findAll().forEach(System.out::println);
-      log.info(Constantes.SEPARADOR);
     } catch (Exception e) {
       throw new Exception("method guardarDatosUsuarios :: " + e.getMessage());
     }
@@ -248,6 +243,7 @@ public class LecturaExcel {
 
   public void guardarPersonas(IPersonaRepositorio personRepository) throws Exception {
     try {
+      log.info(Constantes.BBDD_GUARDA_PERSONAS);
       for (Persona person : personas.values()) {
         personRepository.save(person);
         System.out.println("Se guarda :: " + person.toString()); // Se Recorre Cada Fila Hasta el
@@ -263,7 +259,7 @@ public class LecturaExcel {
   }
 
   public void guardarRegistros(IRegistroRepositorio registroRepository) throws Exception {
-    System.out.println("Inicio guardarRegistros()"); // Se Recorre Cada Fila Hasta el Final
+    log.info(Constantes.BBDD_GUARDA_REGISTROS);
     try {
       for (Registro registro : registros.values()) {
         registroRepository.save(registro);

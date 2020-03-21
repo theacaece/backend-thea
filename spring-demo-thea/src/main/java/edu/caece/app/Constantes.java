@@ -13,9 +13,14 @@ public class Constantes {
   public static final String EXCEL_LECTURA_FOTOS = "Lectura Fotos en Excel";
   public static final String EXCEL_LECTURA_USUARIOS = "Lectura Usuarios en Excel";
   public static final String EXCEL_LECTURA_PERSONAS = "Lectura Personas en Excel";
-  public static final String BBDD_DATOS_REGISTROS = "Lectura Registros en Excel";
+  public static final String EXCEL_LECTURA_REGISTROS = "Lectura Personas en Excel";
 
-  public static final String BBDD_GUARDA_USUARIOS = "Guarda Usuarios BBDD";
+  public static final String BBDD_GUARDA_USUARIOS = "Guarda Usuarios en BBDD";
+  public static final String BBDD_GUARDA_PERSONAS = "Guarda Personas en BBDD";
+  public static final String BBDD_GUARDA_REGISTROS = "Guarda Registros en BBDD";
+
+  public static final String ERROR_PERSONA_NORECONOCIDA = "La persona no fue reconocida";
+  public static final String ERROR_IMAGEN_INVALIDA = "La imagen es invalida";
 
   public static final String INFO_REGISTRO_ALL = "OBTIENE REGISTROS";
   public static final String INFO_REGISTRO_SAVE = "AGREGA REGISTRO";

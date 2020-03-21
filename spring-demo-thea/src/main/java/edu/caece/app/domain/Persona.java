@@ -3,6 +3,7 @@ package edu.caece.app.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,10 +41,6 @@ public class Persona implements Serializable {
 
   @Column(name = "dni")
   private String dni;
-  //
-  // @OneToMany(fetch = FetchType.EAGER)
-  // @JoinColumn(name = "persona_dni", nullable = true)
-  // private Set<Foto> fotos;
 
   @ManyToMany(
       cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
@@ -60,7 +57,6 @@ public class Persona implements Serializable {
   private boolean entryAllowed = false;
 
   public Persona() {
-    // this.fotos = new HashSet<Foto>();
     this.funciones = new ArrayList<Funcion>();
   }
 
@@ -69,7 +65,6 @@ public class Persona implements Serializable {
     this.apellido = apellido;
     this.dni = dni;
     this.matricula = matricula;
-    // this.fotos = new HashSet<Foto>();
     this.funciones = new ArrayList<Funcion>();
   }
 
@@ -129,22 +124,6 @@ public class Persona implements Serializable {
     funciones.remove(funcion);
   }
 
-  // public Set<Foto> getFotos() {
-  // return fotos;
-  // }
-  //
-  // public void setFotos(Set<Foto> fotos) {
-  // this.fotos = fotos;
-  // }
-  //
-  // public void addFoto(Foto foto) {
-  // fotos.add(foto);
-  // }
-  //
-  // public void removeFoto(Foto foto) {
-  // fotos.remove(foto);
-  // }
-
   public boolean isEntryAllowed() {
     return entryAllowed;
   }
@@ -155,6 +134,25 @@ public class Persona implements Serializable {
 
   public String getFullName() {
     return String.join(" ", this.getNombre(), this.getApellido());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(dni, entryAllowed, nombre, id, apellido, matricula);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Persona other = (Persona) obj;
+    return Objects.equals(dni, other.dni) && entryAllowed == other.entryAllowed
+        && Objects.equals(nombre, other.nombre) && Objects.equals(id, other.id)
+        && Objects.equals(apellido, other.apellido) && Objects.equals(matricula, other.matricula);
   }
 
 }

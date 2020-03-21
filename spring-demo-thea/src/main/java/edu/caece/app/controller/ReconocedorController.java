@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import edu.caece.app.Constantes;
 import edu.caece.app.controller.dto.ReconocerPersonaResult;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.service.ReconocimientoService;
@@ -27,16 +28,15 @@ public class ReconocedorController {
 
   @RequestMapping(value = "/reconocer", method = RequestMethod.POST)
   public ReconocerPersonaResult reconocer(@RequestBody byte[] payload) {
-    if (this.isValidImage(payload)) {
+    if (this.esImagenValida(payload)) {
       Persona persona = reconocimientoService.recognize(payload);
       if (persona != null) {
         return new ReconocerPersonaResult(true, persona.isEntryAllowed(), persona.getFullName(),
             "Bienvenido a la facultad");
       }
-      return new ReconocerPersonaResult(false, false, null, "La persona no fue reconocida");
+      return new ReconocerPersonaResult(false, false, null, Constantes.ERROR_PERSONA_NORECONOCIDA);
     }
-    // TODO: handle response code and message
-    throw new RuntimeException("La imagen provista en la invocación es invalida");
+    throw new RuntimeException(Constantes.ERROR_IMAGEN_INVALIDA);
   }
 
   public void registrarPersona(@RequestParam String personaId, @RequestBody byte[] payload) {
@@ -48,13 +48,12 @@ public class ReconocedorController {
     // Asociar el archivo a las fotos de la persona
   }
 
-  private boolean isValidImage(byte[] payload) {
+  private boolean esImagenValida(byte[] payload) {
     try {
       ImageIO.read(new ByteArrayInputStream(payload));
       return true;
     } catch (IOException e) {
-      // Logging: Error al leer la imagen, retornar un error
-      logger.debug("An invalid Image was provided", e);
+      logger.debug("method esImagenValida :: ", e);
       return false;
     }
   }
