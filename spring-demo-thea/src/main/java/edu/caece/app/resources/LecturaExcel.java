@@ -48,7 +48,7 @@ public class LecturaExcel {
 
   public void leerArchivo() throws Exception {
     try {
-      log.info(Constantes.EXCEL_INICIO);
+      log.info(Constantes.EXCEL_LECTURA_INICIO);
       String path = System.getProperty("user.dir"); // Lectura Excel
       rutaArchivo = path + RUTA_CSV;
       FileInputStream file = new FileInputStream(new File(rutaArchivo));

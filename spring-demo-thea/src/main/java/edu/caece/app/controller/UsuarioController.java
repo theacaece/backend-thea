@@ -2,6 +2,8 @@ package edu.caece.app.controller;
 
 import java.util.Collection;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,39 +16,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import edu.caece.app.Constantes;
 import edu.caece.app.domain.Usuario;
 import edu.caece.app.repository.IUsuarioRepositorio;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class UsuarioController {
+
+  protected final Logger log = LoggerFactory.getLogger(getClass());
 
   @Autowired
   private IUsuarioRepositorio repositorio;
 
   @RequestMapping(value = "/users", method = RequestMethod.GET)
   public Collection<Usuario> getUsuarios() {
+    log.info(Constantes.INFO_USUARIO_ALL);
     return repositorio.findAll();
   }
 
   @RequestMapping(value = "/users/edit/{id}", method = RequestMethod.GET)
   public Optional<Usuario> getUsuarioById(@PathVariable Long id) {
+    log.info(Constantes.INFO_USUARIO_ONE);
     return repositorio.findById(id);
   }
 
   @PostMapping("/users/save")
   public void saveUsuario(@RequestBody Usuario user) {
+    log.info(Constantes.INFO_USUARIO_SAVE);
     repositorio.save(user);
   }
 
   @DeleteMapping(path = {"/users/{id}"})
   public void deleteUsuario(@PathVariable("id") Long id) {
+    log.info(Constantes.INFO_USUARIO_DELETE);
     repositorio.deleteById(id);
   }
 
   @PostMapping("/users/update/{id}")
   public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody Usuario user) {
-
+    log.info(Constantes.INFO_USUARIO_UPDATE);
     Optional<Usuario> _userData = repositorio.findById(id);
     boolean existe_username = repositorio.existsByUsername(user.getUsername());
 
@@ -58,7 +69,6 @@ public class UsuarioController {
         _user.setEmail(user.getEmail());
         _user.setUsername(user.getUsername());
         _user.setRoles(user.getRoles());
-
         return new ResponseEntity<>(repositorio.save(_user), HttpStatus.OK);
       } else {
         return new ResponseEntity<>(

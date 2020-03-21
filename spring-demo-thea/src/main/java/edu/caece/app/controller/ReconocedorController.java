@@ -16,23 +16,26 @@ import edu.caece.app.Constantes;
 import edu.caece.app.controller.dto.ReconocerPersonaResult;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.service.ReconocimientoService;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class ReconocedorController {
 
-  private final static Logger logger = LoggerFactory.getLogger(ReconocedorController.class);
+  private final static Logger log = LoggerFactory.getLogger(ReconocedorController.class);
 
   @Autowired
   private ReconocimientoService reconocimientoService;
 
   @RequestMapping(value = "/reconocer", method = RequestMethod.POST)
   public ReconocerPersonaResult reconocer(@RequestBody byte[] payload) {
+    log.info(Constantes.INFO_RECONOCIMIENTO);
     if (this.esImagenValida(payload)) {
       Persona persona = reconocimientoService.recognize(payload);
       if (persona != null) {
-        return new ReconocerPersonaResult(true, persona.isEntryAllowed(), persona.getFullName(),
-            "Bienvenido a la facultad");
+        return new ReconocerPersonaResult(true, persona.estaHabilitado(),
+            persona.getNombreCompleto(), Constantes.LOG_BIENVENIDA);
       }
       return new ReconocerPersonaResult(false, false, null, Constantes.ERROR_PERSONA_NORECONOCIDA);
     }
@@ -53,7 +56,7 @@ public class ReconocedorController {
       ImageIO.read(new ByteArrayInputStream(payload));
       return true;
     } catch (IOException e) {
-      logger.debug("method esImagenValida :: ", e);
+      log.debug("method esImagenValida :: ", e);
       return false;
     }
   }

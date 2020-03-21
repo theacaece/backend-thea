@@ -54,7 +54,7 @@ public class Persona implements Serializable {
   private String matricula;
 
   @Column
-  private boolean entryAllowed = false;
+  private boolean habilitado = false;
 
   public Persona() {
     this.funciones = new ArrayList<Funcion>();
@@ -124,21 +124,21 @@ public class Persona implements Serializable {
     funciones.remove(funcion);
   }
 
-  public boolean isEntryAllowed() {
-    return entryAllowed;
+  public boolean estaHabilitado() {
+    return habilitado;
   }
 
-  public void setEntryAllowed(boolean entryAllowed) {
-    this.entryAllowed = entryAllowed;
+  public void setHabilitado(boolean entryAllowed) {
+    this.habilitado = entryAllowed;
   }
 
-  public String getFullName() {
+  public String getNombreCompleto() {
     return String.join(" ", this.getNombre(), this.getApellido());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dni, entryAllowed, nombre, id, apellido, matricula);
+    return Objects.hash(dni, habilitado, nombre, id, apellido, matricula);
   }
 
   @Override
@@ -150,7 +150,7 @@ public class Persona implements Serializable {
     if (getClass() != obj.getClass())
       return false;
     Persona other = (Persona) obj;
-    return Objects.equals(dni, other.dni) && entryAllowed == other.entryAllowed
+    return Objects.equals(dni, other.dni) && habilitado == other.habilitado
         && Objects.equals(nombre, other.nombre) && Objects.equals(id, other.id)
         && Objects.equals(apellido, other.apellido) && Objects.equals(matricula, other.matricula);
   }

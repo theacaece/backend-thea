@@ -29,11 +29,13 @@ public class FotoController {
 
   @RequestMapping(value = "/fotos", method = RequestMethod.GET)
   public Collection<Foto> getAll() {
+    log.info(Constantes.INFO_FOTO_ALL);
     return fotoRepositorio.findAll();
   }
 
   @RequestMapping(value = "/fotos/dni/{dni}", method = RequestMethod.GET)
   public ResponseEntity<Object> getAllByDni(@PathVariable String dni) {
+    log.info(Constantes.INFO_FOTO_ONE);
     log.info("Buscando fotos con DNI: " + dni);
     List<Foto> fotos = fotoRepositorio.findFotosByDni(dni);
     if (fotos == null || fotos.size() == 0) {

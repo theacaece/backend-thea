@@ -2,6 +2,8 @@ package edu.caece.app.controller;
 
 import java.util.Collection;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PersonaController {
 
+  protected final Logger log = LoggerFactory.getLogger(getClass());
+
   @Autowired
   private IPersonaRepositorio personaRepositorio;
 
@@ -34,16 +38,19 @@ public class PersonaController {
 
   @RequestMapping(value = "/personas", method = RequestMethod.GET)
   public Collection<Persona> getAll() {
+    log.info(Constantes.INFO_PERSONA_ALL);
     return personaRepositorio.findAll(sortByApellido());
   }
 
   @RequestMapping(value = "/personas/edit/{id}", method = RequestMethod.GET)
   public Optional<Persona> getById(@PathVariable Long id) {
+    log.info(Constantes.INFO_PERSONA_ONE);
     return personaRepositorio.findById(id);
   }
 
   @PostMapping("/personas/save")
   public ResponseEntity<Object> save(@RequestBody String dni) {
+    log.info(Constantes.INFO_PERSONA_SAVE);
     boolean existe_dni = personaRepositorio.existsByDni(dni);
     if (!existe_dni) {
       return new ResponseEntity<>(Constantes.ERROR_MATRICULA_EXISTENTE, HttpStatus.NOT_FOUND);
@@ -54,6 +61,7 @@ public class PersonaController {
 
   @PostMapping("/personas/update/{id}")
   public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody Persona persona) {
+    log.info(Constantes.INFO_PERSONA_UPDATE);
 
     Optional<Persona> _persona = personaRepositorio.findById(id);
     boolean existe_dni = personaRepositorio.existsByDni(persona.getDni());
@@ -81,6 +89,7 @@ public class PersonaController {
 
   @DeleteMapping(path = {"/personas/{id}"})
   public void delete(@PathVariable("id") Long id) {
+    log.info(Constantes.INFO_PERSONA_DELETE);
     personaRepositorio.deleteById(id);
   }
 

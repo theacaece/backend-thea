@@ -1,5 +1,7 @@
 package edu.caece.app.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +20,13 @@ import edu.caece.app.domain.JwtRequest;
 import edu.caece.app.domain.JwtResponse;
 import edu.caece.app.service.AuthenticationManagerService;
 import edu.caece.app.service.JwtUserDetailsService;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class JwtAuthenticationController {
-
+  protected final Logger log = LoggerFactory.getLogger(getClass());
   @Autowired
   private AuthenticationManagerService authenticationManager;
 
@@ -35,6 +39,7 @@ public class JwtAuthenticationController {
   @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
   public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
       throws Exception {
+    log.info(Constantes.INFO_TOKEN);
     try {
       authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
       final UserDetails userDetails =
@@ -48,6 +53,7 @@ public class JwtAuthenticationController {
 
   private void authenticate(String username, String password) throws Exception {
     try {
+      log.info(Constantes.INFO_AUTENTICACION);
       authenticationManager
           .authenticate(new UsernamePasswordAuthenticationToken(username, password));
     } catch (DisabledException e) {
