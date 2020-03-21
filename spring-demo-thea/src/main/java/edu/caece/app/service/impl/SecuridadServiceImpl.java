@@ -9,18 +9,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import edu.caece.app.Constantes;
 import edu.caece.app.domain.EventType;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.SecurityLog;
 import edu.caece.app.repository.SecurityLogRepository;
-import edu.caece.app.service.SecurityService;
+import edu.caece.app.service.SecuridadService;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class SecurityServiceImpl implements SecurityService {
+public class SecuridadServiceImpl implements SecuridadService {
 
-  private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(SecuridadServiceImpl.class);
 
 
   private static final String DEFAULT_MODULE = "BACKEND";
@@ -29,9 +30,9 @@ public class SecurityServiceImpl implements SecurityService {
 
   @Override
   public void logAccess(Persona person) {
-    String message =
-        format("Acceso %s para %s (%s)", person.estaHabilitado() ? "autorizado" : "denegado",
-            person.getNombreCompleto(), person.getDni());
+    String message = format(Constantes.LOG_ACCESO_PEDIDO,
+        person.estaHabilitado() ? Constantes.LOG_ACCESO_AUTORIZADO : Constantes.LOG_ACCESO_DENEGADO,
+        person.getNombreCompleto(), person.getDni());
     this.log(null, message, person, person.estaHabilitado() ? GRANTED_ACCESS : DENIED_ACCESS);
     logger.info(message);
   }
@@ -39,8 +40,7 @@ public class SecurityServiceImpl implements SecurityService {
   @Override
   public void logAccessThresholdNotMet(Persona person) {
     String message =
-        format("No se pudo autorizar a la persona, confianza menor al 60% para %s (%s)",
-            person.getNombreCompleto(), person.getDni());
+        format(Constantes.LOG_ACCESO_NOCONFIABLE, person.getNombreCompleto(), person.getDni());
     this.log(DEFAULT_MODULE, message, person, RECOGNIZED_THRESHOLD_NOT_MET);
   }
 
@@ -59,8 +59,7 @@ public class SecurityServiceImpl implements SecurityService {
   public void log(String module, String message, Persona person, EventType eventType) {
     SecurityLog securityLog = new SecurityLog(module, message, person, eventType);
     securityLogRepository.save(securityLog);
-    // TODO: FIXME: Avoid null values being logged
-    logger.info(format("%s - %s (Person:%s): %s", module, eventType, person, message));
+    logger.info(format(Constantes.LOG_ACCESO_NOCONFIABLE, module, eventType, person, message));
   }
 
 }

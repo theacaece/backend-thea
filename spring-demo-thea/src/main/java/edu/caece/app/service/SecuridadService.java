@@ -3,7 +3,7 @@ package edu.caece.app.service;
 import edu.caece.app.domain.EventType;
 import edu.caece.app.domain.Persona;
 
-public interface SecurityService {
+public interface SecuridadService {
   public void logAccess(Persona person);
 
   public void logAccessThresholdNotMet(Persona person);

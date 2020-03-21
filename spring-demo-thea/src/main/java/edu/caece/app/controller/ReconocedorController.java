@@ -2,6 +2,7 @@ package edu.caece.app.controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Optional;
 import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
-import edu.caece.app.controller.dto.ReconocerPersonaResult;
+import edu.caece.app.controller.dto.ResultadoReconocimiento;
 import edu.caece.app.domain.Persona;
+import edu.caece.app.repository.IPersonaRepositorio;
 import edu.caece.app.service.ReconocimientoService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,39 +28,44 @@ public class ReconocedorController {
   private final static Logger log = LoggerFactory.getLogger(ReconocedorController.class);
 
   @Autowired
+  private IPersonaRepositorio personaRepositorio;
+  @Autowired
   private ReconocimientoService reconocimientoService;
 
   @RequestMapping(value = "/reconocer", method = RequestMethod.POST)
-  public ReconocerPersonaResult reconocer(@RequestBody byte[] payload) {
+  public ResultadoReconocimiento reconocer(@RequestBody byte[] captura) throws Exception {
     log.info(Constantes.INFO_RECONOCIMIENTO);
-    if (this.esImagenValida(payload)) {
-      Persona persona = reconocimientoService.recognize(payload);
-      if (persona != null) {
-        return new ReconocerPersonaResult(true, persona.estaHabilitado(),
-            persona.getNombreCompleto(), Constantes.LOG_BIENVENIDA);
+    try {
+      if (this.esImagenValida(captura)) {
+        Persona persona = reconocimientoService.reconocerIngreso(captura);
+        if (persona != null) {
+          return new ResultadoReconocimiento(true, persona.estaHabilitado(),
+              persona.getNombreCompleto(), Constantes.LOG_BIENVENIDA);
+        }
+        return new ResultadoReconocimiento(false, false, null,
+            Constantes.ERROR_PERSONA_NORECONOCIDA);
       }
-      return new ReconocerPersonaResult(false, false, null, Constantes.ERROR_PERSONA_NORECONOCIDA);
+    } catch (Exception e) {
+      throw new Exception(Constantes.ERROR_IMAGEN_INVALIDA);
     }
-    throw new RuntimeException(Constantes.ERROR_IMAGEN_INVALIDA);
+    return null;
   }
 
-  public void registrarPersona(@RequestParam String personaId, @RequestBody byte[] payload) {
-    // TODO : buscar la persona, y persistir la foto en un archivo de imagen
+  public void registrarPersona(@RequestParam Long id, @RequestBody byte[] payload) {
+    Optional<Persona> _persona = personaRepositorio.findById(id);
 
-    // Leer imagen para verificar
-    // indicar el formato de la imagen
-    // Guadar el archivo
-    // Asociar el archivo a las fotos de la persona
   }
 
-  private boolean esImagenValida(byte[] payload) {
+  private boolean esImagenValida(byte[] payload) throws Exception {
     try {
       ImageIO.read(new ByteArrayInputStream(payload));
       return true;
     } catch (IOException e) {
-      log.debug("method esImagenValida :: ", e);
-      return false;
+      log.debug("method esImagenValida :: IOException :: ", e);
+    } catch (Exception e) {
+      throw new Exception("method esImagenValida :: " + e.getMessage());
     }
+    return false;
   }
 
 }

@@ -7,6 +7,16 @@ public class Constantes {
   }
 
   public static final String LOG_BIENVENIDA = "Bienvenide a la facultad";
+  public static final String LOG_ACCESO_PEDIDO = "Acceso %s para %s (%s)";
+  public static final String LOG_ACCESO_DETECTADO =
+      "Se detecto una persona, pero con una confianza menor al %s% : %f";
+  public static final String LOG_ACCESO_NOCONFIABLE =
+      "Acceso no autorizado, confianza menor al 60% para %s (%s)";
+  public static final String LOG_ACCESO_NOENCONTRADA =
+      "Se reconocio a la persona, pero no se la encontro en la base de datos con el DNI : %s";
+
+  public static final String LOG_ACCESO_AUTORIZADO = "Autorizado";
+  public static final String LOG_ACCESO_DENEGADO = "Denegado";
 
   public static final String EXCEL_LECTURA_INICIO = "Inicio Lectura de Datos en Excel";
   public static final String EXCEL_LECTURA = "Lectura datos en Excel";

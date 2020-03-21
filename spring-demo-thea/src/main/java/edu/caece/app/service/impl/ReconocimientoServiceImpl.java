@@ -12,60 +12,57 @@ import org.springframework.http.RequestEntity.BodyBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import edu.caece.app.Constantes;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.repository.IPersonaRepositorio;
 import edu.caece.app.service.ReconocimientoService;
-import edu.caece.app.service.SecurityService;
-import edu.caece.app.service.impl.dto.ReconocimientoResultDto;
-import edu.caece.app.service.impl.dto.ReconocimientoResultsDto;
+import edu.caece.app.service.SecuridadService;
+import edu.caece.app.service.impl.dto.ResultadoReconocimientoDTO;
+import edu.caece.app.service.impl.dto.ResultadosReconocimientoDTO;
 
 @Service
 public class ReconocimientoServiceImpl implements ReconocimientoService {
 
   private static final double CONFIDENCE_THRESHOLD = 60D;
+  public static final String URL = "http://localhost:8085/reconocedor/matias";
 
   private static final Logger logger = LoggerFactory.getLogger(ReconocimientoServiceImpl.class);
 
   @Autowired
-  private IPersonaRepositorio personRepository;
+  private IPersonaRepositorio personaRepositorio;
 
   @Autowired
-  private SecurityService securityService;
+  private SecuridadService securidadService;
 
   @Override
-  public Persona recognize(byte[] faceImageData) {
+  public Persona reconocerIngreso(byte[] imagenCara) {
     RestTemplate restTemplate = new RestTemplate();
-
-    BodyBuilder requestBuilder = RequestEntity.method(HttpMethod.POST,
-        URI.create("http://localhost:8085/reconocedor/matias"));
+    BodyBuilder requestBuilder = RequestEntity.method(HttpMethod.POST, URI.create(URL));
     RequestEntity<byte[]> request = requestBuilder.accept(MediaType.APPLICATION_JSON)
-        .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(faceImageData.length)
-        .<byte[]>body(faceImageData);
+        .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(imagenCara.length)
+        .<byte[]>body(imagenCara);
 
-    ResponseEntity<ReconocimientoResultsDto> result =
-        restTemplate.exchange(request, ReconocimientoResultsDto.class);
+    ResponseEntity<ResultadosReconocimientoDTO> result =
+        restTemplate.exchange(request, ResultadosReconocimientoDTO.class);
 
     // Buscar el resutltado con mayor confianza
-    Optional<ReconocimientoResultDto> findFirst = result.getBody().getResults().stream()
+    Optional<ResultadoReconocimientoDTO> personaReconocida = result.getBody().getResults().stream()
         .max((a, b) -> a.getConfidence() >= b.getConfidence() ? 1 : -1);
-    if (findFirst.isPresent()) {
-      ReconocimientoResultDto dto = findFirst.get();
+    if (personaReconocida.isPresent()) {
+      ResultadoReconocimientoDTO dto = personaReconocida.get();
       String dni = dto.getLabel();
-      Persona person = personRepository.findByDni(dni).orElseThrow(() -> {
-        String message = String.format(
-            "Se reconoció a la persona, pero no se la encontró en la base de datos con el DNI : %s",
-            dni);
+      Persona person = personaRepositorio.findByDni(dni).orElseThrow(() -> {
+        String message = String.format(Constantes.LOG_ACCESO_NOENCONTRADA, dni);
         logger.error(message);
         return new RuntimeException(message);
       });
       if (dto.getConfidence() > CONFIDENCE_THRESHOLD) {
-        securityService.logAccess(person);
+        securidadService.logAccess(person);
         return person;
       } else {
-        logger
-            .info(String.format("Se detectó una persona, pero con una confianza menor al %s% : %f",
-                CONFIDENCE_THRESHOLD, dto.getConfidence()));
-        securityService.logAccessThresholdNotMet(person);
+        logger.info(String.format(Constantes.LOG_ACCESO_DETECTADO, CONFIDENCE_THRESHOLD,
+            dto.getConfidence()));
+        securidadService.logAccessThresholdNotMet(person);
       }
     }
     return null;

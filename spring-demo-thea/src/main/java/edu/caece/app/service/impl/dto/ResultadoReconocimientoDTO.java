@@ -1,6 +1,6 @@
 package edu.caece.app.service.impl.dto;
 
-public class ReconocimientoResultDto {
+public class ResultadoReconocimientoDTO {
 
   private String label;
 
