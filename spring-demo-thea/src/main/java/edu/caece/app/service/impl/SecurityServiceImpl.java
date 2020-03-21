@@ -29,9 +29,10 @@ public class SecurityServiceImpl implements SecurityService {
 
   @Override
   public void logAccess(Persona person) {
-    String message = format("Acceso %s para %s (%s)",
-        person.isEntryAllowed() ? "autorizado" : "denegado", person.getFullName(), person.getDni());
-    this.log(null, message, person, person.isEntryAllowed() ? GRANTED_ACCESS : DENIED_ACCESS);
+    String message =
+        format("Acceso %s para %s (%s)", person.estaHabilitado() ? "autorizado" : "denegado",
+            person.getNombreCompleto(), person.getDni());
+    this.log(null, message, person, person.estaHabilitado() ? GRANTED_ACCESS : DENIED_ACCESS);
     logger.info(message);
   }
 
@@ -39,7 +40,7 @@ public class SecurityServiceImpl implements SecurityService {
   public void logAccessThresholdNotMet(Persona person) {
     String message =
         format("No se pudo autorizar a la persona, confianza menor al 60% para %s (%s)",
-            person.getFullName(), person.getDni());
+            person.getNombreCompleto(), person.getDni());
     this.log(DEFAULT_MODULE, message, person, RECOGNIZED_THRESHOLD_NOT_MET);
   }
 
