@@ -2,6 +2,7 @@ package edu.caece.app.domain;
 
 public enum TipoEvento {
 
-  GRANTED_ACCESS, DENIED_ACCESS, RECOGNIZED_THRESHOLD_NOT_MET;
+  ACCESO_OK, ACCESO_DENEGADO, ACCESO_UMBRAL_NO_VALIDO;
 
 }
+

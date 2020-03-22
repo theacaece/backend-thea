@@ -12,11 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-@Entity
+@Entity(name = "Usuario")
+@Table(name = "usuario")
 @Data
 public class Usuario {
 

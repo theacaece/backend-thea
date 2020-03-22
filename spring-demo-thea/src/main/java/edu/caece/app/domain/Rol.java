@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Entity(name = "Rol")
-@Table(name = "Rol")
+@Table(name = "rol")
 @Data
 public class Rol {
 

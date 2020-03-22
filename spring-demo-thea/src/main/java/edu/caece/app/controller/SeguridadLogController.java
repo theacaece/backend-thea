@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import edu.caece.app.Constantes;
 import edu.caece.app.domain.SeguridadLog;
 import edu.caece.app.repository.SeguridadLogRepositorio;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin(origins = Constantes.URL)
+@CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class SeguridadLogController {
 
@@ -24,7 +23,7 @@ public class SeguridadLogController {
   @Autowired
   private SeguridadLogRepositorio seguridadLogRepositorio;
 
-  @RequestMapping(path = "/SecuridadLogs", method = RequestMethod.GET)
+  @RequestMapping(path = "/SeguridadLogs", method = RequestMethod.GET)
   public List<SeguridadLog> getSecuridadLogs(@RequestParam(required = false) Long afterId,
       @RequestParam(required = false) Integer limit) {
     return seguridadLogRepositorio.buscarLogsDe(afterId != null ? afterId : -1,

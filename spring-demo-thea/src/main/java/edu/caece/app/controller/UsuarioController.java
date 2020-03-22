@@ -22,7 +22,7 @@ import edu.caece.app.repository.UsuarioRepositorio;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin(origins = Constantes.URL)
+@CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class UsuarioController {
 
@@ -60,7 +60,6 @@ public class UsuarioController {
     log.info(Constantes.INFO_USUARIO_UPDATE);
     Optional<Usuario> _userData = repositorio.findById(id);
     boolean existe_username = repositorio.existsByUsername(user.getUsername());
-
     if (_userData.isPresent()) {
       Usuario _user = _userData.get();
       if (!existe_username || _user.getUsername().equals(user.getUsername())) {
@@ -75,9 +74,8 @@ public class UsuarioController {
             "ERROR: el usuario " + "\"" + user.getUsername() + "\"" + " ya existe",
             HttpStatus.NOT_FOUND);
       }
-
     } else {
-      return new ResponseEntity<>("Error: el usuario no fue encontrado!", HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(Constantes.ERROR_USUARIO_INEXISTENTE, HttpStatus.NOT_FOUND);
     }
   }
 

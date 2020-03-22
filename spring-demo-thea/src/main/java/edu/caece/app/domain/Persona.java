@@ -14,11 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
 
-@Entity
+@Entity(name = "Persona")
+@Table(name = "persona")
 @DynamicUpdate
 @Data
 public class Persona implements Serializable {

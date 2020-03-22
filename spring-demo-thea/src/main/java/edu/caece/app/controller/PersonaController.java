@@ -23,7 +23,7 @@ import edu.caece.app.repository.PersonaRepositorio;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin(origins = Constantes.URL)
+@CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class PersonaController {
 

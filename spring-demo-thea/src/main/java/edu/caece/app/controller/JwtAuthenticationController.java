@@ -23,7 +23,7 @@ import edu.caece.app.service.JwtUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin(origins = Constantes.URL)
+@CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class JwtAuthenticationController {
 
@@ -43,9 +43,9 @@ public class JwtAuthenticationController {
       throws Exception {
     log.info(Constantes.INFO_TOKEN);
     try {
-      autenticar(autenticacionRequest.getUsuario(), autenticacionRequest.getPassword());
+      autenticar(autenticacionRequest.getUsername(), autenticacionRequest.getPassword());
       final UserDetails usuarioDetalle =
-          usuarioDetalleServicio.loadUserByUsername(autenticacionRequest.getUsuario());
+          usuarioDetalleServicio.loadUserByUsername(autenticacionRequest.getUsername());
       final String token = jwtTokenUtil.generateToken(usuarioDetalle);
       return ResponseEntity.ok(new JwtResponse(token, usuarioDetalle));
     } catch (Exception e) {

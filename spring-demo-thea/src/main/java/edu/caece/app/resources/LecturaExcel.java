@@ -274,14 +274,14 @@ public class LecturaExcel {
     }
   }
 
-  public void guardarRoles(RolRepositorio rolRepository) throws Exception {
+  public void guardarRoles(RolRepositorio rolRepositorio) throws Exception {
     try {
       Rol rol1 = new Rol("ADMIN");
       Rol rol2 = new Rol("USER");
       Rol rol3 = new Rol("SECURITY");
-      rolRepository.save(rol1);
-      rolRepository.save(rol2);
-      rolRepository.save(rol3);
+      rolRepositorio.save(rol1);
+      rolRepositorio.save(rol2);
+      rolRepositorio.save(rol3);
       roles.put(1L, rol1);
       roles.put(2L, rol2);
       roles.put(3L, rol3);
@@ -290,14 +290,14 @@ public class LecturaExcel {
     }
   }
 
-  public void guardarFunciones(FuncionRepositorio funcionRepository) throws Exception {
+  public void guardarFunciones(FuncionRepositorio funcionRepositorio) throws Exception {
     try {
       Funcion funcion1 = new Funcion("Profesor");
       Funcion funcion2 = new Funcion("Alumno");
       Funcion funcion3 = new Funcion("Administrativo");
-      funcionRepository.save(funcion1);
-      funcionRepository.save(funcion2);
-      funcionRepository.save(funcion3);
+      funcionRepositorio.save(funcion1);
+      funcionRepositorio.save(funcion2);
+      funcionRepositorio.save(funcion3);
       funciones.put(1L, funcion1);
       funciones.put(2L, funcion2);
       funciones.put(3L, funcion3);

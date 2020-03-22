@@ -6,10 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
 
-@Entity
+@Entity(name = "Permiso")
+@Table(name = "permiso")
 @Data
 public class Permiso implements Serializable {
 

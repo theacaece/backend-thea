@@ -7,7 +7,7 @@ public interface SeguridadService {
 
   public void verificarIngreso(Persona person);
 
-  public void verificarIngresoThresholdNotMet(Persona persona);
+  public void verificarIngresoUmbralNoAlcanzado(Persona persona);
 
   public void log(String message, TipoEvento tipoEvento);
 

@@ -23,7 +23,7 @@ import edu.caece.app.service.SeguridadService;
 @Service
 public class ReconocimientoServiceImpl implements ReconocimientoService {
 
-  private static final Logger logger = LoggerFactory.getLogger(ReconocimientoServiceImpl.class);
+  protected final Logger log = LoggerFactory.getLogger(getClass());
 
   public static final String URL = "http://localhost:8085/reconocedor/matias";
   private static final double NIVEL_CONFIANZA = 60D;
@@ -41,10 +41,10 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
     RequestEntity<byte[]> request = requestBuilder.accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(imagenCara.length)
         .<byte[]>body(imagenCara);
-    ResponseEntity<ResultadosReconocimientoDTO> result =
+    ResponseEntity<ResultadosReconocimientoDTO> resultado =
         restTemplate.exchange(request, ResultadosReconocimientoDTO.class);
-    Optional<ResultadoReconocimientoDTO> personaReconocida = result.getBody().getResults().stream()
-        .max((a, b) -> a.getNivelConfianza() >= b.getNivelConfianza() ? 1 : -1);
+    Optional<ResultadoReconocimientoDTO> personaReconocida = resultado.getBody().getResults()
+        .stream().max((a, b) -> a.getNivelConfianza() >= b.getNivelConfianza() ? 1 : -1);
     if (personaReconocida.isPresent()) {
       return obtenerPersonaReconocida(personaReconocida);
     }
@@ -62,16 +62,16 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
     String dni = personaReconocida.getDNI();
     Persona persona = personaRepositorio.findByDni(dni).orElseThrow(() -> {
       String mensaje = String.format(Constantes.LOG_ACCESO_NOBBDD, dni);
-      logger.error(mensaje);
+      log.error(mensaje);
       return new RuntimeException(mensaje);
     });
     if (personaReconocida.getNivelConfianza() > NIVEL_CONFIANZA) {
       seguridadService.verificarIngreso(persona);
       return persona;
     } else {
-      logger.info(String.format(Constantes.LOG_ACCESO_DETECTADO, NIVEL_CONFIANZA,
+      log.info(String.format(Constantes.LOG_ACCESO_DETECTADO, NIVEL_CONFIANZA,
           personaReconocida.getNivelConfianza()));
-      seguridadService.verificarIngresoThresholdNotMet(persona);
+      seguridadService.verificarIngresoUmbralNoAlcanzado(persona);
     }
     return null;
   }
