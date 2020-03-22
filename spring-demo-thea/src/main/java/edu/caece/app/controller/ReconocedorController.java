@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.controller.dto.ResultadoReconocimiento;
 import edu.caece.app.domain.Persona;
-import edu.caece.app.repository.IPersonaRepositorio;
+import edu.caece.app.repository.PersonaRepositorio;
 import edu.caece.app.service.ReconocimientoService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +28,7 @@ public class ReconocedorController {
   private final static Logger log = LoggerFactory.getLogger(ReconocedorController.class);
 
   @Autowired
-  private IPersonaRepositorio personaRepositorio;
+  private PersonaRepositorio personaRepositorio;
   @Autowired
   private ReconocimientoService reconocimientoService;
 
@@ -39,7 +39,7 @@ public class ReconocedorController {
       if (this.esImagenValida(captura)) {
         Persona persona = reconocimientoService.reconocerIngreso(captura);
         if (persona != null) {
-          return new ResultadoReconocimiento(true, persona.estaHabilitado(),
+          return new ResultadoReconocimiento(true, persona.isHabilitado(),
               persona.getNombreCompleto(), Constantes.LOG_BIENVENIDA);
         }
         return new ResultadoReconocimiento(false, false, null,

@@ -15,9 +15,13 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity(name = "Funcion")
 @Table(name = "funcion")
+@Getter
+@Setter
 @Data
 public class Funcion implements Serializable {
 
@@ -41,22 +45,6 @@ public class Funcion implements Serializable {
   }
 
   public Funcion(String descripcion) {
-    this.descripcion = descripcion;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getDescripcion() {
-    return descripcion;
-  }
-
-  public void setDescripcion(String descripcion) {
     this.descripcion = descripcion;
   }
 

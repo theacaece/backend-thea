@@ -13,10 +13,14 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity(name = "Registro")
 @Table(name = "Registro")
 @DynamicUpdate
+@Getter
+@Setter
 @Data
 public class Registro implements Serializable {
 
@@ -88,8 +92,8 @@ public class Registro implements Serializable {
     return fechaIngreso;
   }
 
-  public void setFechaIngreso(Date fecha_ingreso) {
-    this.fechaIngreso = fecha_ingreso;
+  public void setFechaIngreso(Date fechaIngreso) {
+    this.fechaIngreso = fechaIngreso;
   }
 
 }

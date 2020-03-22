@@ -14,9 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity(name = "Foto")
 @Table(name = "foto")
+@Getter
+@Setter
 @Data
 public class Foto implements Serializable {
 
@@ -27,7 +31,6 @@ public class Foto implements Serializable {
   @GenericGenerator(name = "native", strategy = "native")
   @Column(name = "id", updatable = false, nullable = false)
   private Integer id;
-
   @Lob
   @Column(name = "archivo")
   private byte[] archivo;

@@ -7,12 +7,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import edu.caece.app.repository.IFotoRepositorio;
-import edu.caece.app.repository.IFuncionRepositorio;
-import edu.caece.app.repository.IPersonaRepositorio;
-import edu.caece.app.repository.IRegistroRepositorio;
-import edu.caece.app.repository.IRolRepositorio;
-import edu.caece.app.repository.IUsuarioRepositorio;
+import edu.caece.app.repository.FotoRepositorio;
+import edu.caece.app.repository.FuncionRepositorio;
+import edu.caece.app.repository.PersonaRepositorio;
+import edu.caece.app.repository.RegistroRepositorio;
+import edu.caece.app.repository.RolRepositorio;
+import edu.caece.app.repository.UsuarioRepositorio;
 import edu.caece.app.resources.LecturaExcel;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,9 +33,9 @@ public class SpringDemoTheaApplication {
   }
 
   @Bean
-  ApplicationRunner init(IUsuarioRepositorio usuarioRepositorio, IRolRepositorio rolRepositorio,
-      IPersonaRepositorio personaRepositorio, IFuncionRepositorio funcionRepositorio,
-      IRegistroRepositorio registroRepositorio, IFotoRepositorio fotoRepositorio) throws Exception {
+  ApplicationRunner init(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
+      PersonaRepositorio personaRepositorio, FuncionRepositorio funcionRepositorio,
+      RegistroRepositorio registroRepositorio, FotoRepositorio fotoRepositorio) throws Exception {
     return args -> {
       inicializarBD(usuarioRepositorio, rolRepositorio, personaRepositorio, funcionRepositorio,
           registroRepositorio, fotoRepositorio);
@@ -53,9 +53,9 @@ public class SpringDemoTheaApplication {
    * @param fotoRepositorio
    * @throws Exception
    */
-  public void inicializarBD(IUsuarioRepositorio usuarioRepositorio, IRolRepositorio rolRepositorio,
-      IPersonaRepositorio personaRepositorio, IFuncionRepositorio funcionRepositorio,
-      IRegistroRepositorio registroRepositorio, IFotoRepositorio fotoRepositorio) throws Exception {
+  public void inicializarBD(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
+      PersonaRepositorio personaRepositorio, FuncionRepositorio funcionRepositorio,
+      RegistroRepositorio registroRepositorio, FotoRepositorio fotoRepositorio) throws Exception {
     try {
       LecturaExcel lecturaExcel = new LecturaExcel();
       lecturaExcel.obtenerDatosBD(usuarioRepositorio, rolRepositorio, personaRepositorio,

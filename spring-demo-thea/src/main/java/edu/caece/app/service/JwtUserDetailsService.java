@@ -9,13 +9,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Usuario;
-import edu.caece.app.repository.IUsuarioRepositorio;
+import edu.caece.app.repository.UsuarioRepositorio;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
   @Autowired
-  private IUsuarioRepositorio usuarioRepositorio;
+  private UsuarioRepositorio usuarioRepositorio;
 
   @Override
   public UserDetails loadUserByUsername(String _usuario) throws UsernameNotFoundException {
@@ -28,7 +28,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     UserBuilder builder = null;
     builder = org.springframework.security.core.userdetails.User.withUsername(_usuario);
     builder.password(usuario.getPassword());
-    builder.roles(usuario.getRolesToArray());
+    // builder.roles(usuario.getRolesToArray());
 
     return builder.build();
   }

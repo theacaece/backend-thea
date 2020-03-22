@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import edu.caece.app.domain.Foto;
 import edu.caece.app.domain.Persona;
-import edu.caece.app.repository.IFotoRepositorio;
+import edu.caece.app.repository.FotoRepositorio;
 
 public class LecturaCarpeta {
 
@@ -25,7 +25,7 @@ public class LecturaCarpeta {
     fotos = new HashMap<String, Foto>();
   }
 
-  public void recorrerCarpetaFotos(IFotoRepositorio fotoRepositorio,
+  public void recorrerCarpetaFotos(FotoRepositorio fotoRepositorio,
       HashMap<String, Persona> personas) throws Exception {
     try {
       leerCarpeta(personas);
@@ -66,14 +66,14 @@ public class LecturaCarpeta {
                                                                                      // la Foto
           Persona persona = personas.get(carpeta.getName());
           if (persona != null) {
-            // Foto foto = new Foto(); // Crea Objeto Foto
-            // foto.setPersona(persona);
-            // foto.setNombreArchivo(archivos[i].getName());
-            // foto.setArchivo(archivoBlob);
+            Foto foto = new Foto(); // Crea Objeto Foto
+            foto.setPersona(persona);
+            foto.setNombreArchivo(archivos[i].getName());
+            foto.setArchivo(archivoBlob);
             // persona.addFoto(foto);
-            // log.info("Cantidad :: " + fotos.size() + " :: Carpeta :: " + carpeta.getName()
-            // + " :: Foto :: " + archivos[i].getName());
-            // fotos.put(archivos[i].getName(), foto); // Agrego Foto a la Lista de Fotos
+            log.info("Cantidad :: " + fotos.size() + " :: Carpeta :: " + carpeta.getName()
+                + " :: Foto :: " + archivos[i].getName());
+            fotos.put(archivos[i].getName(), foto); // Agrego Foto a la Lista de Fotos
           } else {
             System.out.println("La persona no existe :: DNI :: " + carpeta.getName());
           }
@@ -85,7 +85,7 @@ public class LecturaCarpeta {
   }
 
 
-  public void guardarFotos(IFotoRepositorio fotoRepositorio) throws Exception {
+  public void guardarFotos(FotoRepositorio fotoRepositorio) throws Exception {
     try {
       for (Foto foto : fotos.values()) {
         log.info("Foto :: " + foto.getNombreArchivo());

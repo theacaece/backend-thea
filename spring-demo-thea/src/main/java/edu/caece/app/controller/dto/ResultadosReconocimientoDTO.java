@@ -1,4 +1,4 @@
-package edu.caece.app.service.impl.dto;
+package edu.caece.app.controller.dto;
 
 import java.util.List;
 

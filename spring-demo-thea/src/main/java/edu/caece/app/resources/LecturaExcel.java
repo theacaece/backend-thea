@@ -19,12 +19,12 @@ import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.Registro;
 import edu.caece.app.domain.Rol;
 import edu.caece.app.domain.Usuario;
-import edu.caece.app.repository.IFotoRepositorio;
-import edu.caece.app.repository.IFuncionRepositorio;
-import edu.caece.app.repository.IPersonaRepositorio;
-import edu.caece.app.repository.IRegistroRepositorio;
-import edu.caece.app.repository.IRolRepositorio;
-import edu.caece.app.repository.IUsuarioRepositorio;
+import edu.caece.app.repository.FotoRepositorio;
+import edu.caece.app.repository.FuncionRepositorio;
+import edu.caece.app.repository.PersonaRepositorio;
+import edu.caece.app.repository.RegistroRepositorio;
+import edu.caece.app.repository.RolRepositorio;
+import edu.caece.app.repository.UsuarioRepositorio;
 
 public class LecturaExcel {
 
@@ -58,9 +58,9 @@ public class LecturaExcel {
     }
   }
 
-  public void obtenerDatosBD(IUsuarioRepositorio usuarioRepositorio, IRolRepositorio rolRepositorio,
-      IPersonaRepositorio personaRepositorio, IFuncionRepositorio funcionRepositorio,
-      IRegistroRepositorio registroRepositorio, IFotoRepositorio fotoRepositorio) throws Exception {
+  public void obtenerDatosBD(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
+      PersonaRepositorio personaRepositorio, FuncionRepositorio funcionRepositorio,
+      RegistroRepositorio registroRepositorio, FotoRepositorio fotoRepositorio) throws Exception {
     log.info(Constantes.EXCEL_LECTURA);
     try {
       leerArchivo();
@@ -75,7 +75,7 @@ public class LecturaExcel {
     }
   }
 
-  public void obtenerFotos(IPersonaRepositorio personaRepositorio, IFotoRepositorio fotoRepositorio)
+  public void obtenerFotos(PersonaRepositorio personaRepositorio, FotoRepositorio fotoRepositorio)
       throws Exception {
     log.info(Constantes.EXCEL_LECTURA_FOTOS);
     try {
@@ -86,7 +86,7 @@ public class LecturaExcel {
     }
   }
 
-  public void obtenerUsuarios(IUsuarioRepositorio usuarioRepositorio) throws Exception {
+  public void obtenerUsuarios(UsuarioRepositorio usuarioRepositorio) throws Exception {
     log.info(Constantes.EXCEL_LECTURA_USUARIOS);
     try {
       sheet = worbook.getSheetAt(SOLAPA_USUARIOS);
@@ -97,7 +97,7 @@ public class LecturaExcel {
     }
   }
 
-  public void obtenerPersonas(IPersonaRepositorio personaRepositorio) throws Exception {
+  public void obtenerPersonas(PersonaRepositorio personaRepositorio) throws Exception {
     log.info(Constantes.EXCEL_LECTURA_PERSONAS);
     try {
       leerArchivo();
@@ -109,7 +109,7 @@ public class LecturaExcel {
     }
   }
 
-  public void obtenerRegistros(IRegistroRepositorio registroRepositorio) throws Exception {
+  public void obtenerRegistros(RegistroRepositorio registroRepositorio) throws Exception {
     log.info(Constantes.EXCEL_LECTURA_REGISTROS);
     try {
       leerArchivo();
@@ -228,7 +228,7 @@ public class LecturaExcel {
     }
   }
 
-  public void guardarUsuarios(IUsuarioRepositorio usuarioRepositorio, ArrayList<Usuario> users)
+  public void guardarUsuarios(UsuarioRepositorio usuarioRepositorio, ArrayList<Usuario> users)
       throws Exception {
     log.info(Constantes.BBDD_GUARDA_USUARIOS);
     try {
@@ -241,7 +241,7 @@ public class LecturaExcel {
     }
   }
 
-  public void guardarPersonas(IPersonaRepositorio personRepository) throws Exception {
+  public void guardarPersonas(PersonaRepositorio personRepository) throws Exception {
     try {
       log.info(Constantes.BBDD_GUARDA_PERSONAS);
       for (Persona person : personas.values()) {
@@ -258,7 +258,7 @@ public class LecturaExcel {
     }
   }
 
-  public void guardarRegistros(IRegistroRepositorio registroRepository) throws Exception {
+  public void guardarRegistros(RegistroRepositorio registroRepository) throws Exception {
     log.info(Constantes.BBDD_GUARDA_REGISTROS);
     try {
       for (Registro registro : registros.values()) {
@@ -274,7 +274,7 @@ public class LecturaExcel {
     }
   }
 
-  public void guardarRoles(IRolRepositorio rolRepository) throws Exception {
+  public void guardarRoles(RolRepositorio rolRepository) throws Exception {
     try {
       Rol rol1 = new Rol("ADMIN");
       Rol rol2 = new Rol("USER");
@@ -290,7 +290,7 @@ public class LecturaExcel {
     }
   }
 
-  public void guardarFunciones(IFuncionRepositorio funcionRepository) throws Exception {
+  public void guardarFunciones(FuncionRepositorio funcionRepository) throws Exception {
     try {
       Funcion funcion1 = new Funcion("Profesor");
       Funcion funcion2 = new Funcion("Alumno");

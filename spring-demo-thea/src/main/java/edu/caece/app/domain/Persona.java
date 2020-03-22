@@ -108,6 +108,14 @@ public class Persona implements Serializable {
     this.matricula = matricula;
   }
 
+  public boolean isHabilitado() {
+    return habilitado;
+  }
+
+  public void setHabilitado(boolean habilitado) {
+    this.habilitado = habilitado;
+  }
+
   public List<Funcion> getFunciones() {
     return funciones;
   }
@@ -124,16 +132,8 @@ public class Persona implements Serializable {
     funciones.remove(funcion);
   }
 
-  public boolean estaHabilitado() {
-    return habilitado;
-  }
-
-  public void setHabilitado(boolean entryAllowed) {
-    this.habilitado = entryAllowed;
-  }
-
   public String getNombreCompleto() {
-    return String.join(" ", this.getNombre(), this.getApellido());
+    return String.join(" ", nombre, apellido);
   }
 
   @Override

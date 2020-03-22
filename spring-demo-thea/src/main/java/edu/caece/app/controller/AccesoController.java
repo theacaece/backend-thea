@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Acceso;
-import edu.caece.app.repository.IAccesoRepositorio;
+import edu.caece.app.repository.AccesoRepositorio;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -25,7 +25,7 @@ public class AccesoController {
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
   @Autowired
-  private IAccesoRepositorio accesoRepositorio;
+  private AccesoRepositorio accesoRepositorio;
 
   @RequestMapping(value = "/accesos", method = RequestMethod.GET)
   public Collection<Acceso> getAll() {

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Persona;
-import edu.caece.app.repository.IPersonaRepositorio;
+import edu.caece.app.repository.PersonaRepositorio;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -30,7 +30,7 @@ public class PersonaController {
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
   @Autowired
-  private IPersonaRepositorio personaRepositorio;
+  private PersonaRepositorio personaRepositorio;
 
   private Sort sortByApellido() {
     return new Sort(Sort.Direction.ASC, "apellido");

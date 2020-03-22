@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import edu.caece.app.domain.Persona;
 
-public interface IPersonaRepositorio extends JpaRepository<Persona, Long> {
+public interface PersonaRepositorio extends JpaRepository<Persona, Long> {
 
   @Modifying
   @Query("UPDATE Persona p SET p.nombre = :nombre, p.apellido = :apellido, p.dni = :dni, p.matricula = :matricula where p.id = :id")

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Foto;
-import edu.caece.app.repository.IFotoRepositorio;
+import edu.caece.app.repository.FotoRepositorio;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -25,7 +25,7 @@ public class FotoController {
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
   @Autowired
-  private IFotoRepositorio fotoRepositorio;
+  private FotoRepositorio fotoRepositorio;
 
   @RequestMapping(value = "/fotos", method = RequestMethod.GET)
   public Collection<Foto> getAll() {

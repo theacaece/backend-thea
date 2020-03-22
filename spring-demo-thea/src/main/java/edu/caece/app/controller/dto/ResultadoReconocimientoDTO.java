@@ -1,8 +1,8 @@
-package edu.caece.app.service.impl.dto;
+package edu.caece.app.controller.dto;
 
 public class ResultadoReconocimientoDTO {
 
-  private String label;
+  private String dni;
 
   private double confidence;
 
@@ -14,16 +14,16 @@ public class ResultadoReconocimientoDTO {
     this.confidence = confidence;
   }
 
-  public String getLabel() {
-    return label;
+  public String getDNI() {
+    return dni;
   }
 
-  public void setLabel(String label) {
-    this.label = label;
+  public void setDNI(String dni) {
+    this.dni = dni;
   }
 
   @Override
   public String toString() {
-    return "ReconocimientoResultDto [label=" + label + ", confidence=" + confidence + "]";
+    return "ReconocimientoResultDto [label=" + dni + ", confidence=" + confidence + "]";
   }
 }

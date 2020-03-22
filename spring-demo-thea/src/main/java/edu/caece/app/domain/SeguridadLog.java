@@ -17,7 +17,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class SecurityLog {
+public class SeguridadLog {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,38 +25,37 @@ public class SecurityLog {
   private Long id;
 
   @ManyToOne
-  private Persona person;
+  private Persona persona;
 
   @Column
-  private String module;
+  private String modulo;
 
   @Column
   private EventType eventType;
 
   @Column
-  private String message;
+  private String mensaje;
 
   @Column
   private Date timestamp;
 
-  public SecurityLog() {
-    // Default value for timestamp
+  public SeguridadLog() {
     this.timestamp = new Date();
   }
 
-  public SecurityLog(String message, EventType eventType) {
+  public SeguridadLog(String message, EventType eventType) {
     this(message, null, eventType);
   }
 
-  public SecurityLog(String module, String message, EventType eventType) {
+  public SeguridadLog(String module, String message, EventType eventType) {
     this(module, message, null, eventType);
   }
 
-  public SecurityLog(String module, String message, Persona person, EventType eventType) {
+  public SeguridadLog(String modelo, String mensaje, Persona persona, EventType eventType) {
     this();
-    this.person = person;
-    this.module = module;
-    this.message = message;
+    this.persona = persona;
+    this.modulo = modelo;
+    this.mensaje = mensaje;
     this.eventType = eventType;
   }
 

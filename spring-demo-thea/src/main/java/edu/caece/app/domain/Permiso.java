@@ -9,9 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity(name = "Permiso")
 @Table(name = "permiso")
+@Getter
+@Setter
 @Data
 public class Permiso implements Serializable {
 
@@ -31,22 +35,6 @@ public class Permiso implements Serializable {
   }
 
   public Permiso(String descripcion) {
-    this.descripcion = descripcion;
-  }
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getDescripcion() {
-    return descripcion;
-  }
-
-  public void setDescripcion(String descripcion) {
     this.descripcion = descripcion;
   }
 

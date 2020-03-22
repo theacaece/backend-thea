@@ -9,13 +9,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity(name = "Rol")
-@Table(name = "rol")
+@Entity
+@Getter
+@Setter
 @Data
 public class Rol {
 
@@ -40,27 +42,4 @@ public class Rol {
     this.name = nombre;
   }
 
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public List<Usuario> getUsuarios() {
-    return usuarios;
-  }
-
-  public void setUsuarios(List<Usuario> users) {
-    this.usuarios = users;
-  }
 }

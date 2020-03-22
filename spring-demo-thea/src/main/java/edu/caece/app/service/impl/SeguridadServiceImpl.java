@@ -12,29 +12,29 @@ import org.springframework.stereotype.Service;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.EventType;
 import edu.caece.app.domain.Persona;
-import edu.caece.app.domain.SecurityLog;
-import edu.caece.app.repository.SecurityLogRepository;
+import edu.caece.app.domain.SeguridadLog;
+import edu.caece.app.repository.SeguridadLogRepositorio;
 import edu.caece.app.service.SecuridadService;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class SecuridadServiceImpl implements SecuridadService {
-
-  private static final Logger logger = LoggerFactory.getLogger(SecuridadServiceImpl.class);
-
+public class SeguridadServiceImpl implements SecuridadService {
 
   private static final String DEFAULT_MODULE = "BACKEND";
+
+  protected final Logger log = LoggerFactory.getLogger(getClass());
+
   @Autowired
-  private SecurityLogRepository securityLogRepository;
+  private SeguridadLogRepositorio seguridadLogRepositorio;
 
   @Override
   public void logAccess(Persona person) {
     String message = format(Constantes.LOG_ACCESO_PEDIDO,
-        person.estaHabilitado() ? Constantes.LOG_ACCESO_AUTORIZADO : Constantes.LOG_ACCESO_DENEGADO,
+        person.isHabilitado() ? Constantes.LOG_ACCESO_AUTORIZADO : Constantes.LOG_ACCESO_DENEGADO,
         person.getNombreCompleto(), person.getDni());
-    this.log(null, message, person, person.estaHabilitado() ? GRANTED_ACCESS : DENIED_ACCESS);
-    logger.info(message);
+    this.log(null, message, person, person.isHabilitado() ? GRANTED_ACCESS : DENIED_ACCESS);
+    log.info(message);
   }
 
   @Override
@@ -57,9 +57,9 @@ public class SecuridadServiceImpl implements SecuridadService {
   @Override
   @Transactional
   public void log(String module, String message, Persona person, EventType eventType) {
-    SecurityLog securityLog = new SecurityLog(module, message, person, eventType);
-    securityLogRepository.save(securityLog);
-    logger.info(format(Constantes.LOG_ACCESO_NOCONFIABLE, module, eventType, person, message));
+    SeguridadLog securityLog = new SeguridadLog(module, message, person, eventType);
+    seguridadLogRepositorio.save(securityLog);
+    log.info(format(Constantes.LOG_ACCESO_NOCONFIABLE, module, eventType, person, message));
   }
 
 }

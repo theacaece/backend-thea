@@ -12,13 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Entity
-@Table(name = "Usuario")
 @Data
 public class Usuario {
 
@@ -43,18 +40,6 @@ public class Usuario {
   @Column(name = "password", nullable = false)
   private String password;
 
-  @ManyToMany(
-      cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
-      fetch = FetchType.EAGER)
-  @JoinTable(name = "usuario_rol",
-      joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
-  private List<Rol> roles;
-
-  public Usuario() {
-    this.roles = new ArrayList<Rol>();
-  }
-
   public long getId() {
     return id;
   }
@@ -63,12 +48,28 @@ public class Usuario {
     this.id = id;
   }
 
+  public String getFirstname() {
+    return firstname;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  public String getLastname() {
+    return lastname;
+  }
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
+  }
+
   public String getUsername() {
     return username;
   }
 
-  public void setUsername(String name) {
-    this.username = name;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public String getEmail() {
@@ -87,49 +88,24 @@ public class Usuario {
     this.password = password;
   }
 
-  public String getFirstname() {
-    return firstname;
-  }
-
-  public void setFirstname(String firstName) {
-    this.firstname = firstName.toUpperCase();
-  }
-
-  public String getLastname() {
-    return lastname;
-  }
-
-  public void setLastname(String lastName) {
-    this.lastname = lastName.toUpperCase();
-  }
-
   public List<Rol> getRoles() {
     return roles;
   }
 
   public void setRoles(List<Rol> roles) {
     this.roles = roles;
-    this.roles.forEach(x -> x.getUsuarios().add(this));
   }
 
-  public void addRol(Rol rol) {
-    roles.add(rol);
-  }
+  @ManyToMany(
+      cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
+      fetch = FetchType.EAGER)
+  @JoinTable(name = "usuario_rol",
+      joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+  private List<Rol> roles;
 
-  public void removeRol(Rol rol) {
-    roles.remove(rol);
-  }
-
-  @JsonIgnore
-  public String[] getRolesToArray() {
-    String[] rl = new String[roles.size()];
-    int i = 0;
-
-    for (Rol r : roles) {
-      rl[i] = r.getName();
-      i++;
-    }
-    return rl;
+  public Usuario() {
+    this.roles = new ArrayList<Rol>();
   }
 
 }

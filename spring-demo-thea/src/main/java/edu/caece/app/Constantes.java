@@ -12,8 +12,8 @@ public class Constantes {
       "Se detecto una persona, pero con una confianza menor al %s% : %f";
   public static final String LOG_ACCESO_NOCONFIABLE =
       "Acceso no autorizado, confianza menor al 60% para %s (%s)";
-  public static final String LOG_ACCESO_NOENCONTRADA =
-      "Se reconocio a la persona, pero no se la encontro en la base de datos con el DNI : %s";
+  public static final String LOG_ACCESO_NOBBDD =
+      "Persona reconocida, pero no se encuentra en la BBDD con DNI: %s";
 
   public static final String LOG_ACCESO_AUTORIZADO = "Autorizado";
   public static final String LOG_ACCESO_DENEGADO = "Denegado";

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Usuario;
-import edu.caece.app.repository.IUsuarioRepositorio;
+import edu.caece.app.repository.UsuarioRepositorio;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -29,7 +29,7 @@ public class UsuarioController {
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
   @Autowired
-  private IUsuarioRepositorio repositorio;
+  private UsuarioRepositorio repositorio;
 
   @RequestMapping(value = "/users", method = RequestMethod.GET)
   public Collection<Usuario> getUsuarios() {

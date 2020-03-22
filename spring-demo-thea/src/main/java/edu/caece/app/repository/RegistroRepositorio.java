@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import edu.caece.app.domain.Registro;
 import edu.caece.app.domain.Usuario;
 
-public interface IRegistroRepositorio extends JpaRepository<Registro, Long> {
+public interface RegistroRepositorio extends JpaRepository<Registro, Long> {
 
   @Modifying
   @Query("UPDATE Registro r SET r.nombre = :nombre, r.apellido = :apellido, r.dni = :dni, r.fechaIngreso = :fechaIngreso where r.id = :id")

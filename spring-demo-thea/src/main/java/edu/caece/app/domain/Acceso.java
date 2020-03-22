@@ -9,9 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity(name = "Acceso")
 @Table(name = "acceso")
+@Getter
+@Setter
 @Data
 public class Acceso implements Serializable {
 
@@ -28,22 +32,6 @@ public class Acceso implements Serializable {
 
   public Acceso() {
 
-  }
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getFechaAcceso() {
-    return fechaAcceso;
-  }
-
-  public void setFechaAcceso(String fechaAcceso) {
-    this.fechaAcceso = fechaAcceso;
   }
 
 }

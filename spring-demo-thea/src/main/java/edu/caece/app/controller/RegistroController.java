@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.Registro;
-import edu.caece.app.repository.IPersonaRepositorio;
-import edu.caece.app.repository.IRegistroRepositorio;
+import edu.caece.app.repository.PersonaRepositorio;
+import edu.caece.app.repository.RegistroRepositorio;
 import edu.caece.app.resources.FuncionesUtiles;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,10 +30,10 @@ public class RegistroController {
   final Logger logger = LoggerFactory.getLogger(RegistroController.class);
 
   @Autowired
-  private IPersonaRepositorio personaRepositorio;
+  private PersonaRepositorio personaRepositorio;
 
   @Autowired
-  private IRegistroRepositorio registroRepositorio;
+  private RegistroRepositorio registroRepositorio;
 
   private Sort sortByFechaIngresoDesc() {
     return new Sort(Sort.Direction.DESC, "fechaIngreso");
