@@ -26,7 +26,7 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
   public static final String URL = "http://localhost:8085/reconocedor/matias";
-  private static final double NIVEL_CONFIANZA = 60D;
+  private static final double NIVEL_CONFIANZA = 55D;
 
   @Autowired
   private PersonaRepositorio personaRepositorio;
@@ -59,6 +59,7 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
    */
   public Persona obtenerPersonaReconocida(Optional<ResultadoReconocimientoDTO> dto) {
     ResultadoReconocimientoDTO personaReconocida = dto.get();
+    log.info(personaReconocida.toString());
     String dni = personaReconocida.getDNI();
     Persona persona = personaRepositorio.findByDni(dni).orElseThrow(() -> {
       String mensaje = String.format(Constantes.LOG_ACCESO_NOBBDD, dni);

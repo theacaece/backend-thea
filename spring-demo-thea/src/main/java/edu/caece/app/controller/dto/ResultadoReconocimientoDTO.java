@@ -24,6 +24,6 @@ public class ResultadoReconocimientoDTO {
 
   @Override
   public String toString() {
-    return "ReconocimientoResultDto [label=" + dni + ", confidence=" + nivelConfianza + "]";
+    return "ReconocimientoResultDto [dni=" + dni + ", nivelConfianza=" + nivelConfianza + "]";
   }
 }
