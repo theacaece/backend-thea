@@ -12,12 +12,8 @@ import javax.persistence.ManyToMany;
 import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
 @Data
 public class Rol {
 
@@ -27,19 +23,44 @@ public class Rol {
   @Column(name = "id", updatable = false, nullable = false)
   private long id;
 
-  @Column(name = "name", nullable = false, unique = true)
-  private String name;
+  @Column(name = "nombre", nullable = false, unique = true)
+  private String nombre;
 
   @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
   @JsonIgnore
   private List<Usuario> usuarios;
 
   public Rol() {
-    this.usuarios = new ArrayList<Usuario>();
+    usuarios = new ArrayList<Usuario>();
   }
 
   public Rol(String nombre) {
-    this.name = nombre;
+    this.usuarios = new ArrayList<Usuario>();
+    this.nombre = nombre;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public String getNombre() {
+    return nombre;
+  }
+
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
+  public List<Usuario> getUsuarios() {
+    return usuarios;
+  }
+
+  public void setUsuarios(List<Usuario> usuarios) {
+    this.usuarios = usuarios;
   }
 
 }

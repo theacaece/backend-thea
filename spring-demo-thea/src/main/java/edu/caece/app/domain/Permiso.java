@@ -6,16 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Entity(name = "Permiso")
-@Table(name = "permiso")
-@Getter
-@Setter
+@Entity
 @Data
 public class Permiso implements Serializable {
 
@@ -25,7 +19,7 @@ public class Permiso implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
   @GenericGenerator(name = "native", strategy = "native")
   @Column(name = "id", updatable = false, nullable = false)
-  private Integer id = 0;
+  private Integer id;
 
   @Column(name = "descripcion")
   private String descripcion;
@@ -35,6 +29,22 @@ public class Permiso implements Serializable {
   }
 
   public Permiso(String descripcion) {
+    this.descripcion = descripcion;
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public String getDescripcion() {
+    return descripcion;
+  }
+
+  public void setDescripcion(String descripcion) {
     this.descripcion = descripcion;
   }
 

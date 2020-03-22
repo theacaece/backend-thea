@@ -26,7 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class JwtAuthenticationController {
+
   protected final Logger log = LoggerFactory.getLogger(getClass());
+
   @Autowired
   private AuthenticationManagerService authenticationManager;
 
@@ -34,32 +36,35 @@ public class JwtAuthenticationController {
   private JwtTokenUtil jwtTokenUtil;
 
   @Autowired
-  private JwtUserDetailsService userDetailsService;
+  private JwtUserDetailsService usuarioDetalleServicio;
 
   @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-  public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
+  public ResponseEntity<?> crearAutenticacionToken(@RequestBody JwtRequest autenticacionRequest)
       throws Exception {
     log.info(Constantes.INFO_TOKEN);
     try {
-      authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-      final UserDetails userDetails =
-          userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-      final String token = jwtTokenUtil.generateToken(userDetails);
-      return ResponseEntity.ok(new JwtResponse(token, userDetails));
+      autenticar(autenticacionRequest.getUsuario(), autenticacionRequest.getPassword());
+      final UserDetails usuarioDetalle =
+          usuarioDetalleServicio.loadUserByUsername(autenticacionRequest.getUsuario());
+      final String token = jwtTokenUtil.generateToken(usuarioDetalle);
+      return ResponseEntity.ok(new JwtResponse(token, usuarioDetalle));
     } catch (Exception e) {
       return new ResponseEntity<>(Constantes.ERROR_AUTENTICACION, HttpStatus.NOT_FOUND);
     }
   }
 
-  private void authenticate(String username, String password) throws Exception {
+  private void autenticar(String usuario, String password) throws Exception {
     try {
       log.info(Constantes.INFO_AUTENTICACION);
       authenticationManager
-          .authenticate(new UsernamePasswordAuthenticationToken(username, password));
+          .authenticate(new UsernamePasswordAuthenticationToken(usuario, password));
     } catch (DisabledException e) {
       throw new Exception(Constantes.ERROR_USUARIO_NO_AUTORIZADO, e);
     } catch (BadCredentialsException e) {
       throw new Exception(Constantes.ERROR_AUTENTICACION, e);
+    } catch (Exception e) {
+      throw new Exception(Constantes.ERROR_AUTENTICACION, e);
     }
   }
+
 }

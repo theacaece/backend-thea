@@ -1,8 +1,8 @@
 package edu.caece.app.service.impl;
 
-import static edu.caece.app.domain.EventType.DENIED_ACCESS;
-import static edu.caece.app.domain.EventType.GRANTED_ACCESS;
-import static edu.caece.app.domain.EventType.RECOGNIZED_THRESHOLD_NOT_MET;
+import static edu.caece.app.domain.TipoEvento.DENIED_ACCESS;
+import static edu.caece.app.domain.TipoEvento.GRANTED_ACCESS;
+import static edu.caece.app.domain.TipoEvento.RECOGNIZED_THRESHOLD_NOT_MET;
 import static java.lang.String.format;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
@@ -10,16 +10,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import edu.caece.app.Constantes;
-import edu.caece.app.domain.EventType;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.SeguridadLog;
+import edu.caece.app.domain.TipoEvento;
 import edu.caece.app.repository.SeguridadLogRepositorio;
-import edu.caece.app.service.SecuridadService;
+import edu.caece.app.service.SeguridadService;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class SeguridadServiceImpl implements SecuridadService {
+public class SeguridadServiceImpl implements SeguridadService {
 
   private static final String DEFAULT_MODULE = "BACKEND";
 
@@ -45,21 +45,21 @@ public class SeguridadServiceImpl implements SecuridadService {
   }
 
   @Override
-  public void log(String message, EventType eventType) {
-    log(null, message, eventType);
+  public void log(String mensaje, TipoEvento tipoEvento) {
+    log(null, mensaje, tipoEvento);
   }
 
   @Override
-  public void log(String module, String message, EventType eventType) {
-    this.log(module, message, null, eventType);
+  public void log(String module, String mensaje, TipoEvento tipoEvento) {
+    this.log(module, mensaje, null, tipoEvento);
   }
 
   @Override
   @Transactional
-  public void log(String module, String message, Persona person, EventType eventType) {
-    SeguridadLog securityLog = new SeguridadLog(module, message, person, eventType);
+  public void log(String module, String mensaje, Persona persona, TipoEvento tipoEvento) {
+    SeguridadLog securityLog = new SeguridadLog(module, mensaje, persona, tipoEvento);
     seguridadLogRepositorio.save(securityLog);
-    log.info(format(Constantes.LOG_ACCESO_NOCONFIABLE, module, eventType, person, message));
+    log.info(format(Constantes.LOG_ACCESO_NOCONFIABLE, module, tipoEvento, persona, mensaje));
   }
 
 }

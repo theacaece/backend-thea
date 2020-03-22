@@ -21,6 +21,7 @@ import edu.caece.app.config.JwtRequestFilter;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+  
   @Autowired
   private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
   @Autowired

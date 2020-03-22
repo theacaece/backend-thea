@@ -31,7 +31,7 @@ public class SeguridadLog {
   private String modulo;
 
   @Column
-  private EventType eventType;
+  private TipoEvento tipoEvento;
 
   @Column
   private String mensaje;
@@ -43,20 +43,20 @@ public class SeguridadLog {
     this.timestamp = new Date();
   }
 
-  public SeguridadLog(String message, EventType eventType) {
-    this(message, null, eventType);
+  public SeguridadLog(String mensaje, TipoEvento tipoEnvento) {
+    this(mensaje, null, tipoEnvento);
   }
 
-  public SeguridadLog(String module, String message, EventType eventType) {
-    this(module, message, null, eventType);
+  public SeguridadLog(String modulo, String mensaje, TipoEvento tipoEvento) {
+    this(modulo, mensaje, null, tipoEvento);
   }
 
-  public SeguridadLog(String modelo, String mensaje, Persona persona, EventType eventType) {
+  public SeguridadLog(String modulo, String mensaje, Persona persona, TipoEvento tipoEvento) {
     this();
     this.persona = persona;
-    this.modulo = modelo;
+    this.modulo = modulo;
     this.mensaje = mensaje;
-    this.eventType = eventType;
+    this.tipoEvento = tipoEvento;
   }
 
 }
