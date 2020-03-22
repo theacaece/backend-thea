@@ -6,6 +6,6 @@ import edu.caece.app.domain.Rol;
 
 public interface RolRepositorio extends JpaRepository<Rol, Long> {
 
-  Optional<Rol> findByName(String name);
+  Optional<Rol> findByNombre(String nombre);
 
 }

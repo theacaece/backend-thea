@@ -50,16 +50,16 @@ public class SeguridadServiceImpl implements SeguridadService {
   }
 
   @Override
-  public void log(String module, String mensaje, TipoEvento tipoEvento) {
-    this.log(module, mensaje, null, tipoEvento);
+  public void log(String modulo, String mensaje, TipoEvento tipoEvento) {
+    this.log(modulo, mensaje, null, tipoEvento);
   }
 
   @Override
   @Transactional
-  public void log(String module, String mensaje, Persona persona, TipoEvento tipoEvento) {
-    SeguridadLog securityLog = new SeguridadLog(module, mensaje, persona, tipoEvento);
+  public void log(String modulo, String mensaje, Persona persona, TipoEvento tipoEvento) {
+    SeguridadLog securityLog = new SeguridadLog(modulo, mensaje, persona, tipoEvento);
     seguridadLogRepositorio.save(securityLog);
-    log.info(format(Constantes.LOG_ACCESO_NOCONFIABLE, module, tipoEvento, persona, mensaje));
+    log.info(format(Constantes.LOG_ACCESO_NOCONFIABLE, modulo, tipoEvento, persona, mensaje));
   }
 
 }
