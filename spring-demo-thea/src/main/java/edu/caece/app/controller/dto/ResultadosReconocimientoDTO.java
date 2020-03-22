@@ -6,17 +6,17 @@ public class ResultadosReconocimientoDTO {
 
   private List<ResultadoReconocimientoDTO> resultados;
 
-  public List<ResultadoReconocimientoDTO> getResults() {
+  public List<ResultadoReconocimientoDTO> getResultados() {
     return resultados;
   }
 
-  public void setResults(List<ResultadoReconocimientoDTO> resultados) {
+  public void setResultados(List<ResultadoReconocimientoDTO> resultados) {
     this.resultados = resultados;
   }
 
   @Override
   public String toString() {
-    return "ReconocimientoResultsDto [results=" + resultados + "]";
+    return "ReconocimientoResultsDto [resultados=" + resultados + "]";
   }
 
 }

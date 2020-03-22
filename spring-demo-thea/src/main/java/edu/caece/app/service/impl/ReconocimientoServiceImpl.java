@@ -44,8 +44,9 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
     ResponseEntity<ResultadosReconocimientoDTO> resultado =
         restTemplate.exchange(request, ResultadosReconocimientoDTO.class);
     log.info(resultado.toString());
-    Optional<ResultadoReconocimientoDTO> personaReconocida = resultado.getBody().getResults()
-        .stream().max((a, b) -> a.getNivelConfianza() >= b.getNivelConfianza() ? 1 : -1);
+    Optional<ResultadoReconocimientoDTO> personaReconocida = resultado.getBody().getResultados()
+        .stream().max((a, b) -> a.getConfidence() >= b.getConfidence() ? 1 : -1);
+    log.info(personaReconocida.toString());
     if (personaReconocida.isPresent()) {
       return obtenerPersonaReconocida(personaReconocida);
     }
@@ -61,18 +62,18 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
   public Persona obtenerPersonaReconocida(Optional<ResultadoReconocimientoDTO> dto) {
     ResultadoReconocimientoDTO personaReconocida = dto.get();
     log.info(personaReconocida.toString());
-    String dni = personaReconocida.getDNI();
+    String dni = personaReconocida.getLabel();
     Persona persona = personaRepositorio.findByDni(dni).orElseThrow(() -> {
       String mensaje = String.format(Constantes.LOG_ACCESO_NOBBDD, dni);
       log.error(mensaje);
       return new RuntimeException(mensaje);
     });
-    if (personaReconocida.getNivelConfianza() > NIVEL_CONFIANZA) {
+    if (personaReconocida.getConfidence() > NIVEL_CONFIANZA) {
       seguridadService.verificarIngreso(persona);
       return persona;
     } else {
       log.info(String.format(Constantes.LOG_ACCESO_DETECTADO, NIVEL_CONFIANZA,
-          personaReconocida.getNivelConfianza()));
+          personaReconocida.getConfidence()));
       seguridadService.verificarIngresoUmbralNoAlcanzado(persona);
     }
     return null;
