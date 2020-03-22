@@ -13,9 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import edu.caece.app.Constantes;
-import edu.caece.app.controller.dto.ResultadoReconocimientoDTO;
-import edu.caece.app.controller.dto.ResultadosReconocimientoDTO;
 import edu.caece.app.domain.Persona;
+import edu.caece.app.dto.ResultadoReconocimientoDTO;
+import edu.caece.app.dto.ResultadosReconocimientoDTO;
 import edu.caece.app.repository.PersonaRepositorio;
 import edu.caece.app.service.ReconocimientoService;
 import edu.caece.app.service.SeguridadService;
@@ -44,7 +44,7 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
     ResponseEntity<ResultadosReconocimientoDTO> resultado =
         restTemplate.exchange(request, ResultadosReconocimientoDTO.class);
     log.info(resultado.toString());
-    Optional<ResultadoReconocimientoDTO> personaReconocida = resultado.getBody().getResultados()
+    Optional<ResultadoReconocimientoDTO> personaReconocida = resultado.getBody().getResults()
         .stream().max((a, b) -> a.getConfidence() >= b.getConfidence() ? 1 : -1);
     log.info(personaReconocida.toString());
     if (personaReconocida.isPresent()) {

@@ -1,4 +1,4 @@
-package edu.caece.app.controller.dto;
+package edu.caece.app.dto;
 
 public class ResultadoReconocimiento {
 
