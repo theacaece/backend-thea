@@ -33,8 +33,8 @@ public class ResultadoReconocimiento {
     return autorizado;
   }
 
-  public void setAutorizado(boolean authorized) {
-    this.autorizado = authorized;
+  public void setAutorizado(boolean autorizado) {
+    this.autorizado = autorizado;
   }
 
   public String getNombre() {

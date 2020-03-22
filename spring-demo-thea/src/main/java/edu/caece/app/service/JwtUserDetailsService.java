@@ -25,8 +25,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     if (usuario == null)
       throw new UsernameNotFoundException(Constantes.ERROR_USUARIO_INEXISTENTE);
 
-    UserBuilder builder = null;
-    builder = org.springframework.security.core.userdetails.User.withUsername(_usuario);
+    UserBuilder builder = org.springframework.security.core.userdetails.User.withUsername(_usuario);
     builder.password(usuario.getPassword());
     builder.roles(usuario.getRolesToArray());
 

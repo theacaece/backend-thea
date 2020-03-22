@@ -5,9 +5,9 @@ import edu.caece.app.domain.TipoEvento;
 
 public interface SeguridadService {
 
-  public void logAccess(Persona person);
+  public void verificarIngreso(Persona person);
 
-  public void logAccessThresholdNotMet(Persona persona);
+  public void verificarIngresoThresholdNotMet(Persona persona);
 
   public void log(String message, TipoEvento tipoEvento);
 

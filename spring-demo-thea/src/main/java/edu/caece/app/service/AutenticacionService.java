@@ -14,7 +14,7 @@ import edu.caece.app.repository.AccesoRepositorio;
 import edu.caece.app.repository.UsuarioRepositorio;
 
 @Service
-public class AuthenticationManagerService implements AuthenticationManager {
+public class AutenticacionService implements AuthenticationManager {
 
   @Autowired
   private UsuarioRepositorio usuarioRepositorio;
@@ -23,16 +23,17 @@ public class AuthenticationManagerService implements AuthenticationManager {
   private AccesoRepositorio accesoRepositorio;
 
   @Override
-  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-    String username = authentication.getPrincipal().toString();
-    String password = authentication.getCredentials().toString();
-    Usuario user = usuarioRepositorio.findByUsername(username);
-    if (user == null) {
+  public Authentication authenticate(Authentication autenticacion) throws AuthenticationException {
+    String usuario = autenticacion.getPrincipal().toString();
+    String password = autenticacion.getCredentials().toString();
+    Usuario usuarioBBDD = usuarioRepositorio.findByUsername(usuario);
+    if (usuarioBBDD == null) {
       throw new UsernameNotFoundException(Constantes.ERROR_USUARIO_INEXISTENTE);
     } else {
       try {
-        if (user.getUsername().equals(username) && user.getPassword().equals(Hash.sha1(password))) {
-          return authentication;
+        if (usuarioBBDD.getUsername().equals(usuario)
+            && usuarioBBDD.getPassword().equals(Hash.sha1(password))) {
+          return autenticacion;
         } else {
           throw new BadCredentialsException(Constantes.ERROR_AUTENTICACION);
         }

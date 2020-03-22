@@ -23,16 +23,16 @@ import edu.caece.app.service.SeguridadService;
 @Service
 public class ReconocimientoServiceImpl implements ReconocimientoService {
 
-  private static final double NIVEL_CONFIANZA = 60D;
-  public static final String URL = "http://localhost:8085/reconocedor/matias";
-
   private static final Logger logger = LoggerFactory.getLogger(ReconocimientoServiceImpl.class);
+
+  public static final String URL = "http://localhost:8085/reconocedor/matias";
+  private static final double NIVEL_CONFIANZA = 60D;
 
   @Autowired
   private PersonaRepositorio personaRepositorio;
 
   @Autowired
-  private SeguridadService securidadService;
+  private SeguridadService seguridadService;
 
   @Override
   public Persona reconocerIngreso(byte[] imagenCara) {
@@ -44,9 +44,9 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
     ResponseEntity<ResultadosReconocimientoDTO> result =
         restTemplate.exchange(request, ResultadosReconocimientoDTO.class);
     Optional<ResultadoReconocimientoDTO> personaReconocida = result.getBody().getResults().stream()
-        .max((a, b) -> a.getConfidence() >= b.getConfidence() ? 1 : -1);
+        .max((a, b) -> a.getNivelConfianza() >= b.getNivelConfianza() ? 1 : -1);
     if (personaReconocida.isPresent()) {
-      ResultadoReconocimientoDTO dto = personaReconocida.get();
+      return obtenerPersonaReconocida(personaReconocida);
     }
     return null;
   }
@@ -57,20 +57,21 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
    * @param imagenCara
    * @return
    */
-  public Persona obtenerPersonaReconocida(ResultadoReconocimientoDTO dto) {
-    String dni = dto.getDNI();
+  public Persona obtenerPersonaReconocida(Optional<ResultadoReconocimientoDTO> dto) {
+    ResultadoReconocimientoDTO personaReconocida = dto.get();
+    String dni = personaReconocida.getDNI();
     Persona persona = personaRepositorio.findByDni(dni).orElseThrow(() -> {
       String mensaje = String.format(Constantes.LOG_ACCESO_NOBBDD, dni);
       logger.error(mensaje);
       return new RuntimeException(mensaje);
     });
-    if (dto.getConfidence() > NIVEL_CONFIANZA) {
-      securidadService.logAccess(persona);
+    if (personaReconocida.getNivelConfianza() > NIVEL_CONFIANZA) {
+      seguridadService.verificarIngreso(persona);
       return persona;
     } else {
-      logger.info(
-          String.format(Constantes.LOG_ACCESO_DETECTADO, NIVEL_CONFIANZA, dto.getConfidence()));
-      securidadService.logAccessThresholdNotMet(persona);
+      logger.info(String.format(Constantes.LOG_ACCESO_DETECTADO, NIVEL_CONFIANZA,
+          personaReconocida.getNivelConfianza()));
+      seguridadService.verificarIngresoThresholdNotMet(persona);
     }
     return null;
   }

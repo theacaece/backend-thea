@@ -21,11 +21,11 @@ import edu.caece.app.service.ReconocimientoService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = Constantes.URL)
 @Slf4j
 public class ReconocedorController {
 
-  private final static Logger log = LoggerFactory.getLogger(ReconocedorController.class);
+  protected final Logger log = LoggerFactory.getLogger(getClass());
 
   @Autowired
   private PersonaRepositorio personaRepositorio;

@@ -6,6 +6,8 @@ public class Constantes {
 
   }
 
+  public static final String URL = "http://localhost:4200";
+
   public static final String LOG_BIENVENIDA = "Bienvenide a la facultad";
   public static final String LOG_ACCESO_PEDIDO = "Acceso %s para %s (%s)";
   public static final String LOG_ACCESO_DETECTADO =

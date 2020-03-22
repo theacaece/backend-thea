@@ -4,15 +4,7 @@ public class ResultadoReconocimientoDTO {
 
   private String dni;
 
-  private double confidence;
-
-  public double getConfidence() {
-    return confidence;
-  }
-
-  public void setConfidence(double confidence) {
-    this.confidence = confidence;
-  }
+  private double nivelConfianza;
 
   public String getDNI() {
     return dni;
@@ -22,8 +14,16 @@ public class ResultadoReconocimientoDTO {
     this.dni = dni;
   }
 
+  public double getNivelConfianza() {
+    return nivelConfianza;
+  }
+
+  public void setNivelConfianza(double nivelConfianza) {
+    this.nivelConfianza = nivelConfianza;
+  }
+
   @Override
   public String toString() {
-    return "ReconocimientoResultDto [label=" + dni + ", confidence=" + confidence + "]";
+    return "ReconocimientoResultDto [label=" + dni + ", confidence=" + nivelConfianza + "]";
   }
 }

@@ -29,7 +29,7 @@ public class SeguridadServiceImpl implements SeguridadService {
   private SeguridadLogRepositorio seguridadLogRepositorio;
 
   @Override
-  public void logAccess(Persona person) {
+  public void verificarIngreso(Persona person) {
     String message = format(Constantes.LOG_ACCESO_PEDIDO,
         person.isHabilitado() ? Constantes.LOG_ACCESO_AUTORIZADO : Constantes.LOG_ACCESO_DENEGADO,
         person.getNombreCompleto(), person.getDni());
@@ -38,7 +38,7 @@ public class SeguridadServiceImpl implements SeguridadService {
   }
 
   @Override
-  public void logAccessThresholdNotMet(Persona person) {
+  public void verificarIngresoThresholdNotMet(Persona person) {
     String message =
         format(Constantes.LOG_ACCESO_NOCONFIABLE, person.getNombreCompleto(), person.getDni());
     this.log(DEFAULT_MODULE, message, person, RECOGNIZED_THRESHOLD_NOT_MET);

@@ -18,19 +18,19 @@ import edu.caece.app.Constantes;
 import edu.caece.app.config.JwtTokenUtil;
 import edu.caece.app.domain.JwtRequest;
 import edu.caece.app.domain.JwtResponse;
-import edu.caece.app.service.AuthenticationManagerService;
+import edu.caece.app.service.AutenticacionService;
 import edu.caece.app.service.JwtUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = Constantes.URL)
 @Slf4j
 public class JwtAuthenticationController {
 
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
   @Autowired
-  private AuthenticationManagerService authenticationManager;
+  private AutenticacionService authenticationManager;
 
   @Autowired
   private JwtTokenUtil jwtTokenUtil;
