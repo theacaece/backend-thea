@@ -43,6 +43,7 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
         .<byte[]>body(imagenCara);
     ResponseEntity<ResultadosReconocimientoDTO> resultado =
         restTemplate.exchange(request, ResultadosReconocimientoDTO.class);
+    log.info(resultado.toString());
     Optional<ResultadoReconocimientoDTO> personaReconocida = resultado.getBody().getResults()
         .stream().max((a, b) -> a.getNivelConfianza() >= b.getNivelConfianza() ? 1 : -1);
     if (personaReconocida.isPresent()) {
