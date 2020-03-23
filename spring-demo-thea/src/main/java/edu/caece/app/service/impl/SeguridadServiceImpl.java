@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SeguridadServiceImpl implements SeguridadService {
 
-  private static final String DEFAULT_MODULE = "BACKEND";
+  private static final String DEFAULT_MODULE = null;
 
   protected final Logger log = LoggerFactory.getLogger(getClass());
 

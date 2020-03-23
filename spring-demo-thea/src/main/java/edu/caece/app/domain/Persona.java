@@ -54,7 +54,7 @@ public class Persona implements Serializable {
   private String matricula;
 
   @Column
-  private boolean habilitado = false;
+  private boolean habilitado = true;
 
   public Persona() {
     this.funciones = new ArrayList<Funcion>();

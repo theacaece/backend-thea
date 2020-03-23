@@ -26,7 +26,7 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
   public static final String URL = "http://localhost:8085/reconocedor/matias";
-  private static final double NIVEL_CONFIANZA = 55D;
+  private static final double NIVEL_CONFIANZA = 60D;
 
   @Autowired
   private PersonaRepositorio personaRepositorio;
