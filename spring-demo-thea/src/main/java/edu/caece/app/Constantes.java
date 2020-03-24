@@ -10,10 +10,8 @@ public class Constantes {
 
   public static final String LOG_BIENVENIDA = "Bienvenide a la facultad";
   public static final String LOG_ACCESO_PEDIDO = "Acceso %s para %s (%s)";
-  public static final String LOG_ACCESO_DETECTADO =
-      "Se detecto una persona, pero con una confianza menor al %s% : %f";
   public static final String LOG_ACCESO_NOCONFIABLE =
-      "Acceso no autorizado, confianza menor al 60% para %s (%s)";
+      "Acceso no autorizado, bajo nivel de confianza para %s (%s)";
   public static final String LOG_ACCESO_NOBBDD =
       "Persona reconocida, pero no se encuentra en la BBDD con DNI: %s";
 

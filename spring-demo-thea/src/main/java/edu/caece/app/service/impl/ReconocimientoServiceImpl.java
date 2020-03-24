@@ -26,7 +26,7 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
   public static final String URL = "http://localhost:8085/reconocedor/matias";
-  private static final double NIVEL_CONFIANZA = 60D;
+  private static final double NIVEL_CONFIANZA = 58D;
 
   @Autowired
   private PersonaRepositorio personaRepositorio;
@@ -71,10 +71,6 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
     if (personaReconocida.getConfidence() > NIVEL_CONFIANZA) {
       seguridadService.verificarIngreso(persona);
       return persona;
-    } else {
-      log.info(String.format(Constantes.LOG_ACCESO_DETECTADO, NIVEL_CONFIANZA,
-          personaReconocida.getConfidence()));
-      seguridadService.verificarIngresoUmbralNoAlcanzado(persona);
     }
     return null;
   }

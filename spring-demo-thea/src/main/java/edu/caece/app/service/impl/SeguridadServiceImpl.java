@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SeguridadServiceImpl implements SeguridadService {
 
-  private static final String DEFAULT_MODULE = null;
+  private static final String DEFAULT_MODULE = "BACKEND";
 
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -30,7 +30,7 @@ public class SeguridadServiceImpl implements SeguridadService {
     String mensaje = format(Constantes.LOG_ACCESO_PEDIDO,
         persona.isHabilitado() ? Constantes.LOG_ACCESO_AUTORIZADO : Constantes.LOG_ACCESO_DENEGADO,
         persona.getNombreCompleto(), persona.getDni());
-    this.log(null, mensaje, persona,
+    this.log(DEFAULT_MODULE, mensaje, persona,
         persona.isHabilitado() ? TipoEvento.ACCESO_OK : TipoEvento.ACCESO_DENEGADO);
     log.info(mensaje);
   }
@@ -40,6 +40,7 @@ public class SeguridadServiceImpl implements SeguridadService {
     String mensaje =
         format(Constantes.LOG_ACCESO_NOCONFIABLE, persona.getNombreCompleto(), persona.getDni());
     this.log(DEFAULT_MODULE, mensaje, persona, TipoEvento.ACCESO_UMBRAL_NO_VALIDO);
+    log.info(mensaje);
   }
 
   @Override
