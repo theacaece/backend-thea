@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import edu.caece.app.Constantes;
 import edu.caece.app.config.Hash;
 import edu.caece.app.domain.Usuario;
-import edu.caece.app.repository.AccesoRepositorio;
 import edu.caece.app.repository.UsuarioRepositorio;
 
 @Service
@@ -19,9 +18,6 @@ public class AutenticacionService implements AuthenticationManager {
 
   @Autowired
   private UsuarioRepositorio usuarioRepositorio;
-
-  @Autowired
-  private AccesoRepositorio accesoRepositorio;
 
   @Override
   public Authentication authenticate(Authentication autenticacion) throws AuthenticationException {

@@ -16,14 +16,12 @@ import org.slf4j.LoggerFactory;
 
 import edu.caece.app.Constantes;
 import edu.caece.app.config.Hash;
-import edu.caece.app.domain.Funcion;
 import edu.caece.app.domain.Persona;
-import edu.caece.app.domain.Registro;
+import edu.caece.app.domain.Ingreso;
 import edu.caece.app.domain.Rol;
 import edu.caece.app.domain.Usuario;
-import edu.caece.app.repository.FuncionRepositorio;
+import edu.caece.app.repository.IngresoRepositorio;
 import edu.caece.app.repository.PersonaRepositorio;
-import edu.caece.app.repository.RegistroRepositorio;
 import edu.caece.app.repository.RolRepositorio;
 import edu.caece.app.repository.UsuarioRepositorio;
 
@@ -41,9 +39,8 @@ public class LecturaExcel {
   protected int SOLAPA_REGISTROS = 2;
 
   HashMap<Long, Rol> roles = new HashMap<Long, Rol>();
-  HashMap<Long, Funcion> funciones = new HashMap<Long, Funcion>();
   HashMap<String, Persona> personas = new HashMap<String, Persona>();
-  HashMap<String, Registro> registros = new HashMap<String, Registro>();
+  HashMap<String, Ingreso> registros = new HashMap<String, Ingreso>();
 
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -59,16 +56,13 @@ public class LecturaExcel {
   }
 
   public void obtenerDatosBD(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
-      PersonaRepositorio personaRepositorio, FuncionRepositorio funcionRepositorio,
-      RegistroRepositorio registroRepositorio) throws Exception {
+      PersonaRepositorio personaRepositorio) throws Exception {
     log.info(Constantes.EXCEL_LECTURA);
     try {
       leerArchivo();
       guardarRoles(rolRepositorio);
-      guardarFunciones(funcionRepositorio);
       obtenerUsuarios(usuarioRepositorio);
       obtenerPersonas(personaRepositorio);
-      obtenerRegistros(registroRepositorio);
     } catch (Exception e) {
       throw new Exception("method inicializarBD :: " + e.getMessage());
     }
@@ -94,18 +88,6 @@ public class LecturaExcel {
       guardarPersonas(personaRepositorio);
     } catch (Exception e) {
       throw new Exception("method obtenerPersonas :: " + e.getMessage());
-    }
-  }
-
-  public void obtenerRegistros(RegistroRepositorio registroRepositorio) throws Exception {
-    log.info(Constantes.EXCEL_LECTURA_REGISTROS);
-    try {
-      leerArchivo();
-      sheet = worbook.getSheetAt(SOLAPA_REGISTROS);
-      leerHojaRegistros();
-      guardarRegistros(registroRepositorio);
-    } catch (Exception e) {
-      throw new Exception("method obtenerRegistros :: " + e.getMessage());
     }
   }
 
@@ -168,10 +150,6 @@ public class LecturaExcel {
           celda = iterador.next(); // Leo Celda DNI del Excel
           String dni = celda.getStringCellValue();
           persona.setDni(dni);
-          celda = iterador.next(); // Leo Funcion del Excel
-          Long id_funcion = (long) celda.getNumericCellValue();
-          Funcion funcion = funciones.get(id_funcion);
-          persona.addFuncion(funcion);
           celda = iterador.next(); // Leo Celda Matricula del Excel
           persona.setMatricula(celda.getStringCellValue());
           personas.put(dni, persona); // Agrego a Lista de Personas
@@ -179,35 +157,6 @@ public class LecturaExcel {
       }
     } catch (Exception e) {
       throw new Exception("method leerHojaPersonas :: " + e.getMessage());
-    }
-  }
-
-  public void leerHojaRegistros() throws Exception {
-    registros = new HashMap<String, Registro>(); // Creacion de Lista de Personas
-    try {
-      Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
-      Row fila;
-      rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos
-      while (rowIterator.hasNext()) {
-        fila = rowIterator.next(); // Recorro Fila del Excel
-        Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
-        Cell celda; // Se Recorre Cada Celda de la fila del Excel
-        while (iterador.hasNext()) {
-          Registro registro = new Registro(); // Creo Objeto Registro
-          celda = iterador.next(); // Leo Celda Nombre del Excel
-          registro.setNombre(celda.getStringCellValue());
-          celda = iterador.next(); // Leo Celda Apellido del Excel
-          registro.setApellido(celda.getStringCellValue());
-          celda = iterador.next(); // Leo Celda DNI del Excel
-          String dni = celda.getStringCellValue();
-          registro.setDni(dni);
-          celda = iterador.next(); // Leo Celda Fecha Ingreso del Excel
-          registro.setFechaIngreso(FuncionesUtiles.obtenerFecha(celda.getStringCellValue()));
-          registros.put(dni, registro); // Agrego a Lista de Registros
-        }
-      }
-    } catch (Exception e) {
-      throw new Exception("method leerHojaRegistros :: " + e.getMessage());
     }
   }
 
@@ -247,10 +196,10 @@ public class LecturaExcel {
     }
   }
 
-  public void guardarRegistros(RegistroRepositorio registroRepositorio) throws Exception {
+  public void guardarRegistros(IngresoRepositorio registroRepositorio) throws Exception {
     log.info(Constantes.BBDD_GUARDA_REGISTROS);
     try {
-      for (Registro registro : registros.values()) {
+      for (Ingreso registro : registros.values()) {
         registroRepositorio.save(registro);
       }
       if (Constantes.DEBUG) {
@@ -279,22 +228,6 @@ public class LecturaExcel {
       roles.put(3L, rol3);
     } catch (Exception e) {
       throw new Exception("method guardarRoles :: " + e.getMessage());
-    }
-  }
-
-  public void guardarFunciones(FuncionRepositorio funcionRepositorio) throws Exception {
-    try {
-      Funcion funcion1 = new Funcion("Profesor");
-      Funcion funcion2 = new Funcion("Alumno");
-      Funcion funcion3 = new Funcion("Administrativo");
-      funcionRepositorio.save(funcion1);
-      funcionRepositorio.save(funcion2);
-      funcionRepositorio.save(funcion3);
-      funciones.put(1L, funcion1);
-      funciones.put(2L, funcion2);
-      funciones.put(3L, funcion3);
-    } catch (Exception e) {
-      throw new Exception("method guardarFunciones :: " + e.getMessage());
     }
   }
 

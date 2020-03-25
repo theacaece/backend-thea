@@ -8,9 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import edu.caece.app.repository.FuncionRepositorio;
 import edu.caece.app.repository.PersonaRepositorio;
-import edu.caece.app.repository.RegistroRepositorio;
+import edu.caece.app.repository.IngresoRepositorio;
 import edu.caece.app.repository.RolRepositorio;
 import edu.caece.app.repository.UsuarioRepositorio;
 import edu.caece.app.resources.LecturaExcel;
@@ -34,11 +33,9 @@ public class SpringDemoTheaApplication {
 
   @Bean
   ApplicationRunner init(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
-      PersonaRepositorio personaRepositorio, FuncionRepositorio funcionRepositorio,
-      RegistroRepositorio registroRepositorio) throws Exception {
+      PersonaRepositorio personaRepositorio, IngresoRepositorio registroRepositorio) throws Exception {
     return args -> {
-      inicializarBD(usuarioRepositorio, rolRepositorio, personaRepositorio, funcionRepositorio,
-          registroRepositorio);
+      inicializarBD(usuarioRepositorio, rolRepositorio, personaRepositorio, registroRepositorio);
     };
   }
 
@@ -54,12 +51,10 @@ public class SpringDemoTheaApplication {
    * @throws Exception
    */
   public void inicializarBD(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
-      PersonaRepositorio personaRepositorio, FuncionRepositorio funcionRepositorio,
-      RegistroRepositorio registroRepositorio) throws Exception {
+      PersonaRepositorio personaRepositorio, IngresoRepositorio registroRepositorio) throws Exception {
     try {
       LecturaExcel lecturaExcel = new LecturaExcel();
-      lecturaExcel.obtenerDatosBD(usuarioRepositorio, rolRepositorio, personaRepositorio,
-          funcionRepositorio, registroRepositorio);
+      lecturaExcel.obtenerDatosBD(usuarioRepositorio, rolRepositorio, personaRepositorio);
       System.out.print("Fin method inicializarBD() ");
     } catch (Exception e) {
       throw new Exception("method inicializarBD() :: " + e.getMessage());

@@ -1,20 +1,13 @@
 package edu.caece.app.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
@@ -51,24 +44,13 @@ public class Persona implements Serializable {
   @Column(name = "habilitado")
   private boolean habilitado = true;
 
-  @ManyToMany(
-      cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
-      fetch = FetchType.EAGER)
-  @JoinTable(name = "persona_funcion",
-      joinColumns = @JoinColumn(name = "persona_dni", referencedColumnName = "dni"),
-      inverseJoinColumns = @JoinColumn(name = "funcion_id", referencedColumnName = "id"))
-  private List<Funcion> funciones;
-
-  public Persona() {
-    this.funciones = new ArrayList<Funcion>();
-  }
+  public Persona() {}
 
   public Persona(String nombre, String apellido, String dni, String matricula) {
     this.nombre = nombre;
     this.apellido = apellido;
     this.dni = dni;
     this.matricula = matricula;
-    this.funciones = new ArrayList<Funcion>();
   }
 
   public Long getId() {
@@ -117,22 +99,6 @@ public class Persona implements Serializable {
 
   public void setHabilitado(boolean habilitado) {
     this.habilitado = habilitado;
-  }
-
-  public List<Funcion> getFunciones() {
-    return funciones;
-  }
-
-  public void setFunciones(List<Funcion> funciones) {
-    this.funciones = funciones;
-  }
-
-  public void addFuncion(Funcion funcion) {
-    funciones.add(funcion);
-  }
-
-  public void removeFuncion(Funcion funcion) {
-    funciones.remove(funcion);
   }
 
   public String getNombreCompleto() {

@@ -2,7 +2,6 @@ package edu.caece.app.controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Optional;
 
 import javax.imageio.ImageIO;
 

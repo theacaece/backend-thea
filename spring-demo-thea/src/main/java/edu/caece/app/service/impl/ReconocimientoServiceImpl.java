@@ -20,7 +20,7 @@ import edu.caece.app.dto.ResultadoReconocimientoDTO;
 import edu.caece.app.dto.ResultadosReconocimientoDTO;
 import edu.caece.app.repository.PersonaRepositorio;
 import edu.caece.app.service.ReconocimientoService;
-import edu.caece.app.service.SeguridadService;
+import edu.caece.app.service.IngresoService;
 
 @Service
 public class ReconocimientoServiceImpl implements ReconocimientoService {
@@ -34,7 +34,7 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
   private PersonaRepositorio personaRepositorio;
 
   @Autowired
-  private SeguridadService seguridadService;
+  private IngresoService seguridadService;
 
   @Override
   public Persona reconocerIngreso(byte[] imagenCara) {
