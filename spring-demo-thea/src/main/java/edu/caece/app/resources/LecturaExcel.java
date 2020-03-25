@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -12,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import edu.caece.app.Constantes;
 import edu.caece.app.config.Hash;
 import edu.caece.app.domain.Funcion;
@@ -19,7 +21,6 @@ import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.Registro;
 import edu.caece.app.domain.Rol;
 import edu.caece.app.domain.Usuario;
-import edu.caece.app.repository.FotoRepositorio;
 import edu.caece.app.repository.FuncionRepositorio;
 import edu.caece.app.repository.PersonaRepositorio;
 import edu.caece.app.repository.RegistroRepositorio;
@@ -29,7 +30,7 @@ import edu.caece.app.repository.UsuarioRepositorio;
 public class LecturaExcel {
 
   // RUTA DENTRO DEL MISMO PROYECTO
-  protected String RUTA_CSV = "/src/main/resources/bd/TP-FINAL/DatosBD.xlsx";
+  protected String RUTA_CSV = "/src/main/resources/bd/DatosBD.xlsx";
   protected String rutaArchivo = "";
 
   XSSFWorkbook worbook = null;
@@ -48,7 +49,6 @@ public class LecturaExcel {
 
   public void leerArchivo() throws Exception {
     try {
-      log.info(Constantes.EXCEL_LECTURA_INICIO);
       String path = System.getProperty("user.dir"); // Lectura Excel
       rutaArchivo = path + RUTA_CSV;
       FileInputStream file = new FileInputStream(new File(rutaArchivo));
@@ -60,7 +60,7 @@ public class LecturaExcel {
 
   public void obtenerDatosBD(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
       PersonaRepositorio personaRepositorio, FuncionRepositorio funcionRepositorio,
-      RegistroRepositorio registroRepositorio, FotoRepositorio fotoRepositorio) throws Exception {
+      RegistroRepositorio registroRepositorio) throws Exception {
     log.info(Constantes.EXCEL_LECTURA);
     try {
       leerArchivo();
@@ -69,20 +69,8 @@ public class LecturaExcel {
       obtenerUsuarios(usuarioRepositorio);
       obtenerPersonas(personaRepositorio);
       obtenerRegistros(registroRepositorio);
-      obtenerFotos(personaRepositorio, fotoRepositorio);
     } catch (Exception e) {
       throw new Exception("method inicializarBD :: " + e.getMessage());
-    }
-  }
-
-  public void obtenerFotos(PersonaRepositorio personaRepositorio, FotoRepositorio fotoRepositorio)
-      throws Exception {
-    log.info(Constantes.EXCEL_LECTURA_FOTOS);
-    try {
-      LecturaCarpeta lecturaCarpeta = new LecturaCarpeta();
-      lecturaCarpeta.recorrerCarpetaFotos(fotoRepositorio, personas);
-    } catch (Exception e) {
-      throw new Exception("method obtenerFotos :: " + e.getMessage());
     }
   }
 
@@ -122,13 +110,11 @@ public class LecturaExcel {
   }
 
   public ArrayList<Usuario> leerHojaUsuarios() throws Exception {
-    log.info(Constantes.EXCEL_LECTURA_USUARIOS);
     ArrayList<Usuario> usuarios = new ArrayList<Usuario>(); // Creacion de Lista de Usuarios
     try {
       Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
       Row fila;
       rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos
-      // System.out.println("Lista Usuarios");
       while (rowIterator.hasNext()) { // Se Recorre Cada Fila Hasta el Final
         fila = rowIterator.next(); // Recorro Fila del Excel
         Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
@@ -147,7 +133,7 @@ public class LecturaExcel {
           celda = iterador.next(); // Leo Celda Password del Excel
           usuario.setPassword(Hash.sha1(celda.getStringCellValue()));
           celda = iterador.next();// Leo Celda Rol del Excel
-          Long id_rol = (long) celda.getNumericCellValue();
+          //Long id_rol = (long) celda.getNumericCellValue();
           // Rol rol = roles.get(id_rol);
           // if (rol != null) {
           // usuario.addRol(rol);
@@ -188,7 +174,6 @@ public class LecturaExcel {
           persona.addFuncion(funcion);
           celda = iterador.next(); // Leo Celda Matricula del Excel
           persona.setMatricula(celda.getStringCellValue());
-          System.out.println(persona.toString());
           personas.put(dni, persona); // Agrego a Lista de Personas
         }
       }
@@ -203,7 +188,6 @@ public class LecturaExcel {
       Iterator<Row> rowIterator = sheet.iterator(); // Obtiene Todas las Filas de Excel
       Row fila;
       rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos
-      // System.out.println("Lista Personas"); // Se Recorre Cada Fila Hasta el Final
       while (rowIterator.hasNext()) {
         fila = rowIterator.next(); // Recorro Fila del Excel
         Iterator<Cell> iterador = fila.cellIterator(); // Se Obtienen celdas de fila del Excel
@@ -219,7 +203,6 @@ public class LecturaExcel {
           registro.setDni(dni);
           celda = iterador.next(); // Leo Celda Fecha Ingreso del Excel
           registro.setFechaIngreso(FuncionesUtiles.obtenerFecha(celda.getStringCellValue()));
-          System.out.println(registro.toString());
           registros.put(dni, registro); // Agrego a Lista de Registros
         }
       }
@@ -228,28 +211,34 @@ public class LecturaExcel {
     }
   }
 
-  public void guardarUsuarios(UsuarioRepositorio usuarioRepositorio, ArrayList<Usuario> users)
+  public void guardarUsuarios(UsuarioRepositorio usuarioRepositorio, ArrayList<Usuario> usuarios)
       throws Exception {
     log.info(Constantes.BBDD_GUARDA_USUARIOS);
     try {
-      for (Usuario user : users) {
-        usuarioRepositorio.save(user);
+      for (Usuario usuario : usuarios) {
+        usuarioRepositorio.save(usuario);
       }
-      usuarioRepositorio.findAll().forEach(System.out::println);
+      if (Constantes.DEBUG) {
+        usuarioRepositorio.findAll().forEach(System.out::println);
+      } else {
+        log.info("Cantidad de usuarios guardados: " + usuarioRepositorio.findAll().size());
+      }
     } catch (Exception e) {
       throw new Exception("method guardarDatosUsuarios :: " + e.getMessage());
     }
   }
 
-  public void guardarPersonas(PersonaRepositorio personRepository) throws Exception {
+  public void guardarPersonas(PersonaRepositorio personaRepositorio) throws Exception {
     try {
       log.info(Constantes.BBDD_GUARDA_PERSONAS);
       for (Persona person : personas.values()) {
-        personRepository.save(person);
-        System.out.println("Se guarda :: " + person.toString()); // Se Recorre Cada Fila Hasta el
-                                                                 // Final
+        personaRepositorio.save(person);
       }
-      personRepository.findAll().forEach(System.out::println);
+      if (Constantes.DEBUG) {
+        personaRepositorio.findAll().forEach(System.out::println);
+      } else {
+        log.info("Cantidad de personas guardadas: " + personaRepositorio.findAll().size());
+      }
     } catch (ConstraintViolationException e) {
       throw new Exception(
           "method guardarPersonas :: ConstraintViolationException :: " + e.getMessage());
@@ -258,13 +247,16 @@ public class LecturaExcel {
     }
   }
 
-  public void guardarRegistros(RegistroRepositorio registroRepository) throws Exception {
+  public void guardarRegistros(RegistroRepositorio registroRepositorio) throws Exception {
     log.info(Constantes.BBDD_GUARDA_REGISTROS);
     try {
       for (Registro registro : registros.values()) {
-        registroRepository.save(registro);
-        System.out.println("Se guarda :: " + registro.toString()); // Se Recorre Cada Fila Hasta el
-                                                                   // Final
+        registroRepositorio.save(registro);
+      }
+      if (Constantes.DEBUG) {
+        registroRepositorio.findAll().forEach(System.out::println);
+      } else {
+        log.info("Cantidad de registros guardados: " + registroRepositorio.findAll().size());
       }
     } catch (ConstraintViolationException e) {
       throw new Exception(

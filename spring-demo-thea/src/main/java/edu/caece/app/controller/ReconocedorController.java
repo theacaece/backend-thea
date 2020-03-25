@@ -3,7 +3,9 @@ package edu.caece.app.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Optional;
+
 import javax.imageio.ImageIO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.dto.ResultadoReconocimiento;
@@ -48,8 +51,6 @@ public class ReconocedorController {
   }
 
   public void registrarPersona(@RequestParam Long id, @RequestBody byte[] payload) {
-    Optional<Persona> _persona = personaRepositorio.findById(id);
-
   }
 
   private boolean esImagenValida(byte[] payload) throws Exception {

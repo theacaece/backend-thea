@@ -1,6 +1,7 @@
 package edu.caece.app.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 

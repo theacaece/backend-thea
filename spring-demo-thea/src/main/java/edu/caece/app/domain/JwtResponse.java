@@ -1,6 +1,7 @@
 package edu.caece.app.domain;
 
 import java.io.Serializable;
+
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class JwtResponse implements Serializable {

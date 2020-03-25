@@ -2,6 +2,7 @@ package edu.caece.app.service.impl;
 
 import java.net.URI;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.http.RequestEntity.BodyBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.dto.ResultadoReconocimientoDTO;
@@ -71,8 +73,6 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
     if (personaReconocida.getConfidence() > NIVEL_CONFIANZA) {
       seguridadService.verificarIngreso(persona);
       return persona;
-    } else {
-      seguridadService.verificarIngresoUmbralNoAlcanzado(persona);
     }
     return null;
   }

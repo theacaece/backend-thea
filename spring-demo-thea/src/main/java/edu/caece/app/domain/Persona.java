@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+
 import lombok.Data;
 
 @Entity(name = "Persona")
@@ -42,6 +45,12 @@ public class Persona implements Serializable {
   @Column(name = "dni")
   private String dni;
 
+  @Column(name = "matricula")
+  private String matricula;
+
+  @Column(name = "habilitado")
+  private boolean habilitado = true;
+
   @ManyToMany(
       cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
       fetch = FetchType.EAGER)
@@ -49,12 +58,6 @@ public class Persona implements Serializable {
       joinColumns = @JoinColumn(name = "persona_dni", referencedColumnName = "dni"),
       inverseJoinColumns = @JoinColumn(name = "funcion_id", referencedColumnName = "id"))
   private List<Funcion> funciones;
-
-  @Column(name = "matricula")
-  private String matricula;
-
-  @Column
-  private boolean habilitado = true;
 
   public Persona() {
     this.funciones = new ArrayList<Funcion>();

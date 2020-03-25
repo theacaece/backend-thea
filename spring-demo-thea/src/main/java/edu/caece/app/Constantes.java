@@ -6,6 +6,8 @@ public class Constantes {
 
   }
 
+  public static final Boolean DEBUG = false;
+
   public static final String URL = "http://localhost:4200";
 
   public static final String LOG_BIENVENIDA = "Bienvenide a la facultad";
@@ -20,10 +22,10 @@ public class Constantes {
 
   public static final String EXCEL_LECTURA_INICIO = "Inicio Lectura de Datos en Excel";
   public static final String EXCEL_LECTURA = "Lectura datos en Excel";
-  public static final String EXCEL_LECTURA_FOTOS = "Lectura Fotos en Excel";
   public static final String EXCEL_LECTURA_USUARIOS = "Lectura Usuarios en Excel";
   public static final String EXCEL_LECTURA_PERSONAS = "Lectura Personas en Excel";
-  public static final String EXCEL_LECTURA_REGISTROS = "Lectura Personas en Excel";
+  public static final String EXCEL_LECTURA_REGISTROS = "Lectura Registros en Excel";
+  public static final String EXCEL_LECTURA_FOTOS = "Lectura Fotos en Excel";
 
   public static final String BBDD_GUARDA_USUARIOS = "Guarda Usuarios en BBDD";
   public static final String BBDD_GUARDA_PERSONAS = "Guarda Personas en BBDD";
