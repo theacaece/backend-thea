@@ -73,7 +73,8 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
     if (personaReconocida.getConfidence() > NIVEL_CONFIANZA) {
       seguridadService.verificarIngreso(persona);
       return persona;
-    }
+    } else {
+      seguridadService.verificarIngresoUmbralNoAlcanzado(persona);
     return null;
   }
 
