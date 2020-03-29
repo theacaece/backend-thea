@@ -20,46 +20,27 @@ public class Constantes {
   public static final String LOG_ACCESO_AUTORIZADO = "Autorizado";
   public static final String LOG_ACCESO_DENEGADO = "Denegado";
 
-  public static final String EXCEL_LECTURA_INICIO = "Inicio Lectura de Datos en Excel";
-  public static final String EXCEL_LECTURA = "Lectura datos en Excel";
-  public static final String EXCEL_LECTURA_USUARIOS = "Lectura Usuarios en Excel";
-  public static final String EXCEL_LECTURA_PERSONAS = "Lectura Personas en Excel";
-  public static final String EXCEL_LECTURA_REGISTROS = "Lectura Registros en Excel";
-  public static final String EXCEL_LECTURA_FOTOS = "Lectura Fotos en Excel";
+  public static final String BBDD_GUARDA_USUARIOS = "Guarda Usuarios en BBDD :: ";
+  public static final String BBDD_GUARDA_PERSONAS = "Guarda Personas en BBDD :: ";
 
-  public static final String BBDD_GUARDA_USUARIOS = "Guarda Usuarios en BBDD";
-  public static final String BBDD_GUARDA_PERSONAS = "Guarda Personas en BBDD";
-  public static final String BBDD_GUARDA_REGISTROS = "Guarda Registros en BBDD";
-  public static final String BBDD_GUARDA_FOTOS = "Guarda Fotos en BBDD";
+  public static final String INFO_TOKEN = "[TOKEN]";
+  public static final String INFO_AUTENTICACION = "[AUTENTICACION]";
+  public static final String INFO_RECONOCIMIENTO = "[RECONOCIMIENTO]";
 
-  public static final String INFO_TOKEN = "TOKEN ...";
-  public static final String INFO_AUTENTICACION = "AUTENTICACION ...";
-  public static final String INFO_RECONOCIMIENTO = "RECONOCIMIENTO ...";
+  public static final String INFO_USUARIO_ALL = "[OBTIENE USUARIOS]";
+  public static final String INFO_USUARIO_ONE = "[OBTIENE USUARIO POR ID]";
+  public static final String INFO_USUARIO_SAVE = "[AGREGA USUARIO]";
+  public static final String INFO_USUARIO_UPDATE = "[MODIFICA USUARIO]";
+  public static final String INFO_USUARIO_DELETE = "[ELIMINA USUARIO]";
 
-  public static final String INFO_ACCESO_ALL = "OBTIENE ACCESOS";
-  public static final String INFO_ACCESO_ONE = "OBTIENE ACCESO POR ID";
-  public static final String INFO_ACCESO_SAVE = "AGREGA ACCESO";
-  public static final String INFO_ACCESO_UPDATE = "MODIFICA ACCESO";
-  public static final String INFO_ACCESO_DELETE = "ELIMINA ACCESO";
-
-  public static final String INFO_USUARIO_ALL = "OBTIENE USUARIOS";
-  public static final String INFO_USUARIO_ONE = "OBTIENE USUARIO POR ID";
-  public static final String INFO_USUARIO_SAVE = "AGREGA USUARIO";
-  public static final String INFO_USUARIO_UPDATE = "MODIFICA USUARIO";
-  public static final String INFO_USUARIO_DELETE = "ELIMINA USUARIO";
-
-  public static final String INFO_PERSONA_ALL = "OBTIENE PERSONAS";
-  public static final String INFO_PERSONA_ONE = "OBTIENE PERSONA POR ID";
-  public static final String INFO_PERSONA_SAVE = "AGREGA PERSONA";
-  public static final String INFO_PERSONA_UPDATE = "MODIFICA PERSONA";
-  public static final String INFO_PERSONA_DELETE = "ELIMINA PERSONA";
-
-  public static final String INFO_FOTO_ALL = "OBTIENE FOTOS";
-  public static final String INFO_FOTO_ONE = "AGREGA FOTO POR ID";
-
-  public static final String INFO_REGISTRO_ALL = "OBTIENE REGISTROS";
-  public static final String INFO_REGISTRO_SAVE = "AGREGA REGISTRO";
-
+  public static final String INFO_PERSONA_ALL = "[OBTIENE PERSONAS]";
+  public static final String INFO_PERSONA_ONE = "[OBTIENE PERSONA POR ID]";
+  public static final String INFO_PERSONA_SAVE = "[AGREGA PERSONA]";
+  public static final String INFO_PERSONA_UPDATE = "[MODIFICA PERSONA]";
+  public static final String INFO_PERSONA_DELETE = "[ELIMINA PERSONA]";
+  
+  public static final String INFO_INGRESO_ALL = "[OBTIENE INGRESOS]";
+ 
   // ERRORES GENERICOS
   public static final String ERROR_PERSONA_NORECONOCIDA = "La persona no fue reconocida";
   public static final String ERROR_IMAGEN_INVALIDA = "La imagen es invalida";
@@ -74,8 +55,5 @@ public class Constantes {
   public static final String ERROR_PERSONA_INEXISTENTE = "Persona no encontrada.";
   public static final String ERROR_DNI_INEXISTENTE = "DNI indicado inexistente";
   public static final String ERROR_MATRICULA_EXISTENTE = "Matricula indicada existente";
-  public static final String ERROR_FOTO_INEXISTENTE = "No se encontraron fotos.";
-
-  public static final String SEPARADOR = "##############################";
 
 }

@@ -2,9 +2,7 @@ package edu.caece.app.controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.dto.ResultadoReconocimiento;
@@ -45,6 +42,7 @@ public class ReconocedorController {
       }
       return new ResultadoReconocimiento(false, false, null, Constantes.ERROR_PERSONA_NORECONOCIDA);
     } else {
+      log.info(Constantes.INFO_RECONOCIMIENTO);
       throw new Exception(Constantes.ERROR_IMAGEN_INVALIDA);
     }
   }

@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -13,14 +12,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import edu.caece.app.Constantes;
 import edu.caece.app.config.Hash;
-import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.Ingreso;
+import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.Rol;
 import edu.caece.app.domain.Usuario;
-import edu.caece.app.repository.IngresoRepositorio;
 import edu.caece.app.repository.PersonaRepositorio;
 import edu.caece.app.repository.RolRepositorio;
 import edu.caece.app.repository.UsuarioRepositorio;
@@ -57,7 +54,6 @@ public class LecturaExcel {
 
   public void obtenerDatosBD(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
       PersonaRepositorio personaRepositorio) throws Exception {
-    log.info(Constantes.EXCEL_LECTURA);
     try {
       leerArchivo();
       guardarRoles(rolRepositorio);
@@ -69,7 +65,6 @@ public class LecturaExcel {
   }
 
   public void obtenerUsuarios(UsuarioRepositorio usuarioRepositorio) throws Exception {
-    log.info(Constantes.EXCEL_LECTURA_USUARIOS);
     try {
       sheet = worbook.getSheetAt(SOLAPA_USUARIOS);
       ArrayList<Usuario> usuarios = leerHojaUsuarios();
@@ -80,7 +75,6 @@ public class LecturaExcel {
   }
 
   public void obtenerPersonas(PersonaRepositorio personaRepositorio) throws Exception {
-    log.info(Constantes.EXCEL_LECTURA_PERSONAS);
     try {
       leerArchivo();
       sheet = worbook.getSheetAt(SOLAPA_PERSONAS);
@@ -193,25 +187,6 @@ public class LecturaExcel {
           "method guardarPersonas :: ConstraintViolationException :: " + e.getMessage());
     } catch (Exception e) {
       throw new Exception("method guardarDatosPersonas :: " + e.getMessage());
-    }
-  }
-
-  public void guardarRegistros(IngresoRepositorio registroRepositorio) throws Exception {
-    log.info(Constantes.BBDD_GUARDA_REGISTROS);
-    try {
-      for (Ingreso registro : registros.values()) {
-        registroRepositorio.save(registro);
-      }
-      if (Constantes.DEBUG) {
-        registroRepositorio.findAll().forEach(System.out::println);
-      } else {
-        log.info("Cantidad de registros guardados: " + registroRepositorio.findAll().size());
-      }
-    } catch (ConstraintViolationException e) {
-      throw new Exception(
-          "method guardarRegistros :: ConstraintViolationException :: " + e.getMessage());
-    } catch (Exception e) {
-      throw new Exception("method guardarRegistros :: " + e.getMessage());
     }
   }
 

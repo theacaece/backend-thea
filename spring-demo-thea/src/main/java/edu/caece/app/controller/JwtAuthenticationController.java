@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import edu.caece.app.Constantes;
 import edu.caece.app.config.JwtTokenUtil;
 import edu.caece.app.domain.JwtRequest;
