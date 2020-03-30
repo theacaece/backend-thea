@@ -109,14 +109,14 @@ public class LecturaExcel {
           celda = iterador.next(); // Leo Celda Password del Excel
           usuario.setPassword(Hash.sha1(celda.getStringCellValue()));
           celda = iterador.next();// Leo Celda Rol del Excel
-          //Long id_rol = (long) celda.getNumericCellValue();
-          // Rol rol = roles.get(id_rol);
-          // if (rol != null) {
-          // usuario.addRol(rol);
-          usuarios.add(usuario); // Agrego a Lista de Usuarios
-          // } else {
-          // throw new Exception("method leerHojaUsuarios :: No existe el rol");
-          // }
+          Long id_rol = (long) celda.getNumericCellValue();
+          Rol rol = roles.get(id_rol);
+          if (rol != null) {
+            usuario.addRol(rol);
+            usuarios.add(usuario); // Agrego a Lista de Usuarios
+          } else {
+            throw new Exception("method leerHojaUsuarios :: No existe el rol");
+          }
         }
       }
     } catch (Exception e) {
@@ -156,7 +156,6 @@ public class LecturaExcel {
 
   public void guardarUsuarios(UsuarioRepositorio usuarioRepositorio, ArrayList<Usuario> usuarios)
       throws Exception {
-    log.info(Constantes.BBDD_GUARDA_USUARIOS);
     try {
       for (Usuario usuario : usuarios) {
         usuarioRepositorio.save(usuario);
@@ -164,7 +163,7 @@ public class LecturaExcel {
       if (Constantes.DEBUG) {
         usuarioRepositorio.findAll().forEach(System.out::println);
       } else {
-        log.info("Cantidad de usuarios guardados: " + usuarioRepositorio.findAll().size());
+        log.info(Constantes.BBDD_GUARDA_USUARIOS + usuarioRepositorio.findAll().size());
       }
     } catch (Exception e) {
       throw new Exception("method guardarDatosUsuarios :: " + e.getMessage());
@@ -173,14 +172,13 @@ public class LecturaExcel {
 
   public void guardarPersonas(PersonaRepositorio personaRepositorio) throws Exception {
     try {
-      log.info(Constantes.BBDD_GUARDA_PERSONAS);
       for (Persona person : personas.values()) {
         personaRepositorio.save(person);
       }
       if (Constantes.DEBUG) {
         personaRepositorio.findAll().forEach(System.out::println);
       } else {
-        log.info("Cantidad de personas guardadas: " + personaRepositorio.findAll().size());
+        log.info(Constantes.BBDD_GUARDA_PERSONAS + personaRepositorio.findAll().size());
       }
     } catch (ConstraintViolationException e) {
       throw new Exception(

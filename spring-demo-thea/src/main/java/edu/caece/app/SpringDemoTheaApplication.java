@@ -7,7 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import edu.caece.app.repository.IngresoRepositorio;
 import edu.caece.app.repository.PersonaRepositorio;
 import edu.caece.app.repository.RolRepositorio;
 import edu.caece.app.repository.UsuarioRepositorio;
@@ -32,9 +31,9 @@ public class SpringDemoTheaApplication {
 
   @Bean
   ApplicationRunner init(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
-      PersonaRepositorio personaRepositorio, IngresoRepositorio registroRepositorio) throws Exception {
+      PersonaRepositorio personaRepositorio) throws Exception {
     return args -> {
-      inicializarBD(usuarioRepositorio, rolRepositorio, personaRepositorio, registroRepositorio);
+      inicializarBD(usuarioRepositorio, rolRepositorio, personaRepositorio);
     };
   }
 
@@ -44,20 +43,17 @@ public class SpringDemoTheaApplication {
    * @param usuarioRepositorio
    * @param rolRepositorio
    * @param personaRepositorio
-   * @param funcionRepositorio
-   * @param registroRepositorio
-   * @param fotoRepositorio
    * @throws Exception
    */
-  public void inicializarBD(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
-      PersonaRepositorio personaRepositorio, IngresoRepositorio registroRepositorio) throws Exception {
+  public boolean inicializarBD(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
+      PersonaRepositorio personaRepositorio) throws Exception {
     try {
       LecturaExcel lecturaExcel = new LecturaExcel();
       lecturaExcel.obtenerDatosBD(usuarioRepositorio, rolRepositorio, personaRepositorio);
-      System.out.print("Fin method inicializarBD() ");
     } catch (Exception e) {
       throw new Exception("method inicializarBD() :: " + e.getMessage());
     }
+    return true;
   }
 
 }
