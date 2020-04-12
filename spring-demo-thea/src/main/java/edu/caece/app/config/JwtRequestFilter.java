@@ -13,6 +13,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import edu.caece.app.service.JwtUserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -25,29 +28,52 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain chain) throws ServletException, IOException {
-    try {
-      if (SecurityContextHolder.getContext().getAuthentication() == null) {
-        final String requestTokenHeader = request.getHeader("Authorization");
-        if (requestTokenHeader != null) {
-          String jwtToken = requestTokenHeader;
-          if (requestTokenHeader.startsWith("Bearer ")) { // Remuevo Bearer y obtengo el token
-            jwtToken = requestTokenHeader.substring(7);
-          }
-          String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-          if (username != null) { // Con TOKEN validado
-            UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
-            if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
-              UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                  userDetails, null, userDetails.getAuthorities());
-              token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-              SecurityContextHolder.getContext().setAuthentication(token); // Autentica
-            }
-          }
-        }
+
+    final String requestTokenHeader = request.getHeader("Authorization");
+    String username = null;
+    String jwtToken = null;
+    // JWT Token is in the form "Bearer token". Remove Bearer word and get
+    // only the Token
+    if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+      jwtToken = requestTokenHeader.substring(7);
+      try {
+        username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+      } catch (IllegalArgumentException e) {
+        // System.out.println("Unable to get JWT Token");
+        // throw new IllegalArgumentException();
+        chain.doFilter(request, response);
+      } catch (ExpiredJwtException e) {
+        // System.out.println("JWT Token has expired");
+        chain.doFilter(request, response);
+      } catch (SignatureException e) {
+        // throw new SignatureException(e.getMessage());
+        chain.doFilter(request, response);
+      } catch (MalformedJwtException e) {
+        // throw new MalformedJwtException(e.getMessage());
+        chain.doFilter(request, response);
       }
-      chain.doFilter(request, response);
-    } catch (Exception e) {
-      logger.warn(e.getMessage());
+
+    } else {
+      logger.warn("JWT Token does not begin with Bearer String");
     }
+    // Once we get the token validate it.
+    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+      UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
+      // if token is valid configure Spring Security to manually set
+      // authentication
+      if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+            new UsernamePasswordAuthenticationToken(userDetails, null,
+                userDetails.getAuthorities());
+        usernamePasswordAuthenticationToken
+            .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        // After setting the Authentication in the context, we specify
+        // that the current user is authenticated. So it passes the
+        // Spring Security Configurations successfully.
+        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+      }
+    }
+
+    chain.doFilter(request, response);
   }
 }

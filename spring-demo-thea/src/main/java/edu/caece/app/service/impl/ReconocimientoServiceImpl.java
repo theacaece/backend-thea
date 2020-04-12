@@ -73,7 +73,7 @@ public class ReconocimientoServiceImpl implements ReconocimientoService {
       return persona;
     } else {
       seguridadService.verificarIngresoUmbralNoAlcanzado(persona);
-    }  
+    }
     return null;
   }
 

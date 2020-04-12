@@ -21,7 +21,6 @@ import edu.caece.app.config.JwtRequestFilter;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-  
   @Autowired
   private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
   @Autowired
@@ -29,15 +28,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private JwtRequestFilter jwtRequestFilter;
 
-  /**
-   * Configure AuthenticationManager so that it knows from where to load user for matching
-   * credentials Use BCryptPasswordEncoder
-   * 
-   * @param auth
-   * @throws Exception
-   */
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    // configure AuthenticationManager so that it knows from where to load
+    // user for matching credentials
+    // Use BCryptPasswordEncoder
     auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
   }
 
@@ -54,7 +49,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity.cors();
     // We don't need CSRF for this example
     httpSecurity.csrf().disable()
         // dont authenticate this particular request
