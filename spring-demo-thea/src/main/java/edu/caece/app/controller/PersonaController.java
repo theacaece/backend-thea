@@ -23,7 +23,7 @@ import edu.caece.app.repository.PersonaRepositorio;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin(origins = Constantes.URL)
+@CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class PersonaController {
 
@@ -36,7 +36,7 @@ public class PersonaController {
     return new Sort(Sort.Direction.ASC, "apellido");
   }
 
-  @GetMapping(value = "/personas")
+  @RequestMapping(value = "/personas", method = RequestMethod.GET)
   public Collection<Persona> getAll() {
     log.info(Constantes.INFO_PERSONA_ALL);
     return personaRepositorio.findAll(sortByApellido());
