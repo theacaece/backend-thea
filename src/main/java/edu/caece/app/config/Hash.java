@@ -1,10 +1,5 @@
 package edu.caece.app.config;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Formatter;
-import java.util.Random;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,10 +13,6 @@ public class Hash {
 	/* Retorna un hash SHA1 a partir de un texto */
 	public static String sha1(String txt) {
 		return getHash(txt, "SHA1");
-	}
-	
-	public static String getId() {
-		return getMD5Id();
 	}
 
 	/* Retorna un hash a partir de un tipo y un texto */
@@ -44,19 +35,5 @@ public class Hash {
 		}
 
 		return null;
-	}
-	
-	private static String getMD5Id() {
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-		Random rnd = new Random();
-		Formatter formatter = new Formatter();
-				
-		String hash = dateFormat.format(new Date());
-		hash =  hash + String.valueOf(formatter.format("%03d", rnd.nextInt(1000)));
-		
-		formatter.close();
-		
-		return md5(hash);
 	}
 }

@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import edu.caece.app.repository.IFunctionRepository;
-import edu.caece.app.repository.IPersonRepository;
-import edu.caece.app.repository.IRoleRepository;
-import edu.caece.app.repository.IUserRepository;
+import edu.caece.app.repository.FunctionRepository;
+import edu.caece.app.repository.PersonRepository;
+import edu.caece.app.repository.RoleRepository;
+import edu.caece.app.repository.UserRepository;
 import edu.caece.app.resources.ExcelReader;
 
 @SpringBootApplication
@@ -21,8 +21,8 @@ public class SpringDemoTheaApplication {
 	}
 
 	@Bean
-	ApplicationRunner init(IUserRepository userRepository, IRoleRepository roleRepository,
-			IPersonRepository personRepository, IFunctionRepository functionRepository) {
+	ApplicationRunner init(UserRepository userRepository, RoleRepository roleRepository,
+			PersonRepository personRepository, FunctionRepository functionRepository) {
 
 		return args -> {
 			

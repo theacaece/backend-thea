@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.caece.app.domain.Person;
-import edu.caece.app.repository.IPersonRepository;
+import edu.caece.app.repository.PersonRepository;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class PersonController {
 
-	private IPersonRepository repository;
+	private PersonRepository repository;
 	
 	@RequestMapping(value = "/persons/list", method = RequestMethod.GET)
 	public Collection<Person> get() {

@@ -1,7 +1,5 @@
 package edu.caece.app.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.caece.app.service.AuthenticationManagerService;
-import edu.caece.app.service.JwtUserDetailsService;
 import edu.caece.app.config.JwtTokenUtil;
 import edu.caece.app.domain.JwtRequest;
 import edu.caece.app.domain.JwtResponse;
+import edu.caece.app.domain.SecurityLog;
 import edu.caece.app.domain.User;
-import edu.caece.app.domain.UserLog;
-import edu.caece.app.repository.IUserLogRepository;
-import edu.caece.app.repository.IUserRepository;
+import edu.caece.app.repository.SecurityLogRepository;
+import edu.caece.app.repository.UserRepository;
+import edu.caece.app.service.AuthenticationManagerService;
+import edu.caece.app.service.JwtUserDetailsService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -32,10 +30,10 @@ public class JwtAuthenticationController {
 	private AuthenticationManagerService authenticationManager;
 	
 	@Autowired
-	private IUserLogRepository repository_logs;
+	private UserRepository userRepository;
 	
 	@Autowired
-	private IUserRepository repository_users;
+	private SecurityLogRepository securityLogRepository;
 	
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
@@ -50,15 +48,13 @@ public class JwtAuthenticationController {
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		
-		UserLog log = new UserLog();
+		User user = userRepository.findByUsername(authenticationRequest.getUsername());
 		
-		User user = repository_users.findByUsername(authenticationRequest.getUsername());
-				
-		log.setUser(user); //
-		log.setAccessDate(new Date());
-		log.setMessage("INGRESO AL SISTEMA");
+		SecurityLog securityLog = new SecurityLog();
+		securityLog.setPerson(user);
+		securityLog.setMessage("INGRESO AL SISTEMA");
 		
-		repository_logs.save(log);
+		securityLogRepository.save(securityLog);
 		
 		return ResponseEntity.ok(new JwtResponse(token, userDetails));
 	

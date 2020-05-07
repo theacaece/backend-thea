@@ -68,4 +68,10 @@ public class Function {
 	public void setPerson(Set<Person> person) {
 		this.person = person;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("Function [id=%s, name=%s]", id, name);
+	}
+
 }

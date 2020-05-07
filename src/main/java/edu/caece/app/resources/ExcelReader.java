@@ -17,10 +17,10 @@ import edu.caece.app.domain.Function;
 import edu.caece.app.domain.Person;
 import edu.caece.app.domain.Role;
 import edu.caece.app.domain.User;
-import edu.caece.app.repository.IFunctionRepository;
-import edu.caece.app.repository.IPersonRepository;
-import edu.caece.app.repository.IRoleRepository;
-import edu.caece.app.repository.IUserRepository;
+import edu.caece.app.repository.FunctionRepository;
+import edu.caece.app.repository.PersonRepository;
+import edu.caece.app.repository.RoleRepository;
+import edu.caece.app.repository.UserRepository;
 
 public class ExcelReader {
 
@@ -41,13 +41,13 @@ public class ExcelReader {
 	private HashMap<Long, Function> _functions = new HashMap<Long, Function>();
 
 	
-	private IUserRepository _userRepository;
-	private IRoleRepository _roleRepository;
-	private IPersonRepository _personRepository;
-	private IFunctionRepository _functionRepository;
+	private UserRepository _userRepository;
+	private RoleRepository _roleRepository;
+	private PersonRepository _personRepository;
+	private FunctionRepository _functionRepository;
 
-	public ExcelReader(IUserRepository userRepository, IRoleRepository roleRepository,
-			IPersonRepository personRepository, IFunctionRepository functionRepository) {
+	public ExcelReader(UserRepository userRepository, RoleRepository roleRepository,
+			PersonRepository personRepository, FunctionRepository functionRepository) {
 
 		_userRepository = userRepository;
 		_roleRepository = roleRepository;
@@ -260,7 +260,7 @@ public class ExcelReader {
 				celda = cellIterator.next(); // Leo Celda Apellido del Excel
 				person.setLastName(celda.getStringCellValue());
 				celda = cellIterator.next(); // Leo Celda DNI del Excel
-				person.setDni(Integer.parseInt(celda.getStringCellValue()));
+				person.setDni(celda.getStringCellValue());
 				celda = cellIterator.next(); // Leo Funcion del Excel
 				id = (long) celda.getNumericCellValue();
 				function = _functions.get(id);

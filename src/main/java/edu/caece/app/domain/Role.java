@@ -1,11 +1,10 @@
 package edu.caece.app.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,34 +13,41 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "roles")
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class Role {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
 	@Column(name = "name", nullable = false, unique = true)
 	private String name;
 
-	@ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "roles")
 	@JsonIgnore
-	private Set<User> users;
+	private List<User> users = new ArrayList<User>();
 
+	
 	public Role() {
-		this.users = new HashSet<User>();
+
 	}
 
 	public Role(String name) {
-		this.users = new HashSet<User>();
 		this.name = name;
 	}
 
-	public Role(long id, String name) {
-		this.users = new HashSet<User>();
+	public Role(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -62,11 +68,11 @@ public class Role {
 		this.name = name;
 	}
 
-	public Set<User> getUsers() {
+	public List<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Set<User> users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 }
