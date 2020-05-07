@@ -38,18 +38,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			jwtToken = requestTokenHeader.substring(7);
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-			} catch (IllegalArgumentException e) {
-				// System.out.println("Unable to get JWT Token");
-				//throw new IllegalArgumentException();
-				chain.doFilter(request, response);
-			} catch (ExpiredJwtException e) {
-				//System.out.println("JWT Token has expired");
-				chain.doFilter(request, response);
-			} catch (SignatureException e) {
-				//throw new SignatureException(e.getMessage());
-				chain.doFilter(request, response);
-			} catch (MalformedJwtException e) {
-				//throw new MalformedJwtException(e.getMessage());
+			} catch (MalformedJwtException | ExpiredJwtException |SignatureException | IllegalArgumentException e) {
+//				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//				((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
 				chain.doFilter(request, response);
 			}
 

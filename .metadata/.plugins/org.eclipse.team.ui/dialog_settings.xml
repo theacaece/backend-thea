@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="SynchronizeViewSettings">
+		<item key="linkWithEditor" value="false"/>
+		<item key="lastactiveparticipant_id" value="org.eclipse.egit.ui.modelCompareParticipant"/>
+		<item key="lastactiveparticipant_sec_id" value="1580586343344"/>
+		<section name="org.eclipse.egit.ui.modelCompareParticipant.1579624733240">
+		</section>
+		<section name="org.eclipse.egit.ui.modelCompareParticipant.1580586343344">
+			<item key="org.eclipse.team.ui.P_SYNCVIEWPAGE_MODE" value="8"/>
+		</section>
+	</section>
+</section>
