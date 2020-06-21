@@ -7,23 +7,19 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthenticationManagerService implements AuthenticationManager  {
+public class AuthenticationManagerService implements AuthenticationManager {
 
-	
-	
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		
-		String user = authentication.getPrincipal().toString();
-		String pass = authentication.getCredentials().toString();
-		
-		if("Admin".equals(user) && "passwd".equals(pass)) {
-			return authentication;
-		}
-		else
-		{
-			throw new BadCredentialsException("INVALID CREDENTIALS");
-		}
-	}
+  @Override
+  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
+    String user = authentication.getPrincipal().toString();
+    String pass = authentication.getCredentials().toString();
+
+    if ("Admin".equals(user) && "passwd".equals(pass)) {
+      return authentication;
+    } else {
+      throw new BadCredentialsException("INVALID CREDENTIALS");
+    }
+  }
 
 }

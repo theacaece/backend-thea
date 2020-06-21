@@ -1,50 +1,55 @@
 package edu.caece.app;
 
-import java.util.stream.Stream;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-
-import edu.caece.app.domain.Role;
-import edu.caece.app.domain.User;
-import edu.caece.app.repository.IRoleRepository;
-import edu.caece.app.repository.IUserRepository;
+import edu.caece.app.repository.PersonaRepositorio;
+import edu.caece.app.repository.RolRepositorio;
+import edu.caece.app.repository.UsuarioRepositorio;
+import edu.caece.app.resources.LecturaExcel;
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
-@ComponentScan(basePackages = { "edu.caece.app", "edu.caece.app.controller", "edu.caece.app.service" })
+@ComponentScan(basePackages = {"edu.caece.app", "edu.caece.app.controller", "edu.caece.app.domain",
+    "edu.caece.app.repository", "edu.caece.app.service"})
+@Slf4j
 public class SpringDemoTheaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringDemoTheaApplication.class, args);
-	}
+  protected final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Bean
-	ApplicationRunner init(IUserRepository repository, IRoleRepository repository_role) {
-		return args -> {
-			Stream.of("Francisco Ferrari;ff@gmail.com;ffff;admin", "Javier Michelson;jm@gmail.com;jjjj;user|admin",
-					"Juan Salinas;js@gmail.com;ssss;user", "Pablo Garcia;pg@gmail.com;gggg;admin").forEach(alumno -> {
+  public static void main(String[] args) throws Exception {
+    SpringApplication.run(SpringDemoTheaApplication.class, args);
+  }
 
-						String[] datos = alumno.split(";");
-						String[] datos_roles = datos[3].split("|");
+  @Bean
+  ApplicationRunner init(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
+      PersonaRepositorio personaRepositorio) throws Exception {
+    return args -> {
+      inicializarBD(usuarioRepositorio, rolRepositorio, personaRepositorio);
+    };
+  }
 
-											
-						User user = new User(datos[0], datos_roles);
-						user.setName(datos[0]);
-						user.setEmail(datos[1]);
-						user.setPassword(datos[2]);
+  /**
+   * INICIALIZA TODA LA BD CON LOS DATOS
+   * 
+   * @param usuarioRepositorio
+   * @param rolRepositorio
+   * @param personaRepositorio
+   * @throws Exception
+   */
+  public boolean inicializarBD(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio,
+      PersonaRepositorio personaRepositorio) throws Exception {
+    try {
+      LecturaExcel lecturaExcel = new LecturaExcel();
+      lecturaExcel.obtenerDatosBD(usuarioRepositorio, rolRepositorio, personaRepositorio);
+    } catch (Exception e) {
+      throw new Exception("method inicializarBD() :: " + e.getMessage());
+    }
+    return true;
+  }
 
-						repository.save(user);
-					});
-
-			repository.findAll().forEach(x -> {
-					//System.out::println
-					System.out.print(x.getId() + " | " + x.getName() + " | " + x.getEmail() + " | " + x.getPassword() + " | ");
-					System.out.println();
-			});
-
-		};
-	}
 }
