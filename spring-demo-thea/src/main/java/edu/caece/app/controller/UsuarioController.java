@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.Constantes;
 import edu.caece.app.domain.Usuario;
@@ -20,7 +22,7 @@ import edu.caece.app.repository.UsuarioRepositorio;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin(origins = Constantes.URL)
+@CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class UsuarioController {
 
@@ -29,13 +31,13 @@ public class UsuarioController {
   @Autowired
   private UsuarioRepositorio repositorio;
 
-  @GetMapping(value = "/users")
+  @RequestMapping(value = "/users", method = RequestMethod.GET)
   public Collection<Usuario> getUsuarios() {
     log.info(Constantes.INFO_USUARIO_ALL);
     return repositorio.findAll();
   }
 
-  @GetMapping(value = "/users/edit/{id}")
+  @RequestMapping(value = "/users/edit/{id}", method = RequestMethod.GET)
   public Optional<Usuario> getUsuarioById(@PathVariable Long id) {
     log.info(Constantes.INFO_USUARIO_ONE);
     return repositorio.findById(id);

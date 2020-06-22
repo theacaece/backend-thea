@@ -22,7 +22,11 @@ public class SpringDemoTheaApplication {
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
   public static void main(String[] args) throws Exception {
-    SpringApplication.run(SpringDemoTheaApplication.class, args);
+    try {
+      SpringApplication.run(SpringDemoTheaApplication.class, args);
+    } catch (Exception e) {
+      throw new Exception("Error method main() :: " + e.getMessage());
+    }
   }
 
   @Bean

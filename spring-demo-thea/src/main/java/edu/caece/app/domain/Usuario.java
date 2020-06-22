@@ -132,15 +132,5 @@ public class Usuario {
     return rl;
   }
 
-  public String getRolesSeparetedComma() {
-    String result = "";
-    int i = 0;
-    for (Rol rol : roles) {
-      result = rol.getNombre();
-      if (i < roles.size())
-        result = ", ";
-    }
-    return result;
-  }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import edu.caece.app.Constantes;
 import edu.caece.app.domain.Usuario;
 import edu.caece.app.repository.UsuarioRepositorio;
 
@@ -17,13 +18,13 @@ public class JwtUserDetailsService implements UserDetailsService {
   private UsuarioRepositorio usuarioRepositorio;
 
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Usuario usuario = usuarioRepositorio.findById(1L).get();
-    UserBuilder builder = null;
-    builder = org.springframework.security.core.userdetails.User.withUsername(username);
+  public UserDetails loadUserByUsername(String _usuario) throws UsernameNotFoundException {
+    Usuario usuario = usuarioRepositorio.findByUsername(_usuario);
+    if (usuario == null)
+      throw new UsernameNotFoundException(Constantes.ERROR_USUARIO_INEXISTENTE);
+    UserBuilder builder = org.springframework.security.core.userdetails.User.withUsername(_usuario);
     builder.password(usuario.getPassword());
-    builder.roles(usuario.getRolesSeparetedComma());
-
+    builder.roles(usuario.getRolesToArray());
     return builder.build();
   }
 }
