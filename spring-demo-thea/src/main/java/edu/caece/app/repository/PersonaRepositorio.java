@@ -18,7 +18,7 @@ public interface PersonaRepositorio extends JpaRepository<Persona, Long> {
 
   boolean existsByDni(String dni);
 
-  boolean existsByMatricula(String dni);
+  boolean existsByMatricula(String matricula);
 
   @Query("SELECT p FROM Persona p WHERE p.dni = :dni")
   Optional<Persona> findByDni(@Param("dni") String dni);

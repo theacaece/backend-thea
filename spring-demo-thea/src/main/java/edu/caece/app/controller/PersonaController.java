@@ -49,11 +49,13 @@ public class PersonaController {
   }
 
   @PostMapping("/personas/save")
-  public ResponseEntity<Object> save(@RequestBody String dni) {
+  public ResponseEntity<Object> save(@RequestBody Persona persona) {
     log.info(Constantes.INFO_PERSONA_SAVE);
-    boolean existe_dni = personaRepositorio.existsByDni(dni);
-    if (!existe_dni) {
-      return new ResponseEntity<>(Constantes.ERROR_MATRICULA_EXISTENTE, HttpStatus.NOT_FOUND);
+    boolean existe_dni = personaRepositorio.existsByDni(persona.getDni());
+    boolean existe_matricula = personaRepositorio.existsByMatricula(persona.getMatricula());
+    if (!existe_dni && !existe_matricula) {
+      personaRepositorio.save(persona);
+      return new ResponseEntity<>(personaRepositorio.save(persona), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(Constantes.INFO_DNI_EXISTENTE, HttpStatus.NOT_FOUND);
     }
@@ -65,7 +67,7 @@ public class PersonaController {
 
     Optional<Persona> _persona = personaRepositorio.findById(id);
     boolean existe_dni = personaRepositorio.existsByDni(persona.getDni());
-    boolean existe_matricula = personaRepositorio.existsByDni(persona.getMatricula());
+    boolean existe_matricula = personaRepositorio.existsByMatricula(persona.getMatricula());
 
     if (_persona.isPresent()) {
       Persona _person = _persona.get();
