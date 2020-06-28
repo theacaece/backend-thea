@@ -38,9 +38,11 @@ public class Constantes {
   public static final String INFO_PERSONA_SAVE = "[AGREGA PERSONA]";
   public static final String INFO_PERSONA_UPDATE = "[MODIFICA PERSONA]";
   public static final String INFO_PERSONA_DELETE = "[ELIMINA PERSONA]";
-  
+
   public static final String INFO_INGRESO_ALL = "[OBTIENE INGRESOS]";
- 
+  public static final String INFO_AUTENTICANDO = "[AUTENTICANDO]";
+  public static final String INFO_OBTENIENDO_USUARIO = "[OBTENIENDO USUARIO LOGUEADO]";
+
   // ERRORES GENERICOS
   public static final String ERROR_PERSONA_NORECONOCIDA = "La persona no fue reconocida";
   public static final String ERROR_IMAGEN_INVALIDA = "La imagen es invalida";

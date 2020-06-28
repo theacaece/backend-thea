@@ -1,5 +1,7 @@
 package edu.caece.app.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,11 +17,14 @@ import edu.caece.app.repository.UsuarioRepositorio;
 @Service
 public class AutenticacionService implements AuthenticationManager {
 
+  protected final Logger log = LoggerFactory.getLogger(getClass());
+
   @Autowired
   private UsuarioRepositorio usuarioRepositorio;
 
   @Override
   public Authentication authenticate(Authentication autenticacion) throws AuthenticationException {
+    log.info(Constantes.INFO_AUTENTICANDO);
     String usuario = autenticacion.getPrincipal().toString();
     String password = autenticacion.getCredentials().toString();
     Usuario usuarioBBDD = usuarioRepositorio.findByUsername(usuario);

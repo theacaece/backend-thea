@@ -148,5 +148,11 @@ public class Usuario {
     return rl;
   }
 
+  @Override
+  public String toString() {
+    return "Usuario [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname
+        + ", username=" + username + ", email=" + email + ", password=" + password + ", admin="
+        + admin + ", roles=" + roles + "]";
+  }
 
 }
