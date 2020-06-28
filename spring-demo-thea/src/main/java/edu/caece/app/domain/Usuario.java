@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.caece.app.config.Hash;
 import lombok.Data;
 
 @Entity(name = "Usuario")
@@ -42,6 +43,9 @@ public class Usuario {
 
   @Column(name = "password", nullable = false)
   private String password;
+
+  @Column(name = "admin", nullable = false)
+  private boolean admin;
 
   @ManyToMany(
       cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
@@ -100,7 +104,19 @@ public class Usuario {
   }
 
   public void setPassword(String password) {
-    this.password = password;
+    try {
+      this.password = Hash.sha1(password);
+    } catch (Exception e) {
+      this.password = null;
+    }
+  }
+
+  public boolean getAdmin() {
+    return admin;
+  }
+
+  public void setAdmin(boolean admin) {
+    this.admin = admin;
   }
 
   public List<Rol> getRoles() {

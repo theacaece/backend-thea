@@ -13,7 +13,6 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import edu.caece.app.Constantes;
-import edu.caece.app.config.Hash;
 import edu.caece.app.domain.Ingreso;
 import edu.caece.app.domain.Persona;
 import edu.caece.app.domain.Rol;
@@ -107,7 +106,7 @@ public class LecturaExcel {
           celda = iterador.next(); // Leo Celda Usuario del Excel
           usuario.setUsername(celda.getStringCellValue());
           celda = iterador.next(); // Leo Celda Password del Excel
-          usuario.setPassword(Hash.sha1(celda.getStringCellValue()));
+          usuario.setPassword(celda.getStringCellValue());
           celda = iterador.next();// Leo Celda Rol del Excel
           Long id_rol = (long) celda.getNumericCellValue();
           Rol rol = roles.get(id_rol);
