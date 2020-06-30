@@ -42,6 +42,7 @@ public class Constantes {
   public static final String INFO_INGRESO_ALL = "[OBTIENE INGRESOS]";
   public static final String INFO_AUTENTICANDO = "[AUTENTICANDO]";
   public static final String INFO_OBTENIENDO_USUARIO = "[OBTENIENDO USUARIO LOGUEADO]";
+  public static final String INFO_ROL_ONE = "[OBTENIENDO ROL DE USUARIO LOGUEADO]";
 
   // ERRORES GENERICOS
   public static final String ERROR_PERSONA_NORECONOCIDA = "La persona no fue reconocida";

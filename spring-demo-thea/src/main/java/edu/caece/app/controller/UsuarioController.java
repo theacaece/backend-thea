@@ -43,6 +43,18 @@ public class UsuarioController {
     return repositorio.findById(id);
   }
 
+  @RequestMapping(value = "/users/role/{username}", method = RequestMethod.GET)
+  public boolean isAdmin(@PathVariable String username) {
+    log.info(Constantes.INFO_ROL_ONE);
+    boolean isAdmin = false;
+    Usuario usuario = repositorio.findByUsername(username);
+    if (usuario != null) {
+      isAdmin = usuario.getAdmin();
+    }
+    return isAdmin;
+  }
+
+
   @PostMapping("/users/save")
   public void saveUsuario(@RequestBody Usuario user) {
     log.info(Constantes.INFO_USUARIO_SAVE);
