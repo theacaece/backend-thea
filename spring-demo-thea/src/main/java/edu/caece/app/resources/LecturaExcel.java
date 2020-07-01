@@ -107,15 +107,15 @@ public class LecturaExcel {
           usuario.setUsername(celda.getStringCellValue());
           celda = iterador.next(); // Leo Celda Password del Excel
           usuario.setPassword(celda.getStringCellValue());
-          celda = iterador.next();// Leo Celda Rol del Excel
-          Long id_rol = (long) celda.getNumericCellValue();
-          Rol rol = roles.get(id_rol);
-          if (rol != null) {
-            usuario.addRol(rol);
-            usuarios.add(usuario); // Agrego a Lista de Usuarios
+          celda = iterador.next();// Leo Celda Admin del Excel
+          Long admin = (long) celda.getNumericCellValue();
+          if (admin != 2) {
+            usuario.setAdmin(true);
           } else {
-            throw new Exception("method leerHojaUsuarios :: No existe el rol");
+            usuario.setAdmin(false);
           }
+          usuarios.add(usuario);
+          System.out.println(usuario.toString());
         }
       }
     } catch (Exception e) {

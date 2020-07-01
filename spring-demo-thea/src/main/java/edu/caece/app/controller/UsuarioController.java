@@ -79,6 +79,7 @@ public class UsuarioController {
         _user.setLastname(user.getLastname());
         _user.setEmail(user.getEmail());
         _user.setUsername(user.getUsername());
+        _user.setAdmin(user.getAdmin());
         _user.setRoles(user.getRoles());
         return new ResponseEntity<>(repositorio.save(_user), HttpStatus.OK);
       } else {

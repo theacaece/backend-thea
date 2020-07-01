@@ -3,7 +3,6 @@ package edu.caece.app.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -42,15 +41,11 @@ public class JwtAuthenticationController {
   public ResponseEntity<?> crearAutenticacionToken(@RequestBody JwtRequest autenticacionRequest)
       throws Exception {
     log.info(Constantes.INFO_TOKEN);
-    try {
-      autenticar(autenticacionRequest.getUsername(), autenticacionRequest.getPassword());
-      final UserDetails usuarioDetalle =
-          usuarioDetalleServicio.loadUserByUsername(autenticacionRequest.getUsername());
-      final String token = jwtTokenUtil.generateToken(usuarioDetalle);
-      return ResponseEntity.ok(new JwtResponse(token, usuarioDetalle));
-    } catch (Exception e) {
-      return new ResponseEntity<>(Constantes.ERROR_AUTENTICACION, HttpStatus.NOT_FOUND);
-    }
+    autenticar(autenticacionRequest.getUsername(), autenticacionRequest.getPassword());
+    final UserDetails usuarioDetalle =
+        usuarioDetalleServicio.loadUserByUsername(autenticacionRequest.getUsername());
+    final String token = jwtTokenUtil.generateToken(usuarioDetalle);
+    return ResponseEntity.ok(new JwtResponse(token, usuarioDetalle));
   }
 
   private void autenticar(String usuario, String password) throws Exception {
@@ -59,11 +54,11 @@ public class JwtAuthenticationController {
       authenticationManager
           .authenticate(new UsernamePasswordAuthenticationToken(usuario, password));
     } catch (DisabledException e) {
-      throw new Exception(Constantes.ERROR_USUARIO_NO_AUTORIZADO, e);
+      log.info(Constantes.ERROR_AUTENTICACION_EXCEPCION1);
+      throw new Exception("USER_DISABLED", e);
     } catch (BadCredentialsException e) {
-      throw new Exception(Constantes.ERROR_AUTENTICACION, e);
-    } catch (Exception e) {
-      throw new Exception(Constantes.ERROR_AUTENTICACION, e);
+      log.info(Constantes.ERROR_AUTENTICACION_EXCEPCION2);
+      throw new Exception("INVALID_CREDENTIALS", e);
     }
   }
 

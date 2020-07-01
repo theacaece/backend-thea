@@ -58,5 +58,9 @@ public class Constantes {
   public static final String ERROR_PERSONA_INEXISTENTE = "Persona no encontrada.";
   public static final String ERROR_DNI_INEXISTENTE = "DNI indicado inexistente";
   public static final String ERROR_MATRICULA_EXISTENTE = "Matricula indicada existente";
+  public static final String ERROR_AUTENTICACION_EXCEPCION = "Error de autenticación::excepcion";
+  public static final String ERROR_AUTENTICACION_EXCEPCION1 = "Error de autenticación::excepcion1";
+  public static final String ERROR_AUTENTICACION_EXCEPCION2 = "Error de autenticación::excepcion2";
+  public static final String ERROR_AUTENTICACION_EXCEPCION3 = "Error de autenticación::excepcion3";
 
 }
