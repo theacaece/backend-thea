@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @ComponentScan(basePackages = {"edu.caece.app", "edu.caece.app.controller", "edu.caece.app.domain",
     "edu.caece.app.repository", "edu.caece.app.service"})
 @Slf4j
+
 public class SpringDemoTheaApplication {
 
   protected final Logger log = LoggerFactory.getLogger(getClass());
