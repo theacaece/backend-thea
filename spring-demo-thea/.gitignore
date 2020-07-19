@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -13,6 +12,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
+.metadata
 
 ### IntelliJ IDEA ###
 .idea
@@ -32,4 +32,3 @@ build/
 .vscode/
 =======
 /project.xml
->>>>>>> branch 'master' of https://github.com/mastengo/backend-thea.git
