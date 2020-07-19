@@ -1,5 +1,7 @@
 package edu.caece.app.domain;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -22,115 +24,122 @@ import lombok.Data;
 @Data
 public class Usuario {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-  @GenericGenerator(name = "native", strategy = "native")
-  @Column(name = "id", updatable = false, nullable = false)
-  private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GenericGenerator(name = "native", strategy = "native")
+	@Column(name = "id", updatable = false, nullable = false)
+	private long id;
 
-  @Column(name = "firstname", nullable = false)
-  private String firstname;
+	@Column(name = "firstname", nullable = false)
+	private String firstname;
 
-  @Column(name = "lastname", nullable = false)
-  private String lastname;
+	@Column(name = "lastname", nullable = false)
+	private String lastname;
 
-  @Column(name = "username", nullable = false, unique = true)
-  private String username;
+	@Column(name = "username", nullable = false, unique = true)
+	private String username;
 
-  @Column(name = "email", nullable = false)
-  private String email;
+	@Column(name = "email", nullable = false)
+	private String email;
 
-  @Column(name = "password", nullable = false)
-  private String password;
+	@Column(name = "password", nullable = false)
+	private String password;
 
-  @ManyToMany(
-      cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
-      fetch = FetchType.EAGER)
-  @JoinTable(name = "usuario_rol",
-      joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
-  private List<Rol> roles;
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
+			CascadeType.DETACH }, fetch = FetchType.EAGER)
+	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+	private List<Rol> roles;
 
-  public Usuario() {
-    this.roles = new ArrayList<Rol>();
-  }
+	public Usuario() {
+		this.roles = new ArrayList<Rol>();
+	}
 
-  public long getId() {
-    return id;
-  }
+	public Usuario(String firstName, String lastName, String username, String password, String... roles) {
+		this.firstname = firstName;
+		this.lastname = lastName;
+		this.username = username;
+		this.password = password;
+        this.roles = new ArrayList<Rol>();
+		for (int i = 0; i < roles.length; i++) {
+			this.roles.add(new Rol(roles[i]));
+		}
+	}
 
-  public void setId(long id) {
-    this.id = id;
-  }
+	public long getId() {
+		return id;
+	}
 
-  public String getFirstname() {
-    return firstname;
-  }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-  public void setFirstname(String firstname) {
-    this.firstname = firstname;
-  }
+	public String getFirstname() {
+		return firstname;
+	}
 
-  public String getLastname() {
-    return lastname;
-  }
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
 
-  public void setLastname(String lastname) {
-    this.lastname = lastname;
-  }
+	public String getLastname() {
+		return lastname;
+	}
 
-  public String getUsername() {
-    return username;
-  }
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+	public String getUsername() {
+		return username;
+	}
 
-  public String getEmail() {
-    return email;
-  }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+	public String getEmail() {
+		return email;
+	}
 
-  public String getPassword() {
-    return password;
-  }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+	public String getPassword() {
+		return password;
+	}
 
-  public List<Rol> getRoles() {
-    return roles;
-  }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-  public void setRoles(List<Rol> roles) {
-    this.roles = roles;
-    this.roles.forEach(x -> x.getUsuarios().add(this));
-  }
+	public List<Rol> getRoles() {
+		return roles;
+	}
 
-  public void addRol(Rol rol) {
-    roles.add(rol);
-  }
+	public void setRoles(List<Rol> roles) {
+		this.roles = roles;
+		this.roles.forEach(x -> x.getUsuarios().add(this));
+	}
 
-  public void removeRol(Rol rol) {
-    roles.remove(rol);
-  }
+	public void addRol(Rol rol) {
+		roles.add(rol);
+	}
 
-  @JsonIgnore
-  public String[] getRolesToArray() {
-    String[] rl = new String[roles.size()];
-    int i = 0;
+	public void removeRol(Rol rol) {
+		roles.remove(rol);
+	}
 
-    for (Rol r : roles) {
-      rl[i] = r.getNombre();
-      i++;
-    }
-    return rl;
-  }
+	@JsonIgnore
+	public String[] getRolesToArray() {
+		String[] rl = new String[roles.size()];
+		int i = 0;
 
+		for (Rol r : roles) {
+			rl[i] = r.getNombre();
+			i++;
+		}
+		return rl;
+	}
 
 }

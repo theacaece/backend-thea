@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class IngresoImpl implements IngresoService {
 
-	protected final Logger log = LoggerFactory.getLogger(getClass());
+	//protected final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	private IngresoRepositorio registroRepositorio;

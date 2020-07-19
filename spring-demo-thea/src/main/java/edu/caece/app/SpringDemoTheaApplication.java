@@ -1,7 +1,5 @@
 package edu.caece.app;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,16 +9,14 @@ import edu.caece.app.repository.PersonaRepositorio;
 import edu.caece.app.repository.RolRepositorio;
 import edu.caece.app.repository.UsuarioRepositorio;
 import edu.caece.app.resources.LecturaExcel;
-import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"edu.caece.app", "edu.caece.app.controller", "edu.caece.app.domain",
     "edu.caece.app.repository", "edu.caece.app.service"})
-@Slf4j
+
 public class SpringDemoTheaApplication {
 
-  protected final Logger log = LoggerFactory.getLogger(getClass());
-
+  
   public static void main(String[] args) throws Exception {
     try {
       SpringApplication.run(SpringDemoTheaApplication.class, args);
